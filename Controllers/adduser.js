@@ -28,4 +28,3 @@ newUser.validate()
     });
 
 
-connect();

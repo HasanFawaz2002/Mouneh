@@ -20,4 +20,3 @@ newWorkshop.save()
         console.log('Error saving Workshop:', error);
     });
 
-    connect();

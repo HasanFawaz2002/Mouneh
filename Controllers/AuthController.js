@@ -2,8 +2,8 @@ const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcrypt");
 require('dotenv').config();
 const jwt = require("jsonwebtoken");
-const User = require("../../models/user");
-const connect = require('../../server/connect');
+const User = require("../models/user");
+const connect = require('../server/connect');
 
 //@desc Register a user
 //@route POST /api/users/register
@@ -75,5 +75,4 @@ const loginUser = asyncHandler(async (req, res) => {
 });
 
 
-connect();
 module.exports = { registerUser, loginUser };

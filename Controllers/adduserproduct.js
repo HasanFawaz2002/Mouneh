@@ -32,4 +32,3 @@ newUserProduct.save()
     });
 
 
-connect();

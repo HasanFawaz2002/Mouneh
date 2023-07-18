@@ -25,4 +25,3 @@ newProduct.save()
         console.log('Error saving Product:', error);
     });
 
-    connect();

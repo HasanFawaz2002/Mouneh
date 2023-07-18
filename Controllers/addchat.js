@@ -17,4 +17,3 @@ newChat.save()
         console.log('Error saving Chat:', error);
     });
 
-    connect();

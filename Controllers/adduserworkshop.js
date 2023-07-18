@@ -17,4 +17,3 @@ newUserWorkshop.save()
         console.log('Error saving UserWorkshop:', error);
     });
 
-    connect();
