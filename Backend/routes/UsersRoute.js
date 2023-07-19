@@ -1,6 +1,6 @@
 const { Router } = require('express');
-const verify = require('./verifytoken');
-const { updateUser,deleteUser,getUser,getAllUser, statUser} = require('./UsersController'); // Use destructuring to import the updateUser function
+const verify = require('../Controllers/verifytoken');
+const { updateUser,deleteUser,getUser,getAllUser, statUser} = require('../Controllers/UsersController'); // Use destructuring to import the updateUser function
 
 const router = Router();
 

@@ -1,6 +1,7 @@
 const express=require('express');
-const authRoute=require('../functionality/Controllers/AuthRoute');
-const usersRoute=require('../functionality/Controllers/UsersRoute');
+const authRoute=require('../routes/AuthRoute');
+const usersRoute=require('../routes/UsersRoute');
+const ProductRoute =require("../route/ProductRoute");
 const cors=require('cors');
 require('dotenv').config();
 const app=express();
@@ -21,7 +22,7 @@ app.get("/about",function(req,res){
 
 app.use(express.json(),cors());
 
-app.use(authRoute,usersRoute);
+app.use(authRoute,usersRoute,ProductRoute);
 
 
 
