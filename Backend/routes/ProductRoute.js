@@ -4,6 +4,6 @@ const { updateProduct} = require('../Controllers/ProductsController'); // Use de
 
 const router = Router();
 
-router.put('/products/:id/productID', verify, updateUser);
+router.put('/products/:id/:productID', verify, updateProduct);
 
 module.exports = router;

@@ -1,7 +1,8 @@
 const express=require('express');
-const authRoute=require('../routes/AuthRoute');
+const authRoute=require('../routes/AuthRoutes');
 const usersRoute=require('../routes/UsersRoute');
-const ProductRoute =require("../route/ProductRoute");
+const ProductRoute =require("../routes/ProductRoute");
+const connect = require('./connect');
 const cors=require('cors');
 require('dotenv').config();
 const app=express();
@@ -27,5 +28,6 @@ app.use(authRoute,usersRoute,ProductRoute);
 
 
 app.listen(process.env.PORT,function(){
+    connect();
     console.log(`Server started on port ${process.env.PORT}`);
 })
