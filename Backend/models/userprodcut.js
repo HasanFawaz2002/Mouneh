@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+/*const mongoose = require('mongoose');
 const UserModel = require('./user');
 const ProductModel = require('./product').schema;
 const connect = require('../server/connect');
@@ -25,4 +25,4 @@ const userProductSchema = new mongoose.Schema({
 
 const UserProductModel = mongoose.model('UserProduct', userProductSchema);
 
-module.exports = UserProductModel;
+module.exports = UserProductModel;*/

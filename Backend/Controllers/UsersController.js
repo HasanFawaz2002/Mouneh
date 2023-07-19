@@ -23,18 +23,34 @@ module.exports.updateUser = async (req, res) => {
   }
 };
 
+//Delete
 module.exports.deleteUser = async (req, res) => {
-  if (req.user.user.id === req.params.id || req.user.user.isAdmin) {
-    try {
-      await UserModel.findByIdAndDelete(req.params.id);
-      res.status(200).json("User has been deleted");
-    } catch (err) {
-      res.status(500).json(err);
+  const userID = req.params.id;
+
+  try {
+    // Check if the user with the given userID exists
+    const user = await UserModel.findById(userID);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found.' });
     }
-  } else {
-    res.status(403).json('You can delete only your account!');
+
+    // Compare the userID of the user with the id of the authenticated user
+    if (req.user.user.id === userID || req.user.user.isAdmin) {
+      try {
+        // If the authenticated user is the owner or an admin, proceed with the deletion
+        await UserModel.findByIdAndDelete(userID);
+        res.status(200).json({ message: 'User has been deleted.' });
+      } catch (err) {
+        res.status(500).json(err);
+      }
+    } else {
+      res.status(403).json({ error: 'You can delete only your account or you must be an admin.' });
+    }
+  } catch (err) {
+    res.status(500).json(err);
   }
 };
+
 
 module.exports.getUser = async (req, res) => {
   try {
@@ -80,7 +96,7 @@ module.exports.statUser = async (req, res) => {
   "November",
   "December"
 ];
-if (req.user.isAdmin){
+if (req.user.user.isAdmin){
 try{
   const data = await UserModel.aggregate([
       {
