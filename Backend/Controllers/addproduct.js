@@ -2,6 +2,7 @@ const connect = require('../server/connect');
 const ProductModel = require("../models/product");
 
 const newProduct = new ProductModel({
+    user:'64b51eb01ae823fea4766396', // Replace with the actual user ID
     name: 'Example Product',
     image: 'https://example.com/product.jpg',
     price: 10.99,
@@ -17,11 +18,14 @@ const newProduct = new ProductModel({
     }
 });
 
-newProduct.save()
-    .then(() => {
+async function saveProduct() {
+    try {
+        await connect(); // Wait for the database connection to be established
+        await newProduct.save();
         console.log('Product saved successfully.');
-    })
-    .catch((error) => {
+    } catch (error) {
         console.log('Error saving Product:', error);
-    });
+    }
+}
 
+saveProduct();

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+/*const mongoose = require('mongoose');
 const connect = require('../server/connect');
 const UserProductModel = require('../models/userproduct');
 
@@ -31,4 +31,4 @@ newUserProduct.save()
         console.log('Error saving UserProduct:', error);
     });
 
-
+*/
