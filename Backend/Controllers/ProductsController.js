@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 //ADD
 
 module.exports.addProduct = async (req, res) => {
-    const userID = req.params.userID;
+    const userID = req.user.user.id;
     const { name, image, price, quantity, description, weight, category, subcategory, ingredient, time, method } = req.body;
   
     // Validate the required fields for the 'recipes' subdocument
@@ -53,8 +53,8 @@ module.exports.addProduct = async (req, res) => {
 // Update
 module.exports.updateProduct = async (req, res) => {
   console.log('req.user:', req.user);
-  console.log('req.params.id:', req.params.id);
-  if (req.user.user.id === req.params.id || req.user.user.isAdmin) {
+  console.log('req.params.id:', req.params.userID);
+  if (req.user.user.id === req.params.userID || req.user.user.isAdmin) {
     
     try {
       const updateProduct = await ProductModel.findByIdAndUpdate(req.params.productID,
@@ -87,7 +87,7 @@ module.exports.deleteProduct = async (req, res) => {
       }
   
       // If the authenticated user is the owner or an admin, proceed with the deletion
-      if (req.user.user.id === req.params.id || req.user.user.isAdmin) {
+      if (req.user.user.id === req.params.userID || req.user.user.isAdmin) {
         try {
           await ProductModel.findByIdAndDelete(productID);
           res.status(200).json({ message: 'Product has been deleted.' });
@@ -106,7 +106,7 @@ module.exports.deleteProduct = async (req, res) => {
 // Get Product
 module.exports.getProduct = async (req, res) => {
   try {
-    const product = await ProductModel.findById(req.params.id);
+    const product = await ProductModel.findById(req.params.productID);
     const { password, ...info } = product._doc;
     res.status(200).json(info);
   } catch (err) {
@@ -114,12 +114,28 @@ module.exports.getProduct = async (req, res) => {
   }
 };
 
+// Get My Products (Products that belong to the authenticated user)
+module.exports.getMyProducts = async (req, res) => {
+  const userID = req.user.user.id; // Get the userID of the authenticated user
+
+  try {
+    // Find all products that have the same userID as the authenticated user's ID
+    const products = await ProductModel.find({ userID: userID });
+
+    // Respond with the list of products
+    res.status(200).json(products);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+
 //Get All Product
 module.exports.getAllProduct = async (req, res) => {
   const query = req.query.new;
   if (req.user.user.isAdmin) {
     try {
-      const products = query ? await ProductModel.find().sort({_id:-1}).limit(10) : await ProductModel.find();
+      const products = query ? await ProductModel.find().sort({_id:-1}) : await ProductModel.find();
       res.status(200).json(products);
     } catch (err) {
       res.status(500).json(err);
