@@ -29,4 +29,13 @@ module.exports.registerForWorkshop = async (req, res) => {
   }
 };
 module.exports.fetchUserWorkshops = async (req, res) => {
-  const userId = req.user.user.id;}
+  const userId = req.user.user.id;
+
+  try {
+    // Find workshops registered by the user
+    const userWorkshops = await UserWorkshopModel.find({ user: userId }).populate('workshop');
+    res.status(200).json(userWorkshops);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
