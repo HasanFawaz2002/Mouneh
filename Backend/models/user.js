@@ -2,17 +2,10 @@ const mongoose = require('mongoose');
 //const connect = require('../server/connect');
 
 const UserSchema = new mongoose.Schema({
-    firstname: {
+    username: {
         type: String,
-        required: [true, 'First name is required.'],
-        minlength: [3, 'First name must be at least 2 characters long.'],
-        maxlength: [30, 'First name cannot exceed 50 characters.']
-    },
-    lastname: {
-        type: String,
-        required: [true, 'Last name is required.'],
-        minlength: [3, 'Last name must be at least 2 characters long.'],
-        maxlength: [30, 'Last name cannot exceed 50 characters.']
+        required: true,
+        unique: true, // Add unique index to enforce uniqueness
     },
     email: {
         type: String,

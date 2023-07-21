@@ -6,7 +6,7 @@ require('dotenv').config();
 const jwt = require("jsonwebtoken");
 
 module.exports.registerForWorkshop = async (req, res) => {
-  const workshopId  = req.params.id;
+  const workshopId  = req.params.workshopID;
   const userId = req.user.user.id;
 
   try {
@@ -29,13 +29,4 @@ module.exports.registerForWorkshop = async (req, res) => {
   }
 };
 module.exports.fetchUserWorkshops = async (req, res) => {
-  const userId = req.user.user.id;
-
-  try {
-    // Find workshops registered by the user
-    const userWorkshops = await UserWorkshopModel.find({ user: userId }).populate('workshop');
-    res.status(200).json(userWorkshops);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-};
+  const userId = req.user.user.id;}

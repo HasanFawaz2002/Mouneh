@@ -21,7 +21,7 @@ module.exports.addWorkshop = async (req, res) => {
 module.exports.updateWorkshop = async (req, res) => {
   if (req.user.user.isAdmin) {
     try {
-      const workshopID = req.params.id;
+      const workshopID = req.params.workshopID;
       const updatedWorkshop = await WorkshopModel.findByIdAndUpdate(
         workshopID,
         { $set: req.body },
@@ -40,7 +40,7 @@ module.exports.updateWorkshop = async (req, res) => {
 module.exports.deleteWorkshop = async (req, res) => {
   if (req.user.user.isAdmin) {
     try {
-      const workshopID = req.params.id;
+      const workshopID = req.params.workshopID;
       await WorkshopModel.findByIdAndRemove(workshopID);
       res.status(200).json('Workshop deleted successfully.');
     } catch (err) {

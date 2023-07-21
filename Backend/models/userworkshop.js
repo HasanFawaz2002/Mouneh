@@ -5,7 +5,7 @@ const WorkshopModel = require('./workshop');
 const userWorkshopSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'UserModel',
+        ref: 'user',
         validate: {
             validator: async function (value) {
                 const userExists = await UserModel.exists({ _id: value });
@@ -16,7 +16,7 @@ const userWorkshopSchema = new mongoose.Schema({
     },
     workshop: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'WorkshopModel',
+        ref: 'workshops',
         validate: {
             validator: async function (value) {
                 const workExists = await WorkshopModel.exists({ _id: value });

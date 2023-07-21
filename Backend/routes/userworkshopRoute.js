@@ -5,7 +5,7 @@ const { registerForWorkshop, fetchUserWorkshops } = require('../Controllers/user
 const router = Router();
 
 // Register user for a workshop
-router.post('/registeruserworkshop/:id', verify, registerForWorkshop);
+router.post('/registeruserworkshop/:workshopID', verify, registerForWorkshop);
 
 // Fetch workshops registered by the user
 router.get('/userworkshops', verify, fetchUserWorkshops);

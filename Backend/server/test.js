@@ -2,6 +2,8 @@ const express=require('express');
 const authRoute=require('../routes/AuthRoutes');
 const usersRoute=require('../routes/UsersRoute');
 const ProductRoute =require("../routes/ProductRoute");
+const workshopRoute =require("../routes/workshopRoute");
+const userworkshopRoute =require("../routes/userworkshopRoute");
 const connect = require('./connect');
 const cors=require('cors');
 require('dotenv').config();
@@ -23,8 +25,7 @@ app.get("/about",function(req,res){
 
 app.use(express.json(),cors());
 
-app.use(authRoute,usersRoute,ProductRoute);
-
+app.use(authRoute,usersRoute,ProductRoute,workshopRoute,userworkshopRoute);
 
 
 app.listen(process.env.PORT,function(){
