@@ -1,7 +1,6 @@
 const { Router } = require('express');
 const verify = require('../Controllers/verifytoken');
 const { addWorkshop,updateWorkshop,deleteWorkshop,getAllWorkshops} = require('../Controllers/workshopcontrollers'); // Use destructuring to import the updateUser function
-
 const router = Router();
 
 router.put('/workshopupdate/:workshopID', verify, updateWorkshop);

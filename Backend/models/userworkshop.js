@@ -16,7 +16,7 @@ const userWorkshopSchema = new mongoose.Schema({
     },
     workshop: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'workshops',
+        ref: 'workshops ',
         validate: {
             validator: async function (value) {
                 const workExists = await WorkshopModel.exists({ _id: value });
