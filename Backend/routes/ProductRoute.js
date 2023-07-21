@@ -5,10 +5,10 @@ const { addProduct, updateProduct, deleteProduct, getProduct, getAllProduct, get
 const router = Router();
 
 router.put('/products/:userID/:productID', verify, updateProduct);
-router.post('/products', addProduct);
+router.post('/products', verify, addProduct);
 router.delete("/products/:userID/:productID", verify, deleteProduct);
 router.get('/products/find/:productID', getProduct);
 router.get('/products', verify, getAllProduct);
-router.get('/products/my-products', verify, getMyProducts); // Add the "Get My Products" route
+router.get('/products/my-products', verify, getMyProducts); 
 
 module.exports = router;
