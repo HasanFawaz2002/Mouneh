@@ -5,6 +5,7 @@ const router = Router();
 
 router.put('/workshopupdate/:workshopID', verify, updateWorkshop);
 router.delete('/delete/:workshopID', verify, deleteWorkshop);
+
 router.get('/allworkshop', verify, getAllWorkshops );
 router.post('/workshop', verify, addWorkshop);
 
