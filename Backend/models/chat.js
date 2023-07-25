@@ -7,7 +7,7 @@ const UserModel = require('./user');
 const chatSchema = new mongoose.Schema({
         user: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'UserModel',
+            ref: 'user',
             validate: {
                 validator: async function (value) {
                     const userExists = await UserModel.exists({ _id: value });
@@ -24,7 +24,7 @@ const chatSchema = new mongoose.Schema({
         },
         workshop: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'UserWorkshopModel',
+            ref: 'UserWorkshop',
             validate: {
                 validator: async function (value) {
                     const userWorkshopExists = await UserWorkshopModel.exists({ _id: value });
