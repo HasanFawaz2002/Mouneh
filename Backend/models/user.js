@@ -2,7 +2,12 @@ const mongoose = require('mongoose');
 //const connect = require('../server/connect');
 
 const UserSchema = new mongoose.Schema({
-    username: {
+    firstname: {
+        type: String,
+        required: true,
+        unique: true, // Add unique index to enforce uniqueness
+    },
+    lastname: {
         type: String,
         required: true,
         unique: true, // Add unique index to enforce uniqueness
@@ -46,10 +51,8 @@ const UserSchema = new mongoose.Schema({
         minlength: [2, 'Address must be at least 5 characters long.']
     },
     age: {
-        type: Number,
+        type: Date,
         required: [true, 'Age is required.'],
-        min: [18, 'Minimum age allowed is 18.'],
-        max: [100, 'Maximum age allowed is 100.']
     },
     isAdmin: { 
         type: Boolean,
@@ -57,14 +60,6 @@ const UserSchema = new mongoose.Schema({
     }
 },{ timestamps: true }
 );
-/*const UserSchema =new mongoose.Schema({
-    username: { type: String, required: true, unique: true },
-    email: { type: String, required: true, unique: true},
-    password: { type: String, required: true },
-    isAdmin: { type: Boolean, default: false },
-  },
-  { timestamps: true }
-);*/
 
 
 const UserModel = mongoose.model('User', UserSchema);

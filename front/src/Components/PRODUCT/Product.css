@@ -1,0 +1,97 @@
+
+.product-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 65px;
+    margin-bottom: 65px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: -5px 5px 5px rgba(0,0,0,0.3);
+    width: 1000px;
+    color: white;
+    font-size: larger;
+    border-radius: 20px;
+}
+.product-container span{
+    color: var(--primary-color);
+}
+.product-container-left{
+height: 450px;
+width: 400px;
+background-color: black;
+border-bottom-left-radius: 20px;
+border-top-left-radius: 20px;
+
+}
+.product-container-left img{
+height: 100%;
+width: 100%;
+border-bottom-left-radius: 20px;
+border-top-left-radius: 20px;
+
+}
+
+.product-container-right{
+    display: grid;
+    grid-template-columns: 40% 60% ;
+    grid-template-rows: 1fr;
+    width: 600px;
+    height: 450px;
+    background-color: var(--secondary-color);
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.product-container-right-section{
+    word-break:break-all;
+    padding: 20px;
+    margin: 10px;
+}
+
+.product-container-right-section:nth-child(3){
+    margin-left: 250px;
+    justify-self: center;
+}
+
+
+.product-container-right-section button{
+    margin-top: 10px;
+    margin-bottom: 30px;
+    transform: translateX(-15px);
+    padding: 5px;
+    width: 90px;
+    background-color: var(--primary-color);
+    color: white;
+    border: transparent;
+    line-height: 25px;
+    border-radius: 10px;
+    box-shadow: -5px 5px 5px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+.product-container-right-section input{
+    width: 50px;
+}
+
+@media screen and (max-width: 650px) {
+    .product-container{
+       display: flex;
+       flex-direction: column;
+        margin: 0;
+        margin: 20px auto;
+        width: fit-content;
+    }
+    .product-container-right{
+        border-top-right-radius: 0;
+        border-bottom-left-radius: 20px;
+    }
+    .product-container-left{
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 20px;
+    }
+    .product-container-left img{
+        border-bottom-left-radius: 0;
+        border-top-right-radius: 20px;
+
+    }
+}
