@@ -9,8 +9,8 @@ const connect = require('../server/connect');
 //@route POST /api/users/register
 //@access public
 const registerUser = asyncHandler(async (req, res) => {
-  const { username, email, password,city,age,phonenumber } = req.body;
-  if (!username || !email || !password || !city || !age || !phonenumber) {
+  const { firstname,lastname, email, password,city,age,phonenumber } = req.body;
+  if (!firstname || !lastname || !email || !password || !city || !age || !phonenumber) {
     res.status(400);
     throw new Error("All fields are mandatory!");
   }
@@ -23,7 +23,8 @@ const registerUser = asyncHandler(async (req, res) => {
   //Hash password
   const hashedPassword = await bcrypt.hash(password, 10);
   const user = await User.create({
-    username,
+    firstname,
+    lastname,
     email,
     password: hashedPassword,
     city,

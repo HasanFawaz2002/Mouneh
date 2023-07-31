@@ -133,17 +133,30 @@ module.exports.getMyProducts = async (req, res) => {
 //Get All Product
 module.exports.getAllProduct = async (req, res) => {
   const query = req.query.new;
-  if (req.user.user.isAdmin) {
     try {
       const products = query ? await ProductModel.find().sort({_id:-1}) : await ProductModel.find();
       res.status(200).json(products);
     } catch (err) {
       res.status(500).json(err);
     }
-  } else {
-    res.status(403).json('You are not allowed to see all users');
-  }
+  
 };
+
+//Get 8 Products From the newest One
+module.exports.getNewProduct = async (req, res) => {
+  const query = req.query.new;
+    try {
+      const products = query
+        ? await ProductModel.find().sort({ _id: -1 }).limit(8)
+        : await ProductModel.find().limit(8).sort({ _id: -1 });
+
+      res.status(200).json(products);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  
+};
+
 
 /*module.exports.statUser = async (req, res) => {
   const today = new Date();
