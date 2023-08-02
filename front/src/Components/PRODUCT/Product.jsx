@@ -1,22 +1,58 @@
 import React, { useState, useEffect } from "react";
 import "./Product.css";
-import { useParams } from "react-router-dom";
+import { useParams,Link } from "react-router-dom";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft, faBars } from "@fortawesome/free-solid-svg-icons";
+
+function getAccessToken() {
+  const value = `; ${document.cookie}`;
+  const parts = value.split("; access_token=");
+  if (parts.length === 2) return parts.pop().split(";").shift();
+}
 
 const Product = () => {
   const [product, setProduct] = useState();
+  const [quantity, setQuantity] = useState(1);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const params = useParams();
-  const id = params.productID;
+  const productID = params.productID;
+
+  
+
+  const  cartHandling = async(e) => {
+  e.preventDefault();
+  const token = getAccessToken();
+  try {
+    const response = await axios.post(`http://localhost:3001/cart/${localStorage.getItem('userId')}/${productID}`, {quantity}, {
+      headers: {
+        token: `Bearer ${token}`,
+      },
+     
+    });
+  
+    console.log("Cart Added successfully!");
+    console.log(response);
+    console.log(quantity);
+
+
+   
+  } catch (error) {
+    console.error("Cart Add failed:", error);
+    console.log(quantity);
+   
+  }
+  }
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/products/find/" + id)
+      .get("http://localhost:3001/products/find/" + productID)
       .then((result) => {
         console.log(result.data);
         setProduct(result.data);
       })
       .catch((error) => console.error(error));
-  }, [id]); // Add id as a dependency to the useEffect hook
+  }, [productID]); // Add id as a dependency to the useEffect hook
 
   // Check if the product data is available before rendering
   if (!product) {
@@ -24,37 +60,107 @@ const Product = () => {
   }
 
   const isFoodCategory = product.category === "Food";
+  
+
+  const handleMenuClick = () => {
+    setIsMenuOpen((prevState) => !prevState);
+  };
+
+  const handleIncrement = () => {
+    setQuantity((prevQuantity) => prevQuantity + 1);
+  };
+
+  const handleDecrement = () => {
+    setQuantity((prevQuantity) => Math.max(prevQuantity - 1, 1));
+  };
+
+  const handleQuantityChange = (event) => {
+    setQuantity(event.target.value);
+  };
 
   return (
-    <div className="product-container">
-      <div className="product-container-left">
-        <img src={product.image} alt={product.name} />
-      </div>
-      <div
-        className="product-container-right">
-        <div className="product-container-right-section">
-          <h1>{product.name}</h1>
-          <p>{product.description}</p>
-          <h4>Price: <span>{product.price}$</span></h4>
-          <h4>Weight: <span>{product.weight}g</span></h4>
-        </div>
-        
-          <div className="product-container-right-section">
-            {isFoodCategory && (<div>
-            <h4>Ingredients: <span>{product.recipes.ingredient}</span></h4>
-            <h4>Method: <span>{product.recipes.method}</span></h4>
-            <h4>Time: <span>{product.recipes.time}m</span></h4>
+    <div className="product-card-container">
+      <div className="product-card">
+        <div className="card__wrapper">
+          <div className="card__back">
+            <Link to="/">
+              <FontAwesomeIcon icon={faArrowLeft} />
+            </Link>
           </div>
-        )}
+          {isFoodCategory && <div className="card__menu" onClick={handleMenuClick}>
+            <FontAwesomeIcon icon={faBars} />
+          </div>
+          }
+          
         </div>
 
-        <div className="product-container-right-section">
-          <form action="">
-            <label htmlFor="">Quantity</label><br />
-            <input type="number" max={product.quantity} />
-            <button>Buy</button>
-          </form>
+        {isMenuOpen ? (
+          <div className="card__img" style={{ display: "none" }}>
+            <img style={{ display: "none" }} alt="" />
+          </div>
+        ) : (
+          <div className="card__img">
+            <img src={product.image} alt={product.image} />
+          </div>
+        )}
+
+        <div className="card__title">
+          {isMenuOpen ? (
+            <>
+              <div>Quantity: {product.quantity}</div>
+              <div>Weight: {product.weight}g</div>
+            </>
+          ) : (
+            product.name
+          )}
         </div>
+
+        <div className="card__subtitle">
+          {isMenuOpen && isFoodCategory ? (
+            <>
+              <div>
+                <span className="card__subtitle-span">Recipes:</span>
+              </div>
+              <div>
+                <span className="card__subtitle-span">Ingredient:</span>
+                {product.recipes.ingredient}
+              </div>
+              <div>
+                <span className="card__subtitle-span">Time:</span>
+                {product.recipes.time}m
+              </div>
+              <div>
+                <span className="card__subtitle-span">Method:</span>
+                {product.recipes.method}
+              </div>
+            </>
+          ) : (
+            product.description
+          )}
+        </div>
+
+        <div className="card__wrapper">
+          <div className="card__price">${product.price}</div>
+          <div className="card__counter">
+            
+            <button className="card__btn" onClick={handleDecrement}>
+              -
+            </button>
+            <input
+              className="card__counter-score"
+              value={quantity}
+              onChange={handleQuantityChange}
+            ></input>
+            <button className="card__btn card__btn-plus" onClick={handleIncrement}>
+              +
+            </button>
+            
+          </div>
+          
+        </div>
+            <form style={{display:"flex",justifyContent:"center"}} onSubmit={cartHandling} action="">
+            <button type="submit" className="card__counter-submit-btn">Add To Cart</button>
+            </form> 
       </div>
     </div>
   );
