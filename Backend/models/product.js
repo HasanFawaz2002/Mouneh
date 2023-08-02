@@ -5,7 +5,7 @@ const UserModel = require("./user");
 const productSchema = new mongoose.Schema({
     userID: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'UserModel',
+        ref: 'User',
         validate: {
             validator: async function (value) {
                 const userExists = await UserModel.exists({ _id: value });
