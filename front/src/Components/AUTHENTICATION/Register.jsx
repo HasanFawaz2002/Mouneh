@@ -2,7 +2,7 @@ import React , { useState } from "react";
 import "./style.css";
 import axios from "axios";
 import "./style.css"; 
-
+import {Link} from "react-router-dom";
 function Register() {
   const api = "http://localhost:3001";
   const [contact, setContact] = useState({
@@ -98,7 +98,7 @@ function Register() {
               <button type="submit" className="submit">Register</button>
             </div>
             <p className="parag ">
-              Already a member? <span className="auth-span">Login</span>
+              Already a member? <Link to="/login" className="auth-span">Login</Link>
             </p>
           </form>
         </div>

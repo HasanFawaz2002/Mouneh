@@ -3,11 +3,8 @@
     margin: 0 auto;
 }
   
-.flexSb{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap:10px;
+.forgot-pass{
+    color:#EDB71A;
 }
 .register{
     background-image: url('../../images/pexels-polina-tankilevitch-3735147.jpg');

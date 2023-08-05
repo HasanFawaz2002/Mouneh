@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
-//import {useCookies} from "react-cookie";
+import {useCookies} from "react-cookie";
 import "./style.css"; 
-import {useNavigate} from "react-router-dom";
+import {useNavigate,Link} from "react-router-dom";
 
 
 function Login() {
@@ -24,7 +24,7 @@ function Login() {
     });
   }
 
-  //const [_,setCookies]=useCookies(["access_token"]);
+  const [_,setCookies]=useCookies(["access_token"]);
 
   function hsn(e) {
     e.preventDefault();
@@ -34,10 +34,9 @@ function Login() {
       .then((response) => {
         console.log("Login successful!");
         console.log(response);
-        //setCookies("access_token", response.data.accessToken);
-        localStorage.setItem("access_token", response.data.accessToken);
+        setCookies("access_token", response.data.accessToken);
         localStorage.setItem("userId", response.data.user._id);
-        navigate(-1);
+        navigate('/');
       })
       .catch((error) => {
         console.error("Login failed:", error);
@@ -56,6 +55,7 @@ function Login() {
             <div className="error" id="vemail"></div>
             <input type="password" name="password" placeholder="Password" id="password" value={contact.password} onChange={handleChange} />
             <div className="error" id="vpassword"></div>
+            <Link to="/forgot-password">Forgot password?</Link>
             <div className="centering">
               <button className="submit">Login</button>
             </div>
