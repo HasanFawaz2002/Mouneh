@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import "./Navbar.css";
-import { NavLink } from "react-router-dom";
+import { NavLink,useLocation  } from "react-router-dom";
 import MounehLogo from "../../images/Mouneh-logo.png";
 
 const Navbar = (props) => {
-  
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation(); 
+  const isProductPage = location.pathname.startsWith("/product/");
 
   const menuOnClick = () => {
     setIsMenuOpen((prevState) => !prevState);
@@ -45,9 +46,8 @@ const Navbar = (props) => {
               </NavLink>
             </li>
             <li>
-              <NavLink to="/editprofile" onClick={closeMenu}>
-                Edit Profile
-              </NavLink>
+            {isProductPage && <NavLink to="/cart">My Cart</NavLink>}
+            {!isProductPage && <NavLink to="/editprofile">Edit Profile</NavLink>}
             </li>
             <li>
               <NavLink to="/login" onClick={closeMenu}>
@@ -83,7 +83,8 @@ const Navbar = (props) => {
           </li>
         </ul>
         <div className="authentication-btn">
-          <NavLink to="/editprofile">Edit Profile</NavLink>
+          {isProductPage && <NavLink to="/cart">My Cart</NavLink>}
+          {!isProductPage && <NavLink to="/editprofile">Edit Profile</NavLink>}
           <NavLink to="/login">Login</NavLink>
           <NavLink to="/register">Register</NavLink>
         </div>

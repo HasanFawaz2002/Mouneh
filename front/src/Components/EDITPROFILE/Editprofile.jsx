@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import "./Editprofile.css";
 import axios from 'axios';
+import {useCookies} from "react-cookie";
 
-
-function getAccessToken() {
+/*function getAccessToken() {
   const value = `; ${document.cookie}`;
   const parts = value.split("; access_token=");
   if (parts.length === 2) return parts.pop().split(";").shift();
-}
+}*/
 
 const Editprofile = () => {
   const [formData, setFormData] = useState({

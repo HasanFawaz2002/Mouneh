@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
 import "./Product.css";
-import { useParams,Link } from "react-router-dom";
+import { useParams,useNavigate  } from "react-router-dom";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faBars } from "@fortawesome/free-solid-svg-icons";
 
-function getAccessToken() {
+/*function getAccessToken() {
   const value = `; ${document.cookie}`;
   const parts = value.split("; access_token=");
   if (parts.length === 2) return parts.pop().split(";").shift();
-}
+}*/
 
 const Product = () => {
+  const navigate = useNavigate();
   const [product, setProduct] = useState();
   const [quantity, setQuantity] = useState(1);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -20,29 +21,36 @@ const Product = () => {
 
   
 
-  const  cartHandling = async(e) => {
-  e.preventDefault();
-  const token = getAccessToken();
-  try {
-    const response = await axios.post(`http://localhost:3001/cart/${localStorage.getItem('userId')}/${productID}`, {quantity}, {
-      headers: {
-        token: `Bearer ${token}`,
-      },
-     
-    });
-  
-    console.log("Cart Added successfully!");
-    console.log(response);
-    console.log(quantity);
+  const cartHandling = async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem('access_token');
 
+    if (!token) {
+        navigate('/login');
+        return;
+    }
 
-   
-  } catch (error) {
-    console.error("Cart Add failed:", error);
-    console.log(quantity);
-   
-  }
-  }
+    try {
+        const response = await axios.post(`http://localhost:3001/cart/${localStorage.getItem('userId')}/${productID}`, {quantity}, {
+            headers: {
+                token: `Bearer ${token}`,
+            },
+        });
+       
+        console.log("Cart Added successfully!");
+        navigate("/cart");
+        console.log(response);
+        console.log(quantity);
+    } catch (error) {
+        if (error.response && error.response.status === 403) {
+            console.log("Token is not valid!");
+            navigate('/login');
+        } else {
+            console.error("Cart Add failed:", error);
+            console.log(quantity);
+        }
+    }
+};
 
   useEffect(() => {
     axios
@@ -56,7 +64,7 @@ const Product = () => {
 
   // Check if the product data is available before rendering
   if (!product) {
-    return <div>Loading...</div>;
+    return <div style={{display:'flex',justifyContent:'center',color:'var(--primary-color)',fontSize:'x-large'}}>Loading...</div>;
   }
 
   const isFoodCategory = product.category === "Food";
@@ -82,10 +90,10 @@ const Product = () => {
     <div className="product-card-container">
       <div className="product-card">
         <div className="card__wrapper">
-          <div className="card__back">
-            <Link to="/">
+        <div className="card__back">
+            <button onClick={() => navigate(-1)}>
               <FontAwesomeIcon icon={faArrowLeft} />
-            </Link>
+            </button>
           </div>
           {isFoodCategory && <div className="card__menu" onClick={handleMenuClick}>
             <FontAwesomeIcon icon={faBars} />

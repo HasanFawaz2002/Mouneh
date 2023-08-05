@@ -5,6 +5,7 @@ import {useNavigate,useParams} from "react-router-dom";
 
 
 function Resetpassword() {
+
   const navigate = useNavigate();
   const api = "http://localhost:3001";
   const [password, setPassword] = useState();
@@ -17,6 +18,7 @@ function Resetpassword() {
     axios.post(`${api}/reset-password/${id}/${token}`, {password})
     .then(res => {
         if(res.data.Status === "Success") {
+         
             navigate('/login');
         }
     }).catch(err => console.log(err.response))
