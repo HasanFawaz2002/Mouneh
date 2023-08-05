@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import "./Editprofile.css";
 import axios from 'axios';
-import {useCookies} from "react-cookie";
+
 
 function getAccessToken() {
   const value = `; ${document.cookie}`;
@@ -29,7 +29,7 @@ const Editprofile = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    const token = getAccessToken();
+    const token = localStorage.getItem('access_token');
     console.log(localStorage.getItem('userId'));
     console.log(token);
 

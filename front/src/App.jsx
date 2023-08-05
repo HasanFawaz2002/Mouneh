@@ -10,8 +10,8 @@ import ShowProducts from "./Components/PRODUCTS/ShowProduct";
 import Register from "./Components/AUTHENTICATION/Register";
 import Login from "./Components/AUTHENTICATION/Login";
 import Editprofile from "./Components/EDITPROFILE/Editprofile";
-
-
+import Forgotpassword from "./Components/AUTHENTICATION/Forgotpassword";
+import Resetpassword from "./Components/AUTHENTICATION/Resetpassword";
 
 function App(){
     return (
@@ -27,6 +27,8 @@ function App(){
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<Register />}></Route>
         <Route path="/editprofile" element={<Editprofile />}></Route>
+        <Route path="/forgot-password" element={<Forgotpassword />}></Route>
+        <Route path="/reset_password/:id/:token" element={<Resetpassword />}></Route>
     </Routes>
     <Footer/>
     </>
