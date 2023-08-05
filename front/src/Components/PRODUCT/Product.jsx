@@ -40,6 +40,7 @@ const Product = () => {
         console.log("Cart Added successfully!");
         console.log(response);
         console.log(quantity);
+        navigate('/cart')
     } catch (error) {
         if (error.response && error.response.status === 403) {
             console.log("Token is not valid!");

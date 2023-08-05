@@ -37,7 +37,7 @@ function Login() {
         //setCookies("access_token", response.data.accessToken);
         localStorage.setItem("access_token", response.data.accessToken);
         localStorage.setItem("userId", response.data.user._id);
-        navigate(-1);
+        navigate('/');
       })
       .catch((error) => {
         console.error("Login failed:", error);
