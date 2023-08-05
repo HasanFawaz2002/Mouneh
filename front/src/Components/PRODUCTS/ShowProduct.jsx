@@ -12,7 +12,7 @@ function ShowProducts(){
 const [products,setProducts]=useState([]);
 const [searchQuery, setSearchQuery] = useState('');
 const [currentPage, setCurrentPage] = useState(1);
-const [postsPerPage] = useState(6);
+const [postsPerPage] = useState(8);
 
 useEffect(()=>{
   axios.get('http://localhost:3001/products')

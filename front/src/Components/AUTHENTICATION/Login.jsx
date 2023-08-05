@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import {useCookies} from "react-cookie";
+//import {useCookies} from "react-cookie";
 import "./style.css"; 
 import {useNavigate} from "react-router-dom";
 
@@ -24,7 +24,7 @@ function Login() {
     });
   }
 
-  const [_,setCookies]=useCookies(["access_token"]);
+  //const [_,setCookies]=useCookies(["access_token"]);
 
   function hsn(e) {
     e.preventDefault();
@@ -34,9 +34,10 @@ function Login() {
       .then((response) => {
         console.log("Login successful!");
         console.log(response);
-        setCookies("access_token", response.data.accessToken);
+        //setCookies("access_token", response.data.accessToken);
+        localStorage.setItem("access_token", response.data.accessToken);
         localStorage.setItem("userId", response.data.user._id);
-        navigate('/');
+        navigate(-1);
       })
       .catch((error) => {
         console.error("Login failed:", error);

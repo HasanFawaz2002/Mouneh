@@ -10,6 +10,7 @@ import ShowProducts from "./Components/PRODUCTS/ShowProduct";
 import Register from "./Components/AUTHENTICATION/Register";
 import Login from "./Components/AUTHENTICATION/Login";
 import Editprofile from "./Components/EDITPROFILE/Editprofile";
+import Cart from "./Components/CART/Cart";
 
 
 
@@ -27,6 +28,7 @@ function App(){
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<Register />}></Route>
         <Route path="/editprofile" element={<Editprofile />}></Route>
+        <Route path="/cart" element={<Cart />}></Route>
     </Routes>
     <Footer/>
     </>

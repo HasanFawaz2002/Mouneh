@@ -59,3 +59,22 @@ module.exports.deleteCartItem = async (req, res) => {
   }
   };
 
+
+  // DELETE ALL CART ITEMS FOR A SPECIFIC USER
+module.exports.deleteAllCartItems = async (req, res) => {
+  if (req.user.user.id === req.params.userID) {
+    try {
+      const userID = req.user.user.id;
+
+      // Delete all cart items belonging to the user
+      await CartModel.deleteMany({ userID });
+
+      res.status(200).json({ message: 'All cart items have been deleted.' });
+    } catch (err) {
+      console.error('Error deleting cart items:', err);
+      res.status(500).json({ error: 'Internal server error.' });
+    }
+  } else {
+    res.status(403).json('You can delete only your cart items.');
+  }
+};
