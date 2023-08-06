@@ -5,6 +5,7 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import axios from 'axios';
 import "./Cart.css";
 import image from "../../images/1.jpg"
+import PayButton from "./Paybutton";
 
 const Cart = () => {
     const [cartItems,setCartItems] = useState([]);
@@ -55,6 +56,7 @@ const Cart = () => {
             })
             .catch(error => console.log(error));
         }
+      
 
     
     return (
@@ -97,7 +99,8 @@ const Cart = () => {
                         <h3 style={{fontWeight:'bold'}}>${subtotal}</h3>
                     </div>
                     <p>Taxes and shipping calculated at checkout</p>
-                    <button className="checkout">Check out</button>
+                    <PayButton cartItems={cartItems}/>
+                    
                     <button onClick={continueShopping} className="continue-shopping">
                         <FontAwesomeIcon icon={faArrowLeft} />
                         Continue Shopping</button>

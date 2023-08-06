@@ -13,6 +13,7 @@ import Editprofile from "./Components/EDITPROFILE/Editprofile";
 import Forgotpassword from "./Components/AUTHENTICATION/Forgotpassword";
 import Resetpassword from "./Components/AUTHENTICATION/Resetpassword";
 import Cart from "./Components/CART/Cart";
+import CheckoutSuccess from "./Components/CART/CheckoutSuccess";
 import AllWorkshops from './Components/WORKSHOPS/AllWorkshops';
 import SingleWorkshop from './Components/WORKSHOPS/SingleWorkshop';
 
@@ -33,6 +34,7 @@ function App(){
         <Route path="/forgot-password" element={<Forgotpassword />}></Route>
         <Route path="/reset_password/:id/:token" element={<Resetpassword />}></Route>
         <Route path="/Cart" element={<Cart />}></Route>
+        <Route path="/checkout-success" element={<CheckoutSuccess />}></Route>
         <Route path="/workshops" element={<AllWorkshops />} />
         <Route path="/workshop/:id" element={<SingleWorkshop />} />
         <Route path="/workshop/register" element={<Register />} />
