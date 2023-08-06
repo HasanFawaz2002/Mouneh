@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcrypt");
+const nodeMailer = require('nodemailer');
 require('dotenv').config();
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
@@ -63,7 +64,7 @@ const loginUser = asyncHandler(async (req, res) => {
         },
       },
       process.env.ACCESS,
-      { expiresIn: "55m" }
+      { expiresIn: "1d" }
     );
     res.status(200).json({ user,accessToken });
   } else {
@@ -72,5 +73,78 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 });
 
+const forgot = asyncHandler(async (req, res) => {
+  const { email } = req.body;
+  
+  try {
+    const user = await User.findOne({ email: email });
 
-module.exports = { registerUser, loginUser };
+    if (!user) {
+      return res.status(400).json({ error: 'User not found' });
+    }
+
+    const token = jwt.sign(
+      {
+        user: {
+          email: user.email,
+          id: user._id,
+          isAdmin: user.isAdmin
+        },
+      },
+      process.env.ACCESS,
+      { expiresIn: '1d' }
+    );
+
+    const transporter = nodeMailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+      }
+    });
+
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: 'Reset Password Link',
+      text: `http://localhost:3000/reset_password/${user._id}/${token}`
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.error('Error sending email:', error);
+        return res.status(500).json({ error: 'Failed to send reset email' });
+      } else {
+        return res.status(200).json({ message: 'Reset email sent successfully' });
+      }
+    });
+  } catch (error) {
+    console.error('Error in forgot password:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
+
+const reset = asyncHandler(async (req, res) =>  {
+  const {id, token} = req.params
+  const {password} = req.body
+
+  jwt.verify(token,process.env.ACCESS, (err, decoded) => {
+      if(err) {
+          return res.json({Status: "Error with token"})
+      } else {
+          bcrypt.hash(password, 10)
+          .then(hash => {
+              User.findByIdAndUpdate({_id: id}, {password: hash})
+              .then(u => res.send({Status: "Success"}))
+              .catch(err => res.send({Status: err}))
+          })
+          .catch(err => res.send({Status: err}))
+      }
+  })
+})
+
+
+
+module.exports = { registerUser, loginUser,forgot,reset };

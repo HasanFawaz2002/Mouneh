@@ -36,8 +36,9 @@ const Product = () => {
                 token: `Bearer ${token}`,
             },
         });
-
+       
         console.log("Cart Added successfully!");
+        navigate("/cart");
         console.log(response);
         console.log(quantity);
         navigate('/cart')
@@ -159,7 +160,7 @@ const Product = () => {
               value={quantity}
               onChange={handleQuantityChange}
             ></input>
-            <button className="card__btn card__btn-plus" onClick={handleIncrement}>
+            <button className="card_btn card_btn-plus" onClick={handleIncrement}>
               +
             </button>
             

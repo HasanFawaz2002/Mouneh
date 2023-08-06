@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 //import {useCookies} from "react-cookie";
 import "./style.css"; 
-import {useNavigate} from "react-router-dom";
+import {useNavigate,Link} from "react-router-dom";
 
 
 function Login() {
@@ -56,6 +56,7 @@ function Login() {
             <div className="error" id="vemail"></div>
             <input type="password" name="password" placeholder="Password" id="password" value={contact.password} onChange={handleChange} />
             <div className="error" id="vpassword"></div>
+            <Link to="/forgot-password">Forgot password?</Link>
             <div className="centering">
               <button className="submit">Login</button>
             </div>
