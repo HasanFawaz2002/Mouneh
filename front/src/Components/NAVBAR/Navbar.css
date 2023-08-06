@@ -88,8 +88,8 @@ transform: translateY(-6px) rotateZ(45deg);
 }
 
 .change-bg {
-width: 550px;
-height: 600px;
+width: 600px;
+height: 670px;
 transform: translate(-60%,-30%);
 }
 
@@ -161,7 +161,5 @@ height: 79px;
 
 .logo{
     transform: translateX(0px);
-
-    
 }
 }

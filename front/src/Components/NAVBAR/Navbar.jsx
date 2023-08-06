@@ -46,6 +46,9 @@ const Navbar = (props) => {
               </NavLink>
             </li>
             <li>
+            <NavLink to="/workshops">Workshops</NavLink>
+            </li>
+            <li>
             {isProductPage && <NavLink to="/cart">My Cart</NavLink>}
             {!isProductPage && <NavLink to="/editprofile">Edit Profile</NavLink>}
             </li>
@@ -80,6 +83,9 @@ const Navbar = (props) => {
           </li>
           <li>
             <NavLink to="/contact">Contact</NavLink>
+          </li>
+          <li>
+            <NavLink to="/workshops">Workshops</NavLink>
           </li>
         </ul>
         <div className="authentication-btn">

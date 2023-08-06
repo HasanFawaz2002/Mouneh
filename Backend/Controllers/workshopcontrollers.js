@@ -53,14 +53,25 @@ module.exports.deleteWorkshop = async (req, res) => {
 
 // Get all workshops (accessible only to admin)
 module.exports.getAllWorkshops = async (req, res) => {
-  if (req.user.user.isAdmin) {
     try {
       const workshops = await WorkshopModel.find();
       res.status(200).json(workshops);
     } catch (err) {
       res.status(500).json(err);
     }
-  } else {
-    res.status(403).json('You do not have admin privileges to get all workshops.');
+};
+
+module.exports.getWorkshopById = async (req, res) => {
+  
+  const workshopId = req.params.id; // Assuming you're passing the workshop ID through the request params
+  try {
+    const workshop = await WorkshopModel.findById(workshopId);
+    if (workshop) {
+      res.status(200).json(workshop);
+    } else {
+      res.status(404).json('Workshop not found.');
+    }
+  } catch (err) {
+    res.status(500).json(err);
   }
 };
