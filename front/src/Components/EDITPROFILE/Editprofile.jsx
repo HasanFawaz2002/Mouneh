@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import "./Editprofile.css";
 import axios from 'axios';
-import {useCookies} from "react-cookie";
+//import {useCookies} from "react-cookie";
 
 /*function getAccessToken() {
   const value = `; ${document.cookie}`;

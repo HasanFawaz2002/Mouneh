@@ -7,20 +7,32 @@ import {useNavigate} from "react-router-dom";
 function Forgotpassword() {
   const navigate = useNavigate();
   const api = "http://localhost:3001";
-  const [email, setEmail] = useState();
+  const [email, setEmail] = useState("");
 
   
 
   function handleforgot(e) {
     e.preventDefault();
-    axios.post(`${api}/forgot-password`, {email})
-    .then(res => {
-        if(res.data.Status === "Success") {
-            navigate('/login')
+    
+    axios.post(`${api}/forgot-password`, { email })
+      .then((res) => {
+        if (res.data.Status === 'Success' || res.data.status === 'Success' || res.data.message === 'Reset email sent successfully') {
+          navigate('/login');
+        } else {
+          console.log('Reset email sending failed:', res);
         }
-    }).catch(err => console.log(err))
-}
-   
+      })
+      .catch((err) => {
+        if (err.response) {
+          console.log('Error response from server:', err.response);
+        } else if (err.request) {
+          console.log('No response received:', err.request);
+        } else {
+          console.log('Error during request:', err.message);
+        }
+      });
+  }
+
   return (
     <section className="forgot-password">
       <div className="forgot-password-container">
