@@ -158,6 +158,46 @@ module.exports.getNewProduct = async (req, res) => {
 };
 
 
+// Update product quantity
+module.exports.updateProductQuantity = async (req, res) => {
+  try {
+    const { productID } = req.params;
+    const { quantity } = req.body;
+
+    // Find the product by ID and update the quantity
+    const updatedProduct = await ProductModel.findByIdAndUpdate(
+      productID,
+      { $inc: { quantity: -quantity } }, // Decrement the quantity
+      { new: true }
+    );
+
+    res.status(200).json(updatedProduct);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+
+// Update product quantity
+module.exports.ReturnProductQuantity = async (req, res) => {
+  try {
+    const { productID } = req.params;
+    const { quantity } = req.body;
+
+    // Find the product by ID and update the quantity
+    const updatedProduct = await ProductModel.findByIdAndUpdate(
+      productID,
+      { $inc: { quantity: +quantity } }, // return the quantity
+      { new: true }
+    );
+
+    res.status(200).json(updatedProduct);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+
 /*module.exports.statUser = async (req, res) => {
   const today = new Date();
   const lastYear = today.setFullYear(today.setFullYear() - 1);

@@ -127,6 +127,21 @@
   opacity: 0;
   transform: translateY(100%);
  }
+ .card-btn-out{
+  color: red;
+  padding: 5px;
+  margin-top: 30px;
+  margin-left: 30%;
+  line-height: 30px;
+  font-size: large;
+  border-radius: 10px;
+  border: transparent;
+  width: fit-content;
+  transition: all ease 400ms;
+  opacity: 0;
+  transform: translateY(100%);
+  font-weight: bold;
+ }
  .card-btn a{
   text-decoration: none;
   color: var(--primary-color);
@@ -139,6 +154,10 @@
   border: 1px solid white;
  }
  .card:hover .card-btn{
+  transform: translateY(-5px);
+  opacity: 1;
+ }
+ .card:hover .card-btn-out{
   transform: translateY(-5px);
   opacity: 1;
  }

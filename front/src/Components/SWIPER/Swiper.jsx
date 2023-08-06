@@ -55,34 +55,41 @@ const Swiper = () => {
     <div className="swiper">
       <h1 className="swiper-header">New Products</h1>
       <Slider {...settings}>
-      {newProduct.map(item=>(
-                <div class="card" key={item._id}>
-                <div class="card-info">
-                <div class="card-avatar"><img src={item.image} alt={item.image} /></div>
-                <div class="card-title">{item.name}</div>
-                <div class="card-subtitle">{item.description}</div>
-                </div>
-                <ul class="card-social">
-                <li class="card-social__item">
-                  Price : <br />
-                  {item.price}$
-                </li>
+        {newProduct.map(item => (
+          <div class="card" key={item._id}>
+            <div class="card-info">
+              <div class="card-avatar">
+                <img src={item.image} alt={item.image} />
+              </div>
+              <div class="card-title">{item.name}</div>
+              <div class="card-subtitle">{item.description}</div>
+            </div>
+            <ul class="card-social">
+              <li class="card-social__item">
+                Price : <br />
+                {item.price}$
+              </li>
               <li class="card-social__item">
                 Quantity :<br />
                 {item.quantity}
               </li>
-              
-            <li class="card-social__item">
-            weight :<br />
-            {item.weight}g
-            </li>
-          </ul>
-          <button className="card-btn"><Link to={`/product/${item._id}`}>View Product</Link></button>
-        </div>
-      ))}
+              <li class="card-social__item">
+                Weight :<br />
+                {item.weight}g
+              </li>
+            </ul>
+            {item.quantity === 0 ? (
+              <p className="card-btn-out">Out of Stock</p>
+            ) : (
+              <button className="card-btn">
+                <Link to={`/product/${item._id}`}>View Product</Link>
+              </button>
+            )}
+          </div>
+        ))}
       </Slider>
     </div>
-  )
+  );
 }
 
 export default Swiper;

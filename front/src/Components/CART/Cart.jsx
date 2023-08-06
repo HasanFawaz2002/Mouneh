@@ -31,31 +31,61 @@ const Cart = () => {
             navigate('/showProducts');
         }
 
-        const handleDelete = (e,cartID)=> {
+        const handleDelete = (e, cartID, productID, quantity) => {
             e.preventDefault();
-            axios.delete(`http://localhost:3001/cart/${localStorage.getItem('userId')}/${cartID}`,{
-                headers: {
-                    token: `Bearer ${token}`,
-                }
+            
+            axios.delete(`http://localhost:3001/cart/${localStorage.getItem('userId')}/${cartID}`, {
+              headers: {
+                token: `Bearer ${token}`,
+              },
             })
-            .then(result => {console.log(result)
-            window.location.reload();
+            .then(result => {
+              console.log(result);
+              
+              axios.patch(`http://localhost:3001/return-quantity/${productID}`, { quantity }, {
+                headers: {
+                  token: `Bearer ${token}`,
+                },
+              })
+              .then(updateResult => {
+                console.log(updateResult);
+                window.location.reload(); 
+              })
+              .catch(error => console.log(error));
             })
             .catch(error => console.log(error));
-        }
+          };
 
-        const handleDeleteAllCartItems = (e)=> {
+          
+          const handleDeleteAllCartItems = (e) => {
             e.preventDefault();
-            axios.delete(`http://localhost:3001/cart/${localStorage.getItem('userId')}`,{
+          
+            cartItems.forEach(item => {
+              const { _id: cartID, productID, quantity } = item;
+          
+              axios.patch(`http://localhost:3001/return-quantity/${productID._id}`, { quantity }, {
                 headers: {
-                    token: `Bearer ${token}`,
-                }
+                  token: `Bearer ${token}`,
+                },
+              })
+              .then(updateResult => {
+                console.log(updateResult);
+              })
+              .catch(error => console.log(error));
+            });
+          
+            axios.delete(`http://localhost:3001/cart/${localStorage.getItem('userId')}`, {
+              headers: {
+                token: `Bearer ${token}`,
+              },
             })
-            .then(result => {console.log(result)
-            window.location.reload();
+            .then(result => {
+              console.log(result);
+              window.location.reload();
             })
             .catch(error => console.log(error));
-        }
+          };
+          
       
 
     
@@ -71,24 +101,26 @@ const Cart = () => {
                     <th>TOTAL</th>
                 </thead>
                 <tbody>
-                    {cartItems.map(item => (
-                        <tr key={item._id}>
-                        <td>
-                            <div className="add-to-cart-container-product">
-                                <img src={image} alt="" />
-                                <div className="add-to-cart-container-product-right">
-                                    <h3>{item.productID.name}</h3>
-                                    <p>{item.productID.description}</p>
-                                    <button className="remove" onClick={(e) => handleDelete(e, item._id)}>Remove</button>
-                                </div>
-                            </div>
-                        </td>
-                        <td> {item.productID.price}$</td>
-                        <td>{item.quantity}</td>
-                        <td>{item.productID.price * item.quantity}$</td>
-                    </tr>
-                    ))}
-                </tbody>
+  {cartItems.map(item => (
+    <tr key={item._id}>
+      <td>
+        <div className="add-to-cart-container-product">
+          <img src={image} alt="" />
+          <div className="add-to-cart-container-product-right">
+            <h3>{item.productID.name}</h3>
+            <p>{item.productID.description}</p>
+            <button className="remove" onClick={(e) => handleDelete(e, item._id, item.productID._id, item.quantity)}>
+              Remove
+            </button>
+          </div>
+        </div>
+      </td>
+      <td> {item.productID.price}$</td>
+      <td>{item.quantity}</td>
+      <td>{item.productID.price * item.quantity}$</td>
+    </tr>
+  ))}
+</tbody>
             </table>
         </div>
         <div className="add-to-cart-container-checkout">

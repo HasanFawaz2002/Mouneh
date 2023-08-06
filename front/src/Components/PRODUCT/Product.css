@@ -67,6 +67,11 @@
     font-size: larger;
   }
   
+
+  .quantity-error{
+    color: red;
+  }
+
   .card__subtitle {
     font-weight: 400;
     font-size: 20px;
@@ -110,4 +115,8 @@
   
   .card__btn-plus {
     background: var(--bg-color);
+  }
+
+  .card__counter-submit-btn:active{
+    transform: scale(0.8);
   }

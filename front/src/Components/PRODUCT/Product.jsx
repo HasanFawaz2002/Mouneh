@@ -4,6 +4,8 @@ import { useParams,useNavigate  } from "react-router-dom";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faBars } from "@fortawesome/free-solid-svg-icons";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 /*function getAccessToken() {
   const value = `; ${document.cookie}`;
@@ -16,42 +18,71 @@ const Product = () => {
   const [product, setProduct] = useState();
   const [quantity, setQuantity] = useState(1);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [quantityError, setQuantityError] = useState("");
   const params = useParams();
   const productID = params.productID;
+  const notify = () => toast.success('Product Added', {
+    position: "top-right",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+    });
 
   
 
   const cartHandling = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem('access_token');
-
+  
     if (!token) {
-        navigate('/login');
-        return;
+      navigate('/login');
+      return;
     }
-
+  
     try {
-        const response = await axios.post(`http://localhost:3001/cart/${localStorage.getItem('userId')}/${productID}`, {quantity}, {
-            headers: {
-                token: `Bearer ${token}`,
-            },
-        });
-       
-        console.log("Cart Added successfully!");
-        navigate("/cart");
-        console.log(response);
-        console.log(quantity);
-        navigate('/cart')
+      if (quantity > product.quantity) {
+        setQuantityError('Quantity exceeds available stock.');
+        return;
+      }
+  
+      await axios.post(`http://localhost:3001/cart/${localStorage.getItem('userId')}/${productID}`, { quantity }, {
+        headers: {
+          token: `Bearer ${token}`,
+        },
+      });
+  
+      setQuantityError('');
+      console.log("Cart Added successfully!");
+      notify();
+      //navigate('/cart');
+  
+      await axios.patch(`http://localhost:3001/update-quantity/${productID}`, { quantity }, {
+        headers: {
+          token: `Bearer ${token}`,
+        },
+      });
+  
+      setProduct((prevProduct) => ({
+        ...prevProduct,
+        quantity: prevProduct.quantity - quantity,
+      }));
+  
     } catch (error) {
-        if (error.response && error.response.status === 403) {
-            console.log("Token is not valid!");
-            navigate('/login');
-        } else {
-            console.error("Cart Add failed:", error);
-            console.log(quantity);
-        }
+      if (error.response && error.response.status === 403) {
+        console.log("Token is not valid!");
+        navigate('/login');
+      } else {
+        console.error("Cart Add failed:", error);
+      }
     }
-};
+  };
+  
+  
+  
 
   useEffect(() => {
     axios
@@ -88,7 +119,20 @@ const Product = () => {
   };
 
   return (
+    
     <div className="product-card-container">
+      <ToastContainer
+position="top-right"
+autoClose={3000}
+hideProgressBar={true}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="colored"
+/>
       <div className="product-card">
         <div className="card__wrapper">
         <div className="card__back">
@@ -156,9 +200,11 @@ const Product = () => {
               -
             </button>
             <input
-              className="card__counter-score"
-              value={quantity}
-              onChange={handleQuantityChange}
+            className="card__counter-score"
+            value={quantity}
+            onChange={handleQuantityChange}
+            min={1}
+            max={product.quantity}
             ></input>
             <button className="card_btn card_btn-plus" onClick={handleIncrement}>
               +
@@ -167,6 +213,7 @@ const Product = () => {
           </div>
           
         </div>
+        {quantityError && <p className="quantity-error">{quantityError}</p>}
             <form style={{display:"flex",justifyContent:"center"}} onSubmit={cartHandling} action="">
             <button type="submit" className="card__counter-submit-btn">Add To Cart</button>
             </form> 
