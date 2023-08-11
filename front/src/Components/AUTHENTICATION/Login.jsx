@@ -37,6 +37,7 @@ function Login() {
         //setCookies("access_token", response.data.accessToken);
         localStorage.setItem("access_token", response.data.accessToken);
         localStorage.setItem("userId", response.data.user._id);
+        localStorage.setItem("isAdmin", response.data.user.isAdmin);
         navigate('/');
       })
       .catch((error) => {
@@ -61,7 +62,7 @@ function Login() {
               <button className="submit">Login</button>
             </div>
             <p className="parag ">
-              Not a member? <span className="auth-span">Register</span>
+              Not a member? <Link to='/register'><span className="auth-span">Register</span></Link>
             </p>
           </form>
         </div>

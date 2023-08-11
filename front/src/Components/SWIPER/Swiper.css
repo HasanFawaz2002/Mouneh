@@ -91,7 +91,7 @@
  .card-subtitle {
   color: white;
   font-size: 1em;
-  word-break: break-all;
+  word-break: break-word;
  }
  
  /*Hover*/

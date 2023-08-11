@@ -16,6 +16,7 @@ import Cart from "./Components/CART/Cart";
 import CheckoutSuccess from "./Components/CART/CheckoutSuccess";
 import AllWorkshops from './Components/WORKSHOPS/AllWorkshops';
 import SingleWorkshop from './Components/WORKSHOPS/SingleWorkshop';
+import AddProduct from "./Components/ADDPRODUCT/AddProduct";
 
 function App(){
     return (
@@ -38,6 +39,7 @@ function App(){
         <Route path="/workshops" element={<AllWorkshops />} />
         <Route path="/workshop/:id" element={<SingleWorkshop />} />
         <Route path="/workshop/register" element={<Register />} />
+        <Route path="/addproduct" element={<AddProduct />}></Route>
     </Routes>
     <Footer/>
     </>

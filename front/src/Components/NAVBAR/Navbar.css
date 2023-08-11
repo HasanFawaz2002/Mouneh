@@ -89,7 +89,7 @@ transform: translateY(-6px) rotateZ(45deg);
 
 .change-bg {
 width: 600px;
-height: 670px;
+height: 750px;
 transform: translate(-60%,-30%);
 }
 
@@ -106,7 +106,11 @@ display: flex;
 
 .navbar-list li{
 list-style: none;
+}
 
+
+.navbar-list li:active{
+    transform: scale(.95);
 }
 
 .navbar-list li a{

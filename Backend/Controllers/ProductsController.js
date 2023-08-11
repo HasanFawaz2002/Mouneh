@@ -5,21 +5,21 @@ const bcrypt = require('bcrypt');
 
 module.exports.addProduct = async (req, res) => {
     const userID = req.user.user.id;
-    const { name, image, price, quantity, description, weight, category, subcategory, ingredient, time, method } = req.body;
+    const { name, image, price, quantity, description, category, recipes } = req.body;
   
     // Validate the required fields for the 'recipes' subdocument
-    if (category === 'Food') {
-      if (!ingredient || !time || !method) {
-        res.status(400).json({ error: 'All fields are mandatory for the "recipes" subdocument.' });
-        return;
-      }
-    } else {
-      // Ensure that the 'recipes' fields are not provided for non-Food categories
-      if (ingredient || time || method) {
-        res.status(400).json({ error: 'Invalid fields for the "recipes" subdocument in the non-Food category.' });
-        return;
-      }
-    }
+if (category === 'Food') {
+  if (!recipes.ingredient || !recipes.time || !recipes.method || !recipes.weight) {
+    res.status(400).json({ error: 'All fields are mandatory for the "recipes" subdocument.' });
+    return;
+  }
+} else {
+  // Ensure that the 'recipes' fields are not provided for non-Food categories
+  if (recipes.ingredient || recipes.time || recipes.method || recipes.weight) {
+    res.status(400).json({ error: 'Invalid fields for the "recipes" subdocument in the non-Food category.' });
+    return;
+  }
+}
   
     // Continue with product creation
     try {
@@ -30,14 +30,13 @@ module.exports.addProduct = async (req, res) => {
         price,
         quantity,
         description,
-        weight,
         category,
-        subcategory,
-        recipes:{
-            ingredient,
-            time,
-            method
-        },
+        recipes: {
+          ingredient: recipes.ingredient,
+          time: recipes.time,
+          weight: recipes.weight,
+          method: recipes.method
+      },
       });
   
       console.log(`Product created ${product}`);
@@ -131,7 +130,8 @@ module.exports.getMyProducts = async (req, res) => {
 
 
 //Get All Product
-module.exports.getAllProduct = async (req, res) => {
+
+/*module.exports.getAllProduct = async (req, res) => {
   const query = req.query.new;
     try {
       const products = query ? await ProductModel.find().sort({_id:-1}) : await ProductModel.find();
@@ -140,10 +140,26 @@ module.exports.getAllProduct = async (req, res) => {
       res.status(500).json(err);
     }
   
+};*/
+
+module.exports.getAllProduct = async (req, res) => {
+  const query = req.query.new;
+    try {
+      const products = query
+        ? await ProductModel.find({ status: 'accepted' }).sort({ _id: -1 })
+        : await ProductModel.find({ status: 'accepted' });
+
+      res.status(200).json(products);
+    } catch (err) {
+      res.status(500).json(err);
+    }
 };
 
+//////////////////////////////////////////////////////////////////////////////////////////////
+
 //Get 8 Products From the newest One
-module.exports.getNewProduct = async (req, res) => {
+
+/*module.exports.getNewProduct = async (req, res) => {
   const query = req.query.new;
     try {
       const products = query
@@ -155,8 +171,22 @@ module.exports.getNewProduct = async (req, res) => {
       res.status(500).json(err);
     }
   
+};*/
+
+module.exports.getNewProduct = async (req, res) => {
+  const query = req.query.new;
+    try {
+      const products = query
+        ? await ProductModel.find({ status: 'accepted' }).sort({ _id: -1 }).limit(8)
+        : await ProductModel.find({ status: 'accepted' }).limit(8).sort({ _id: -1 });
+
+      res.status(200).json(products);
+    } catch (err) {
+      res.status(500).json(err);
+    }
 };
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Update product quantity
 module.exports.updateProductQuantity = async (req, res) => {

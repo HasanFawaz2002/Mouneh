@@ -1,7 +1,11 @@
 const mongoose = require('mongoose');
-//const connect = require('../server/connect');
 
 const UserSchema = new mongoose.Schema({
+    username:{
+        type: String,
+        required: true,
+        unique: true, // Add unique index to enforce uniqueness
+    },
     firstname: {
         type: String,
         required: true,
@@ -57,7 +61,10 @@ const UserSchema = new mongoose.Schema({
     isAdmin: { 
         type: Boolean,
         default: false 
-    }
+    },
+    googleId:String,
+    googlename:String,
+    googleemail:String
 },{ timestamps: true }
 );
 

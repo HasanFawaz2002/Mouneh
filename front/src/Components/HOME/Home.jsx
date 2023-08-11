@@ -7,6 +7,7 @@ import Swiper from "../SWIPER/Swiper";
 
 const Home = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const token = localStorage.getItem('access_token');
   
   // Wrap the initialization of 'images' in useMemo to memoize the array
   const images = useMemo(() => [HomeLandPageImage1, HomeLandPageImage2], []);
@@ -38,7 +39,7 @@ const Home = () => {
           <h1 className="landpage-section-right-header">Artisanal Delights</h1>
           <h4 className="landpage-section-right-header4">Savor the Essence of Handcrafted Mouneh</h4>
           <div className="landpage-section-right-btn">
-            <button>Get Started</button>
+            {!token && <button><Link to="/login">Get Started</Link></button>}
             <button><Link to="/showProducts">Products</Link></button>
           </div>
         </div>

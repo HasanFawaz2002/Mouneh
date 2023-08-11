@@ -25,7 +25,7 @@ const Cart = () => {
             setSubtotal(sum);
         })
         .catch(error => console.error(error));
-    }, []);
+    }, [token]);
     
         const continueShopping = () => {
             navigate('/showProducts');
@@ -56,7 +56,6 @@ const Cart = () => {
             .catch(error => console.log(error));
           };
 
-          
           const handleDeleteAllCartItems = (e) => {
             e.preventDefault();
           

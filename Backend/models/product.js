@@ -42,34 +42,17 @@ const productSchema = new mongoose.Schema({
         trim: true,
         minlength: [10, 'Product description must be at least 10 characters long.']
     },
-    weight: {
-        type: Number,
-        required: [true, 'Product weight is required.'],
-        min: [0, 'Product weight cannot be negative.']
-    },
+    
     category: {
         type: String,
         required: [true, 'Product category is required.'],
         enum: ['Food', 'Craft'] // Replace with the desired category values
     },
-    subcategory: {
+    status: {
         type: String,
-        required: [true, 'Product subcategory is required.'],
-        validate: {
-            validator: function (value) {
-                const category = this.category;
-
-                // Define the subcategories based on the category value
-                const subcategories = {
-                    Food: ['Subcategory1', 'Subcategory2', 'Subcategory3'],
-                    Craft: ['Subcategory4', 'Subcategory5', 'Subcategory6'],
-                };
-
-                return subcategories[category].includes(value);
-            },
-            message: 'Invalid subcategory for the given category.'
-        }
+        default: 'waiting' // Set the default status to 'waiting'
     },
+    
     recipes: {
         ingredient: {
             type: String,
@@ -83,6 +66,13 @@ const productSchema = new mongoose.Schema({
                 return this.category === 'Food';
             },
             min: [1, 'Recipe time must be a positive value.']
+        },
+        weight: {
+            type: Number,
+            required: function () {
+                return this.category === 'Food';
+            },
+            min: [0, 'Product weight cannot be negative.']
         },
         method: {
             type: String,

@@ -161,7 +161,7 @@ theme="colored"
           {isMenuOpen ? (
             <>
               <div>Quantity: {product.quantity}</div>
-              <div>Weight: {product.weight}g</div>
+              <div>Weight: {product.recipes.weight}g</div>
             </>
           ) : (
             product.name

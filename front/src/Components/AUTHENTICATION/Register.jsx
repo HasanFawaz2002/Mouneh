@@ -2,8 +2,9 @@ import React , { useState } from "react";
 import "./style.css";
 import axios from "axios";
 import "./style.css"; 
-import {Link} from "react-router-dom";
+import {Link,useNavigate} from "react-router-dom";
 function Register() {
+  const navigate = useNavigate();
   const api = "http://localhost:3001";
   const [contact, setContact] = useState({
     firstname: "",
@@ -25,27 +26,30 @@ function Register() {
       };
     });
   }
-  function hsn(e){
+  function hsn(e) {
     e.preventDefault();
-
+  
     /* Call the validation function before making the API call
     const isValid = RegisterValid(contact);
-
+  
     // Proceed with the API call only if the validation passes
     if (!isValid) {
       console.log("Validation failed. Please check the input fields.");
       // You can also show an error message to the user indicating that validation failed
       return; // Return early and prevent the Axios request from being sent to the server
     }*/
-
+  
     axios.post(`${api}/register`, contact)
-    .then((response) => {
-      console.log("Registration successful!");
- })
- .catch((error) => {
-   console.error("Registration failed:", error);
- });
-  };
+      .then((response) => {
+        console.log("Registration successful!");
+        // Clear localStorage here
+        localStorage.clear();
+        navigate('/');
+      })
+      .catch((error) => {
+        console.error("Registration failed:", error);
+      });
+  }
   
   return (
     <section className="register">

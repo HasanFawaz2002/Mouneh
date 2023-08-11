@@ -72,6 +72,7 @@
     font-size: 2em;
     text-transform: capitalize;
     color: var(--textColor);
+    word-break:break-word;
 }
 .namePrice span{
     font-size: 1.5em;
@@ -81,6 +82,7 @@
     font-size: 18px;
     line-height: 25px;
     margin-top: 5px;
+    word-wrap:break-word;
 }
 .stars {
     font-size: 1.3em;

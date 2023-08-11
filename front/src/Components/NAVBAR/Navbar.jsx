@@ -2,11 +2,16 @@ import React, { useState } from "react";
 import "./Navbar.css";
 import { NavLink,useLocation  } from "react-router-dom";
 import MounehLogo from "../../images/Mouneh-logo.png";
+import DropDown from "../DROPDOWN/Dropdown";
 
 const Navbar = (props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation(); 
   const isProductPage = location.pathname.startsWith("/product/");
+  const isProductsPage = location.pathname.startsWith("/showProducts");
+  const isAdmin = localStorage.getItem("isAdmin");
+
+
 
   const menuOnClick = () => {
     setIsMenuOpen((prevState) => !prevState);
@@ -45,9 +50,25 @@ const Navbar = (props) => {
                 Contact
               </NavLink>
             </li>
-            <li>
-            <NavLink to="/workshops">Workshops</NavLink>
+            {isAdmin === "true" && (
+              <li>
+              <NavLink to="/dashboard" onClick={closeMenu}>
+              Dashboard
+            </NavLink>
             </li>
+            )}
+            <li>
+            <NavLink to="/workshops" onClick={closeMenu}>
+                Workshop
+              </NavLink>
+            </li>
+            {isAdmin === "false" && (
+              <li>
+              <NavLink to="/addproduct" onClick={closeMenu}>
+              Add Product
+            </NavLink>
+            </li>
+            )}
             <li>
             {isProductPage && <NavLink to="/cart">My Cart</NavLink>}
             {!isProductPage && <NavLink to="/editprofile">Edit Profile</NavLink>}
@@ -85,12 +106,13 @@ const Navbar = (props) => {
             <NavLink to="/contact">Contact</NavLink>
           </li>
           <li>
-            <NavLink to="/workshops">Workshops</NavLink>
+            <DropDown />
           </li>
         </ul>
         <div className="authentication-btn">
+            
+          {isProductsPage && <NavLink to="/cart">My Cart</NavLink>}
           {isProductPage && <NavLink to="/cart">My Cart</NavLink>}
-          {!isProductPage && <NavLink to="/editprofile">Edit Profile</NavLink>}
           <NavLink to="/login">Login</NavLink>
           <NavLink to="/register">Register</NavLink>
         </div>

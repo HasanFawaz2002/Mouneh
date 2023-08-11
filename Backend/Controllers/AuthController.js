@@ -4,7 +4,6 @@ const nodeMailer = require('nodemailer');
 require('dotenv').config();
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
-const connect = require('../server/connect');
 
 //@desc Register a user
 //@route POST /api/users/register
@@ -23,7 +22,9 @@ const registerUser = asyncHandler(async (req, res) => {
 
   //Hash password
   const hashedPassword = await bcrypt.hash(password, 10);
+  const username = firstname + " " + lastname;
   const user = await User.create({
+    username,
     firstname,
     lastname,
     email,

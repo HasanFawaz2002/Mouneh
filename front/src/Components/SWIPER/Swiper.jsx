@@ -73,10 +73,12 @@ const Swiper = () => {
                 Quantity :<br />
                 {item.quantity}
               </li>
-              <li class="card-social__item">
-                Weight :<br />
-                {item.weight}g
-              </li>
+              {item.category === "Food" && (  
+                <li class="card-social__item">
+                  Weight :<br />
+                  {item.recipes.weight}g
+                </li>
+              )}
             </ul>
             {item.quantity === 0 ? (
               <p className="card-btn-out">Out of Stock</p>

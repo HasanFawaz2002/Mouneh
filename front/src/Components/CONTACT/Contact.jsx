@@ -1,5 +1,7 @@
 import React,{useState} from "react";
 import axios from "axios"; 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import './Contact.css'
 import treeImage from '../../images/cherry tree.gif'
@@ -11,6 +13,17 @@ const Contact = () => {
     const [email,setEmail] = useState('');
     const [message,setMessage] = useState('');
 
+    const notify = () => toast.success('Email Sended', {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      });
+
       const handleSubmit = (e) => {
         e.preventDefault();
     
@@ -18,8 +31,8 @@ const Contact = () => {
           .post("http://localhost:3001/sendEmail", {firstname,lastname,subject,email,message})
           .then((response) => {
             console.log("Email sent successfully:", response.data);
-            alert("Message Sent");
-            window.location.reload();
+            notify();
+            //window.location.reload();
           })
           .catch((error) => {
             console.error("Error sending email:", error);
@@ -29,6 +42,18 @@ const Contact = () => {
 
     return (
         <div className="contact-container">
+          <ToastContainer
+          position="top-center"
+          autoClose={3000}
+          hideProgressBar={true}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+          />
             <div className="contact-container-left">
                 <img src={treeImage} alt="" />
             </div>
