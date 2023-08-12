@@ -59,7 +59,7 @@ const Swiper = () => {
           <div class="card" key={item._id}>
             <div class="card-info">
               <div class="card-avatar">
-                <img src={item.image} alt={item.image} />
+                <img src={`http://localhost:3001/products/${item._id}/photo`} alt={item.image} />
               </div>
               <div class="card-title">{item.name}</div>
               <div class="card-subtitle">{item.description}</div>

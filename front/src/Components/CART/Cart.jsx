@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import axios from 'axios';
 import "./Cart.css";
-import image from "../../images/1.jpg"
 import PayButton from "./Paybutton";
 
 const Cart = () => {
@@ -104,7 +103,7 @@ const Cart = () => {
     <tr key={item._id}>
       <td>
         <div className="add-to-cart-container-product">
-          <img src={image} alt="" />
+          <img src={`http://localhost:3001/products/${item.productID._id}/photo`} alt={`${item._id}`} />
           <div className="add-to-cart-container-product-right">
             <h3>{item.productID.name}</h3>
             <p>{item.productID.description}</p>

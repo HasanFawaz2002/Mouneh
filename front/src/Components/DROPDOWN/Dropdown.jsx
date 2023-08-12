@@ -28,7 +28,7 @@ const DropDown = () => {
         toggleDropdown();
     }
     const dashboard = () => {
-        navigate('/dashboard')
+        navigate('/dashboard/admin/*')
         toggleDropdown();
     }
     const addProduct = () => {

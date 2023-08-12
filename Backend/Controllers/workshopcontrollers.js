@@ -5,11 +5,15 @@ require('dotenv').config();
 const jwt = require("jsonwebtoken");
 // Add a new workshop (accessible only to admin)
 module.exports.addWorkshop = async (req, res) => {
+  console.log("Incoming request body:", req.body);
+  
   if (req.user.user.isAdmin) {
     try {
       const newWorkshop = await WorkshopModel.create(req.body);
+      console.log("New workshop created:", newWorkshop);
       res.status(201).json(newWorkshop);
     } catch (err) {
+      console.error("Error creating workshop:", err);
       res.status(500).json(err);
     }
   } else {
@@ -59,18 +63,19 @@ module.exports.getAllWorkshops = async (req, res) => {
     } catch (err) {
       res.status(500).json(err);
     }
+  
 };
 
 module.exports.getWorkshopById = async (req, res) => {
-  
-  const workshopId = req.params.id; // Assuming you're passing the workshop ID through the request params
   try {
-    const workshop = await WorkshopModel.findById(workshopId);
-    if (workshop) {
-      res.status(200).json(workshop);
-    } else {
-      res.status(404).json('Workshop not found.');
+    const workshopID = req.params.workshopID;
+    const workshop = await WorkshopModel.findById(workshopID);
+    
+    if (!workshop) {
+      return res.status(404).json('Workshop not found.');
     }
+    
+    res.status(200).json(workshop);
   } catch (err) {
     res.status(500).json(err);
   }

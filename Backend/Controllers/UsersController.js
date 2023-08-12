@@ -51,18 +51,29 @@ module.exports.deleteUser = async (req, res) => {
   }
 };
 
-
+//Get User
 module.exports.getUser = async (req, res) => {
+  const userID = req.params.id;
   try {
-    const user = await UserModel.findById(req.params.id);
+    const user = await UserModel.findById(userID);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found.' });
+    }
+    if (req.user.user.id === userID || req.user.user.isAdmin) {
+      try{
+  await UserModel.findById(userID);
     const { password, ...info } = user._doc;
-    res.status(200).json(info);
+    res.status(200).json(info);}catch (err) {
+      res.status(500).json(err);
+    }}else {
+      res.status(403).json({ error: 'You canfind the user on your account or you must be an admin.' });
+    }
   } catch (err) {
     res.status(500).json(err);
   }
 };
 
-
+//Get All User
 module.exports.getAllUser = async (req, res) => {
   const query = req.query.new;
   if (req.user.user.isAdmin) {

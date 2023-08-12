@@ -1,5 +1,4 @@
 import React from "react";
-import firstimage from "../../images/1.jpg";
 import {Link} from "react-router-dom";
 
 
@@ -8,7 +7,7 @@ function Product(props) {
       <>
         <div className="product">
           <div className="image">
-            <img src={firstimage} alt="food" />
+            <img src={props.imageSrc} alt="food" />
           </div>
           <div className="namePrice">
             <h3>{props.name}</h3>

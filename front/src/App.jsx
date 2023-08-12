@@ -17,6 +17,13 @@ import CheckoutSuccess from "./Components/CART/CheckoutSuccess";
 import AllWorkshops from './Components/WORKSHOPS/AllWorkshops';
 import SingleWorkshop from './Components/WORKSHOPS/SingleWorkshop';
 import AddProduct from "./Components/ADDPRODUCT/AddProduct";
+import AdminDashboard from './Components/ADMIN/AdminDashboard';
+import UpdateProduct from './Components/ADMIN/updateproduct';
+import Products from './Components/ADMIN/Allproduct';
+import CreateProduct from './Components/ADMIN/createproduct';
+import Users from './Components/ADMIN/users';
+import AllWorkshop from './Components/ADMIN/allworkshop';
+import CreateWorkshop from './Components/ADMIN/createworkshop';
 
 function App(){
     return (
@@ -40,6 +47,13 @@ function App(){
         <Route path="/workshop/:id" element={<SingleWorkshop />} />
         <Route path="/workshop/register" element={<Register />} />
         <Route path="/addproduct" element={<AddProduct />}></Route>
+        <Route path="/dashboard/admin/*" element={<AdminDashboard />} />
+        <Route path="/dashboard/admin/createproduct" element={<CreateProduct />} />
+        <Route path="/dashboard/admin/products" element={<Products />} />
+        <Route path="/dashboard/admin/product/update/:userId/:productId" element={<UpdateProduct />} />
+        <Route path="/dashboard/admin/create-workshop" element={<CreateWorkshop />} />
+        <Route path="/dashboard/admin/users" element={<Users />} />
+        <Route path="/dashboard/admin/allworkshop" element={<AllWorkshop />} />
     </Routes>
     <Footer/>
     </>

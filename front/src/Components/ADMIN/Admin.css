@@ -1,0 +1,176 @@
+
+.dash{
+  background-color:var( --primary-color);
+ border-radius: 3px;
+margin-left: -12px;
+ padding: 0px;
+}
+.dashadmin{
+  background-color:var( --primary-color);
+ border-radius: 3px;
+margin-left: -20px;
+ padding: 0px;
+}
+.dashinsert{
+  background-color:var( --primary-color);
+ border-radius: 3px;
+margin-left: -105px;
+ padding: 0px;
+}
+
+.dashboard-menu h4 {
+  background-color:var(--secondary-color) !important;
+  color: white;
+  padding: 20px 0px;
+
+}
+.list-group-item {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  border: var(--primary-color);
+  border-radius: 5px;
+}
+ .list-group-item:hover{
+background-color: white !important;
+ }
+ .card{
+  color: var(--secondary-color);
+  font-size: x-large;
+  padding-right: 10px;
+  padding-left: 10px;
+ }
+ .infoadmin{
+  color :white;
+ }
+ .carda{
+  font-weight: 30px;
+  background-color: var(--primary-color);
+  text-align: center;
+  height: 50px;
+  border-radius: 4px;
+  padding-top: 0px !important;
+  padding: 0px !important;
+ }
+ .list-group-item.active {
+  background-color: var(--accent-color-2);
+ }
+ .form-control{
+  border:2px solid #EDB71A;}
+  input:focus,
+  .form-control:focus {
+    outline: 3px solid var(--secondary-color) !important;
+  
+box-shadow: none;
+ }
+  
+.create-product-container{
+  background-color: var(--secondary-color);
+  border: 2px solid var(--secondary-color);
+  border-radius: 4px;
+  padding-left: 6px ;
+  padding-right: 4px;
+  margin-top: 5px;
+ margin-left: 40px;
+}
+.container{
+  color:var(--primary-color);
+  margin-top: 20px;
+}
+.cont{
+  margin-left: 110px !important;
+}
+label{
+  margin-bottom: 10px !important;
+  font-weight: 30px !important;
+  font-size: 20px;
+}
+.btn{
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  border: 2px solid var(--primary-color);
+
+}
+.btnu{
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  border: 2px solid var(--primary-color);
+  border-radius: 4px;
+  font-size: 20px;
+  text-align: center;
+}
+.btn:hover{
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  border: 2px solid var(--primary-color) !important;
+}
+.btnu:hover{
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+}
+
+.productlist{
+  color: var(--secondary-color);
+  background-color: var(--primary-color);
+  height: 60px;
+  text-align: center;
+}
+.product-image{
+  margin-top: 5px;
+
+}
+.cardproduct{
+  color:var(--secondary-color);
+  border: 2px solid var(--secondary-color);
+}
+.cardbtn{
+  margin-top: 20px;
+}
+.workshopheader{
+
+color: var(--primary-color);
+text-align: center;
+border-radius: 4px;
+}
+.workshopcontainer{
+background-color: var(--secondary-color);
+width: 800px !important;
+height: 480px !important;
+margin-right: 500px !important;
+margin-left: -110px;
+padding-left: 10px !important;
+padding-right: 10px !important;
+}
+.create-workshop-container{
+  margin-left: 20px !important;
+  background-color: var(--secondary-color);
+}
+.headerupdate{
+color:var(--primary-color);
+}
+.containerupdate{
+border:3px solid var(--secondary-color);
+width: 900px !important;
+margin-left: 20px !important;
+padding-left: 50px !important;
+}
+.card-title-workshop{
+background-color: var(--secondary-color);
+color: var(--primary-color);
+height: 50px !important;
+text-align: center !important;
+padding-top: 10px !important;
+}
+.user-card{
+border: 3px solid var(--secondary-color) !important;
+}
+.card-title-user{
+background-color: var(--secondary-color);
+color: var(--primary-color);
+height: 50px !important;
+text-align: center !important;
+padding-top: 10px !important;
+}
+.userlist{
+background-color: var(--primary-color);
+color: var(--secondary-color);
+}

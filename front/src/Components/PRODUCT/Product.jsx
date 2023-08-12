@@ -153,7 +153,7 @@ theme="colored"
           </div>
         ) : (
           <div className="card__img">
-            <img src={product.image} alt={product.image} />
+            <img src={`http://localhost:3001/products/${product._id}/photo`} alt={product.image} />
           </div>
         )}
 

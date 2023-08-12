@@ -1,42 +1,95 @@
 const ProductModel = require("../models/product");
 const bcrypt = require('bcrypt');
+const path = require('path');
+const multer = require ('multer');
+const fs = require('fs');
+
+
+// Construct the full path to the uploads directory
+const uploadPath = path.join(__dirname, '..', 'server', 'uploads', 'usersImages');
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    try {
+      console.log('Uploading files ...');
+      fs.mkdirSync(uploadPath, { recursive: true });
+      cb(null, uploadPath); // Remove the extra concatenation here
+    } catch (error) {
+      console.error('Error:', error.message);
+    }
+  },
+  filename: (req, file, cb) => {
+    try {
+      cb(null, `${Date.now()}-${file.originalname}`);
+    } catch (error) {
+      console.error('Error:', error.message);
+    }
+  }
+});
+
+module.exports.upload = multer({ storage: storage });
+
+// ... Rest of the code ...
+
+module.exports.getProductPhoto = async (req, res) => {
+  try {
+    const product = await ProductModel.findById(req.params.productID);
+    if (!product) {
+      return res.status(404).json({ error: 'Product not found.' });
+    }
+
+    // Use the imagePath directly as it should be a relative path
+    const relativeImagePath = product.imagePath;
+
+    // Get the absolute path to the image file
+    const absoluteImagePath = path.join(uploadPath, relativeImagePath);
+
+    // Send the product's photo as a response
+    res.sendFile(absoluteImagePath);
+  } catch (err) {
+    console.error('Error retrieving product photo:', err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
 
 //ADD
 
 module.exports.addProduct = async (req, res) => {
     const userID = req.user.user.id;
-    const { name, image, price, quantity, description, category, recipes } = req.body;
+    const { name,  price, quantity, description, weight, category, /*subcategory*/ ingredient, time, method } = req.body;
   
     // Validate the required fields for the 'recipes' subdocument
-if (category === 'Food') {
-  if (!recipes.ingredient || !recipes.time || !recipes.method || !recipes.weight) {
-    res.status(400).json({ error: 'All fields are mandatory for the "recipes" subdocument.' });
-    return;
-  }
-} else {
-  // Ensure that the 'recipes' fields are not provided for non-Food categories
-  if (recipes.ingredient || recipes.time || recipes.method || recipes.weight) {
-    res.status(400).json({ error: 'Invalid fields for the "recipes" subdocument in the non-Food category.' });
-    return;
-  }
-}
+    if (category === 'Food') {
+      if (!ingredient || !time || !method || !weight) {
+        res.status(400).json({ error: 'All fields are mandatory for the "recipes" subdocument.' });
+        return;
+      }
+    } else {
+      // Ensure that the 'recipes' fields are not provided for non-Food categories
+      if (ingredient || time || method || weight) {
+        res.status(400).json({ error: 'Invalid fields for the "recipes" subdocument in the non-Food category.' });
+        return;
+      }
+    }
   
     // Continue with product creation
     try {
+      const relativeImagePath = req.file.filename;
       const product = await ProductModel.create({
         userID,
         name,
-        image,
+        imagePath: relativeImagePath,
         price,
         quantity,
         description,
+       
         category,
-        recipes: {
-          ingredient: recipes.ingredient,
-          time: recipes.time,
-          weight: recipes.weight,
-          method: recipes.method
-      },
+        recipes:{
+            ingredient,
+            time,
+             weight,
+            method
+        },
       });
   
       console.log(`Product created ${product}`);
@@ -51,21 +104,39 @@ if (category === 'Food') {
 
 // Update
 module.exports.updateProduct = async (req, res) => {
-  console.log('req.user:', req.user);
-  console.log('req.params.id:', req.params.userID);
-  if (req.user.user.id === req.params.userID || req.user.user.isAdmin) {
-    
-    try {
-      const updateProduct = await ProductModel.findByIdAndUpdate(req.params.productID,
-        { $set: req.body },
-        { new: true }
-      );
-      res.status(200).json(updateProduct);
-    } catch (err) {
-      res.status(500).json(err);
+  console.log("req.user:", req.user);
+  console.log("req.params.userID:", req.params.userID); // Corrected parameter name
+
+  console.log("updateProduct API route called");
+  try {
+    const { imagePath, ...updatedFields } = req.body; // Exclude imagePath from the update
+
+    // If a new image is provided, handle it separately
+    if (req.file) {
+      const product = await ProductModel.findById(req.params.productID);
+      if (!product) {
+        return res.status(404).json({ error: "Product not found." });
+      }
+
+      // Delete the existing image file from the server
+      if (product.imagePath) {
+        const imagePathToDelete = path.join(uploadPath, product.imagePath);
+        fs.unlinkSync(imagePathToDelete);
+      }
+
+      // Set the new image path in the updatedFields
+      updatedFields.imagePath = req.file.filename;
     }
-  } else {
-    res.status(403).json('You can update only your Product!');
+    console.log("Updated Fields:", updatedFields);
+    const updateProduct = await ProductModel.findByIdAndUpdate(
+      req.params.productID, // Corrected parameter name
+      { $set: updatedFields },
+      { new: true }
+    );
+
+    res.status(200).json(updateProduct);
+  } catch (err) {
+    res.status(500).json(err);
   }
 };
 
@@ -113,6 +184,16 @@ module.exports.getProduct = async (req, res) => {
   }
 };
 
+//Get All Category
+module.exports.getAllCategory = async (req, res) => {
+  try {
+    const categories = await ProductModel.distinct("category");
+    res.status(200).json(categories);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
 // Get My Products (Products that belong to the authenticated user)
 module.exports.getMyProducts = async (req, res) => {
   const userID = req.user.user.id; // Get the userID of the authenticated user
@@ -131,7 +212,7 @@ module.exports.getMyProducts = async (req, res) => {
 
 //Get All Product
 
-/*module.exports.getAllProduct = async (req, res) => {
+module.exports.getAllProduct = async (req, res) => {
   const query = req.query.new;
     try {
       const products = query ? await ProductModel.find().sort({_id:-1}) : await ProductModel.find();
@@ -140,9 +221,9 @@ module.exports.getMyProducts = async (req, res) => {
       res.status(500).json(err);
     }
   
-};*/
+};
 
-module.exports.getAllProduct = async (req, res) => {
+/*module.exports.getAllProduct = async (req, res) => {
   const query = req.query.new;
     try {
       const products = query
@@ -153,13 +234,13 @@ module.exports.getAllProduct = async (req, res) => {
     } catch (err) {
       res.status(500).json(err);
     }
-};
+};*/
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 //Get 8 Products From the newest One
 
-/*module.exports.getNewProduct = async (req, res) => {
+module.exports.getNewProduct = async (req, res) => {
   const query = req.query.new;
     try {
       const products = query
@@ -171,9 +252,9 @@ module.exports.getAllProduct = async (req, res) => {
       res.status(500).json(err);
     }
   
-};*/
+};
 
-module.exports.getNewProduct = async (req, res) => {
+/*module.exports.getNewProduct = async (req, res) => {
   const query = req.query.new;
     try {
       const products = query
@@ -184,7 +265,7 @@ module.exports.getNewProduct = async (req, res) => {
     } catch (err) {
       res.status(500).json(err);
     }
-};
+};*/
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 

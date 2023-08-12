@@ -44,7 +44,7 @@ const currentPosts = filteredProducts.slice(firstPostIndex, lastPostIndex);
            
         <div className="products">
         {currentPosts.map((item) => (
-            <Product key={item._id} {...item}/>
+            <Product key={item._id} imageSrc={`http://localhost:3001/products/${item._id}/photo`} {...item}/>
           ))}
           
         </div>
