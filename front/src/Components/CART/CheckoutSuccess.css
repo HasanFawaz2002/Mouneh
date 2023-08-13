@@ -12,7 +12,7 @@
     font-weight: bold;
     font-size: 20px;
 }
-h1,h2{
+.payment-text h1,.payment-text h2{
     text-align: center;
 }
 @media (max-width: 768px) {
