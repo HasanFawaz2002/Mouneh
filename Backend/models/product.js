@@ -41,6 +41,12 @@ const productSchema = new mongoose.Schema({
         trim: true,
         minlength: [1, 'Product description must be at least 10 characters long.']
     },
+
+    status:{
+        type: String,
+        required: [true, 'Product category is required.'],
+        enum: ['waiting', 'accepted'] // Replace with the desired category values
+    },
     
     category: {
         type: String,

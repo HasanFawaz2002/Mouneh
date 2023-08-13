@@ -54,51 +54,57 @@ module.exports.getProductPhoto = async (req, res) => {
 
 //ADD
 
+
 module.exports.addProduct = async (req, res) => {
-    const userID = req.user.user.id;
-    const { name,  price, quantity, description, weight, category, /*subcategory*/ ingredient, time, method } = req.body;
-  
-    // Validate the required fields for the 'recipes' subdocument
-    if (category === 'Food') {
-      if (!ingredient || !time || !method || !weight) {
-        res.status(400).json({ error: 'All fields are mandatory for the "recipes" subdocument.' });
-        return;
-      }
-    } else {
-      // Ensure that the 'recipes' fields are not provided for non-Food categories
-      if (ingredient || time || method || weight) {
-        res.status(400).json({ error: 'Invalid fields for the "recipes" subdocument in the non-Food category.' });
-        return;
-      }
+  const userID = req.user.user.id;
+  const { name, price, quantity, description, weight, category, /*subcategory*/ ingredient, time, method } = req.body;
+
+  // Validate the required fields for the 'recipes' subdocument
+  if (category === 'Food') {
+    if (!ingredient || !time || !method || !weight) {
+      res.status(400).json({ error: 'All fields are mandatory for the "recipes" subdocument.' });
+      return;
     }
-  
-    // Continue with product creation
-    try {
-      const relativeImagePath = req.file.filename;
-      const product = await ProductModel.create({
-        userID,
-        name,
-        imagePath: relativeImagePath,
-        price,
-        quantity,
-        description,
-       
-        category,
-        recipes:{
-            ingredient,
-            time,
-             weight,
-            method
-        },
-      });
-  
-      console.log(`Product created ${product}`);
-      res.status(201).json(product);
-    } catch (error) {
-      console.error('Error creating product:', error);
-      res.status(400).json({ error: 'Product data is not valid.' });
+  } else if (category === 'Craft') {
+    // Ensure that the 'recipes' fields are not provided for non-Food categories
+    if (ingredient || time || method || weight) {
+      res.status(400).json({ error: 'Invalid fields for the "recipes" subdocument in the non-Food category.' });
+      return;
     }
-  };
+  }
+
+  // Determine the status based on whether the user is an admin or not
+  const isAdmin = req.user.user.isAdmin;
+  const status = isAdmin ? 'accepted' : 'waiting';
+
+  // Continue with product creation
+  try {
+    const relativeImagePath = req.file.filename;
+    const product = await ProductModel.create({
+      userID,
+      name,
+      imagePath: relativeImagePath,
+      price,
+      quantity,
+      description,
+      category,
+      status,  // Set the status based on isAdmin
+      recipes: {
+        ingredient,
+        time,
+        weight,
+        method,
+      },
+    });
+
+    console.log(`Product created ${product}`);
+    res.status(201).json(product);
+  } catch (error) {
+    console.error('Error creating product:', error);
+    res.status(400).json({ error: 'Product data is not valid.' });
+  }
+};
+
   
 
 
@@ -212,7 +218,7 @@ module.exports.getMyProducts = async (req, res) => {
 
 //Get All Product
 
-module.exports.getAllProduct = async (req, res) => {
+/*module.exports.getAllProduct = async (req, res) => {
   const query = req.query.new;
     try {
       const products = query ? await ProductModel.find().sort({_id:-1}) : await ProductModel.find();
@@ -221,9 +227,9 @@ module.exports.getAllProduct = async (req, res) => {
       res.status(500).json(err);
     }
   
-};
+};*/
 
-/*module.exports.getAllProduct = async (req, res) => {
+module.exports.getAllProduct = async (req, res) => {
   const query = req.query.new;
     try {
       const products = query
@@ -234,13 +240,13 @@ module.exports.getAllProduct = async (req, res) => {
     } catch (err) {
       res.status(500).json(err);
     }
-};*/
+};
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 //Get 8 Products From the newest One
 
-module.exports.getNewProduct = async (req, res) => {
+/*module.exports.getNewProduct = async (req, res) => {
   const query = req.query.new;
     try {
       const products = query
@@ -252,9 +258,9 @@ module.exports.getNewProduct = async (req, res) => {
       res.status(500).json(err);
     }
   
-};
+};*/
 
-/*module.exports.getNewProduct = async (req, res) => {
+module.exports.getNewProduct = async (req, res) => {
   const query = req.query.new;
     try {
       const products = query
@@ -265,7 +271,7 @@ module.exports.getNewProduct = async (req, res) => {
     } catch (err) {
       res.status(500).json(err);
     }
-};*/
+};
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 

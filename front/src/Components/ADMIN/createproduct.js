@@ -23,21 +23,8 @@ const CreateProduct = () => {
   const [ingredient, setIngredient] = useState("");
   const [time, setTime] = useState("");
   const [method, setMethod] = useState("");
-  const [categories, setCategories] = useState([]);
 
-  const getAllCategory = async () => {
-    try {
-      const { data } = await axios.get("http://localhost:3001/categories");
-      setCategories(data);
-    } catch (error) {
-      console.log(error);
-      toast.error("Something went wrong in getting categories");
-    }
-  };
-
-  useEffect(() => {
-    getAllCategory();
-  }, []);
+  
 
   const handleCreate = async (e) => {
     e.preventDefault();
@@ -71,10 +58,7 @@ const CreateProduct = () => {
       setQuantityError("Product quantity is required.");
       return;
     }
-    if (!weight) {
-      setWeightError("Product weight is required.");
-      return;
-    }
+    
   
     try {
       console.log("Form submitted. Starting product creation...");
@@ -88,6 +72,10 @@ const CreateProduct = () => {
   
       // Additional check for 'Food' category before adding recipe data
       if (category === "Food") {
+        if (!weight) {
+          setWeightError("Product weight is required.");
+          return;
+        }
         productData.append("weight", weight);
         productData.append("ingredient", ingredient); // Corrected key here
         productData.append("time", time); // Corrected key here
@@ -171,20 +159,27 @@ const CreateProduct = () => {
                     <div className="mb-3">
                       <label>Category:</label>
                       <div style={{ display: "flex", marginBottom: "10px" }}>
-                        {categories.map((cat) => (
-                          <div key={cat} style={{ marginRight: "20px" }}>
-                            <label>
-                              <input
-                                type="radio"
-                                name="category"
-                                value={cat}
-                                checked={category === cat}
-                                onChange={(e) => setCategory(e.target.value)}
-                              />
-                              {cat}
+                          <label>
+                                <input
+                                    type="radio"
+                                    name="category"
+                                    value="Food"
+                                    checked={category === 'Food'}
+                                    onChange={(e) => setCategory(e.target.value)}
+                                />
+                                Food
                             </label>
-                          </div>
-                        ))}
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="category"
+                                    value="Craft"
+                                    checked={category === 'Craft'}
+                                    onChange={(e) => setCategory(e.target.value)}
+                                />
+                                Craft
+                            </label>
+                          
                       </div>
                     </div>
                     <div className="mb-3">

@@ -10,27 +10,31 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const AddProduct = () => {
-    const navigate = useNavigate();
-    const token = localStorage.getItem('access_token');
-    const [product, setProduct] = useState({
-        name: '',
-        image: '',
-        price: '',
-        quantity: '',
-        description: '',
-        category: '',
-        recipes: {
-            ingredient: '',
-            time: '',
-            weight: '',
-            method: ''
-        }
-    });
-    const ingredientInputRef = useRef(null); 
-    const timeInputRef = useRef(null);
-    const weightInputRef = useRef(null);
-    const methodInputRef = useRef(null);
+  const navigate = useNavigate();
+const token = localStorage.getItem('access_token');
 
+const [name, setName] = useState("");
+  const [nameError, setNameError] = useState("");
+  const [description, setDescription] = useState("");
+  const [descriptionError, setDescriptionError] = useState("");
+  const [price, setPrice] = useState("");
+  const [priceError, setPriceError] = useState("");
+  const [category, setCategory] = useState("");
+ const [categoryError, setCategoryError] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [quantityError, setQuantityError] = useState("");
+  const [weight, setWeight] = useState("");
+  const [weightError, setWeightError] = useState("");
+  const [imagePath, setImage] = useState(null);
+  const [imageError, setimageError] = useState("");
+  const [ingredient, setIngredient] = useState("");
+  const [ingredientError, setIngredientError] = useState("");
+  const [time, setTime] = useState("");
+  const [timeError, setTimeError] = useState("");
+  const [method, setMethod] = useState("");
+  const [methodError, setMethodError] = useState("");
+
+  
     const formRef = useRef(null); 
     const notify = () => toast.success('Product Added', {
         position: "top-right",
@@ -43,74 +47,110 @@ const AddProduct = () => {
         theme: "colored",
         });
 
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        setProduct((prevProduct) => ({
-            ...prevProduct,
-            [name]: value
-        }));
-    };
-
-    const handleCategoryChange = (event) => {
-        const { value } = event.target;
-        setProduct((prevProduct) => ({
-            ...prevProduct,
-            category: value
-        }));
     
-    };
-    
-    const handleChangeNested = (event, propertyPath) => {
-        const {  value } = event.target;
-        setProduct((prevProduct) => ({
-            ...prevProduct,
-            recipes: {
-                ...prevProduct.recipes,
-                [propertyPath]: value
-            }
-        }));
-    };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (!token) {
             navigate('/login');
             return;
-          }
+        }
         
-          
+        // Reset all the previous error messages
+    setNameError("");
+    setDescriptionError("");
+    setPriceError("");
+    setCategoryError("");
+    setQuantityError("");
+    setWeightError("");
+  
+    // Validate the input fields
+    if (!name) {
+      setNameError("Product name is required.");
+      return;
+    }
+    if (!description) {
+      setDescriptionError("Product description is required.");
+      return;
+    }
+    if (!price) {
+      setPriceError("Product price is required.");
+      return;
+    }
+    if (!category) {
+      setCategoryError("Product category is required.");
+      return;
+    }
+    if (!quantity) {
+      setQuantityError("Product quantity is required.");
+      return;
+    }
+    if(!imagePath){
+      setimageError("Product image  is required.");
+    }
+    
+  
+    try {
+      console.log("Form submitted. Starting product creation...");
+      const productData = new FormData();
+      productData.append("name", name);
+      productData.append("description", description);
+      productData.append("price", price);
+      productData.append("quantity", quantity);
+      productData.append("imagePath", imagePath);
+      productData.append("category", category);
+  
+      // Additional check for 'Food' category before adding recipe data
+      if (category === "Food") {
+        if (!weight) {
+          setWeightError("Product weight is required.");
+          return;
+        }
+        if(!ingredient){
+          setIngredientError("Product ingredient is required.");
+          return;
+        }
+        if(!time){
+          setTimeError("Product time is required.");
+          return;
+        }
+        if(!method){
+          setMethodError("Product method is required.");
+          return;
+        }
+        productData.append("weight", weight);
+        productData.append("ingredient", ingredient); // Corrected key here
+        productData.append("time", time); // Corrected key here
+        productData.append("method", method); // Corrected key here
+      }
 
-        try {
-            await axios.post('http://localhost:3001/products', product, {
-                headers: {
-                    token: `Bearer ${token}`,
-                }
-            });
+      console.log(category);
 
-            setProduct({
-                name: '',
-                image: '',
-                price: '',
-                quantity: '',
-                description: '',
-                category: '',
-                recipes: {
-                    ingredient: '',
-                    time: '',
-                    weight: '',
-                    method: ''
-                }
-            });
-            notify();
-            console.log('Product Added Successfully');
-        } catch (error) {
+      console.log("Product data before sending request:", Object.fromEntries(productData)); // Log productData
+
+      // Set the token in the request headers
+      const headers = {
+        token: `Bearer ${token}`,
+      };
+
+      const response = await axios.post(
+        "http://localhost:3001/products",
+        productData,
+        { headers }
+      );
+      console.log("Product creation response:", response.data);
+      if (response.data?.success) {
+        notify();
+      } else {
+        notify();
+      }
+    } catch (error) {
             if (error.response && error.response.status === 403) {
                 console.log("Token is not valid!");
                 navigate('/login');
-              } else {
-                console.error("Cart Add failed:", error);
-                console.log(product);
-              }
+            } else {
+                console.error("Product Add failed:", error);
+            }
         }
     };
     
@@ -143,18 +183,19 @@ const AddProduct = () => {
 
     return (
         <>
-        <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={true}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-        />
+                <ToastContainer
+position="top-right"
+autoClose={3000}
+hideProgressBar={true}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="colored"
+/>
+
             <h1 className='add-product-container-header'>Add your Own Product</h1>
             <div className="add-product-container">
                 <img src={recipesImage} alt="Recipe" />
@@ -175,38 +216,53 @@ const AddProduct = () => {
                     <div className="add-product-container-form-section product-name">
                         <label htmlFor="name">Product Name</label>
                         <input
-                            type="text"
-                            name="name"
-                            value={product.name}
-                            onChange={handleChange}
-                        />
+                        type="text"
+                        value={name}
+                        placeholder="Write a name"
+                        onChange={(e) => setName(e.target.value)}
+                      />
+                      {nameError && (
+                        <span className="error-message">{nameError}</span>
+                      )}
                     </div>
                     <div className="add-product-container-form-section product-price">
                         <label htmlFor="price">Price/$</label>
                         <input
-                            type="number"
-                            name="price"
-                            value={product.price}
-                            onChange={handleChange}
-                        />
+                        type="number"
+                        value={price}
+                        placeholder="Write a Price"
+                        className="form-control"
+                        onChange={(e) => setPrice(e.target.value)}
+                      />
+                      {priceError && (
+                        <span className="error-message">{priceError}</span>
+                      )}
                     </div>
                     <div className="add-product-container-form-section product-quantity">
                         <label htmlFor="quantity">Quantity</label>
                         <input
-                            type="number"
-                            name="quantity"
-                            value={product.quantity}
-                            onChange={handleChange}
-                        />
+                        type="number"
+                        value={quantity}
+                        placeholder="Write a quantity"
+                        className="form-control"
+                        onChange={(e) => setQuantity(e.target.value)}
+                      />
+                      {quantityError && (
+                        <span className="error-message">{quantityError}</span>
+                      )}
                     </div>
                     <div className="add-product-container-form-section product-description">
                         <label htmlFor="description">Description</label>
                         <input
                             type="text"
-                            name="description"
-                            value={product.description}
-                            onChange={handleChange}
-                        />
+                        value={description}
+                        placeholder="Write a description"
+                        className="form-control"
+                        onChange={(e) => setDescription(e.target.value)}
+                      />
+                      {descriptionError && (
+                        <span className="error-message">{descriptionError}</span>
+                      )}
                     </div>
                     <div className="add-product-container-form-section product-category">
                         <label htmlFor="category">Category</label>
@@ -216,8 +272,8 @@ const AddProduct = () => {
                                     type="radio"
                                     name="category"
                                     value="Food"
-                                    checked={product.category === 'Food'}
-                                    onChange={handleCategoryChange}
+                                    checked={category === 'Food'}
+                                    onChange={(e) => setCategory(e.target.value)}
                                 />
                                 Food
                             </label>
@@ -226,65 +282,83 @@ const AddProduct = () => {
                                     type="radio"
                                     name="category"
                                     value="Craft"
-                                    checked={product.category === 'Craft'}
-                                    onChange={handleCategoryChange}
+                                    checked={category === 'Craft'}
+                                    onChange={(e) => setCategory(e.target.value)}
                                 />
                                 Craft
                             </label>
+                            {categoryError && 
+                            <span className="error-message">{categoryError}</span>
+                            }
                         </div>
                     </div>
-                    {product.category === 'Food' && (
+                    {category === 'Food' && (
                         <>
                             <div className="add-product-container-form-section product-ingredient">
                 <label htmlFor="recipes.ingredient">Ingredient</label>
                 <input
-                    type="text"
-                    name="recipes.ingredient"
-                    value={product.recipes.ingredient}
-                    onChange={(event) => handleChangeNested(event, 'ingredient')}
-                    ref={ingredientInputRef} 
-                />
+                            type="text"
+                            value={ingredient}
+                            placeholder="Ingredient"
+                            className="form-control"
+                            onChange={(e) => setIngredient(e.target.value)}
+                          />
             </div>
+            {ingredientError && (
+                        <span className="error-message">{ingredientError}</span>
+                      )}
             <div className="add-product-container-form-section product-time">
                                 <label htmlFor="recipes.time">Time/minutes</label>
                                 <input
-                                    type="number"
-                                    name="recipes.time"
-                                    value={product.recipes.time}
-                                    onChange={(event) => handleChangeNested(event, 'time')}
-                                    ref={timeInputRef}
-                                />
+                            type="number"
+                            value={time}
+                            placeholder="Time"
+                            className="form-control"
+                            onChange={(e) => setTime(e.target.value)}
+                          />
                             </div>
+                            {timeError && (
+                        <span className="error-message">{timeError}</span>
+                      )}
                             <div className="add-product-container-form-section product-weight">
                                 <label htmlFor="recipes.weight">Weight/gram</label>
                                 <input
-                                    type="number"
-                                    name="recipes.weight"
-                                    value={product.recipes.weight}
-                                    onChange={(event) => handleChangeNested(event, 'weight')}
-                                    ref={weightInputRef}
-                                />
+                            type="number"
+                            value={weight}
+                            placeholder="Weight"
+                            className="form-control"
+                            onChange={(e) => setWeight(e.target.value)}
+                          />
+                          {weightError && (
+                            <span className="error-message">{weightError}</span>
+                          )}
                             </div>
                             <div className="add-product-container-form-section">
                                 <label htmlFor="recipes.method">Method</label>
                                 <input
-                                    type="text"
-                                    name="recipes.method"
-                                    value={product.recipes.method}
-                                    onChange={(event) => handleChangeNested(event, 'method')}
-                                    ref={methodInputRef}
-                                />
+                            type="text"
+                            value={method}
+                            placeholder="Method"
+                            className="form-control"
+                            onChange={(e) => setMethod(e.target.value)}
+                          />
+                          {methodError && (
+                            <span className="error-message">{methodError}</span>
+                          )}
                             </div>
                         </>
                     )}
                     <div className="add-product-container-form-section">
                         <label htmlFor="image">Upload an Image</label>
                         <input
-                            type="text"
-                            name="image"
-                            value={product.image}
-                            onChange={handleChange}
+                          type="file"
+                          name="imagePath"
+                          accept="image/*"
+                          onChange={(e) => setImage(e.target.files[0])}
                         />
+                        {imageError && (
+                            <span className="error-message">{imageError}</span>
+                          )}
                     </div>
                     <button type='submit' onClick={handleSubmit}>Add Product</button>
                 </form>

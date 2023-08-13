@@ -80,6 +80,9 @@
     border-radius: 5px;
     margin: 10px 0 10px 0;
 }
+.checkout:active{
+    transform: scale(.9);
+}
 
 .clear-cart{
     color: gray;

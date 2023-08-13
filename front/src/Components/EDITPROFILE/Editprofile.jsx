@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import "./Editprofile.css";
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
 //import {useCookies} from "react-cookie";
 
 /*function getAccessToken() {
@@ -17,6 +18,17 @@ const Editprofile = () => {
     email: '',
     password: '',
   });
+
+  const notify = () => toast.success('Profile Edited', {
+    position: "top-right",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+    });
 
   const api ="http://localhost:3001"; 
 
@@ -41,6 +53,7 @@ const Editprofile = () => {
       });
       console.log("Profile updated successfully!");
       console.log(response);
+      notify();
       } catch (error) {
       console.error("Profile update failed:", error);
      
@@ -49,6 +62,18 @@ const Editprofile = () => {
 
   return (
     <section className="edit-profile">
+      <ToastContainer
+position="top-right"
+autoClose={3000}
+hideProgressBar={true}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="colored"
+/>
       <div className="edit-profile-container">
         <div className="edit-profile-container-content">
           <h2 className="center edit-profile-container-header2">EDIT YOUR PROFILE</h2>
