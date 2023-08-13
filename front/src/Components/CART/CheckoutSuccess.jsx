@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
-
+import './CheckoutSuccess.css';
+import payment from './img/Plain credit card.gif'
 
 
 const CheckoutSuccess = () =>{
@@ -13,13 +14,25 @@ const CheckoutSuccess = () =>{
     }
 })
 .then(result => {console.log(result)
-window.location.reload();
 })
 .catch(error => console.log(error));
 
  return(
     <>
-      <h2>Checkout Succcess</h2>
+    <div className="payment-content">
+      
+         <img src={payment} alt="money"/>
+      
+      <div className="payment-text">
+         <h1>Payment Successful !</h1>
+         <h2>Thank you for your order !</h2>
+         <p>Our estimated delivery time is within two days,
+          If you have any questions or need assistance, please don't hesitate to contact us.  
+          </p>
+      </div>
+    
+    </div>
+     
     </>
  )
 
