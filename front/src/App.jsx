@@ -24,7 +24,8 @@ import CreateProduct from './Components/ADMIN/createproduct';
 import Users from './Components/ADMIN/users';
 import AllWorkshop from './Components/ADMIN/allworkshop';
 import CreateWorkshop from './Components/ADMIN/createworkshop';
-
+import MyProducts from "./Components/PRODUCTS/showmyproducts";
+import UpdatemyProduct from"./Components/PRODUCTS/updateproduct";
 function App(){
     return (
     <>
@@ -35,7 +36,9 @@ function App(){
         <Route path="/contact" element={<Contact/>}></Route>
         <Route path="/about" element={<AboutUs/>}></Route>
         <Route path="/product/:productID" element={<Product/>}></Route>
+        <Route path="/updateproduct/:productID" element={<UpdatemyProduct/>}></Route>
         <Route path="/showProducts" element={<ShowProducts />}></Route>
+        <Route path="/myProducts" element={<MyProducts />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<Register />}></Route>
         <Route path="/editprofile" element={<Editprofile />}></Route>

@@ -202,18 +202,41 @@ module.exports.getAllCategory = async (req, res) => {
 
 // Get My Products (Products that belong to the authenticated user)
 module.exports.getMyProducts = async (req, res) => {
-  const userID = req.user.user.id; // Get the userID of the authenticated user
-
-  try {
-    // Find all products that have the same userID as the authenticated user's ID
-    const products = await ProductModel.find({ userID: userID });
-
-    // Respond with the list of products
-    res.status(200).json(products);
-  } catch (err) {
-    res.status(500).json(err);
+  console.log('User ID from params:', req.params.id);
+  
+  if (req.user.user.id === req.params.id) {
+    try {
+      const getMyProducts = await ProductModel.find({ userID: req.params.id });
+      console.log('Products retrieved:', getMyProducts);
+      res.status(200).json(getMyProducts);
+    } catch (err) {
+      console.error('Error:', err);
+      res.status(500).json(err);
+    }
+  } else {
+    console.log('User ID does not match:', req.params.id, req.user.user.id);
+    res.status(403).json('You can get only your products!');
   }
 };
+
+module.exports.getinfoProducts = async (req, res) => {
+ 
+  
+  if (req.user.user.id === req.params.id) {
+    try {
+      const getProduct = await ProductModel.find({ _id: req.params.productID});
+      console.log('Product from database retrieved:', getProduct);
+      res.status(200).json(getProduct);
+    } catch (err) {
+      console.error('Error:', err);
+      res.status(500).json(err);
+    }
+  } else {
+    console.log('User ID does not match:', req.params.userId, req.user.user.id);
+    res.status(403).json('You can get only your products!');
+  }
+};
+
 
 
 //Get All Product
@@ -313,6 +336,30 @@ module.exports.ReturnProductQuantity = async (req, res) => {
     res.status(500).json(err);
   }
 };
+
+module.exports.updatemyproduct = async (req, res) => {
+  //const { productID } = req.params.productID;
+  console.log('Request Body:');
+  //console.log(req.body);
+  if (req.user.user.id !== req.params.id){
+    return res.status(403).json({ message: "Unauthorized" });
+  }
+  try {
+    const updateproduct = await ProductModel.findByIdAndUpdate(
+      {_id:req.params.productID},
+      {
+        $set: req.body,
+      },
+      { new: true }
+    );
+    console.log("product updated successfuly");
+    res.status(200).json(updateproduct);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+
 
 
 /*module.exports.statUser = async (req, res) => {
