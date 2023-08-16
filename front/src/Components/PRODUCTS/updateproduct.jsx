@@ -18,6 +18,12 @@ const UpdatemyProduct = () => {
   const [inputQuantity, setInputQuantity] = useState("");
   const [inputWeight, setInputWeight] = useState("");
   const [inputIngredient, setInputIngredient] = useState("");
+  const [ingredientError, setIngredientError] = useState("");
+  const [weightError, setWeightError] = useState("");
+  const [priceError, setPriceError] = useState("");
+  const [quantityError, setQuantityError] = useState("");
+  const [descriptionError, setDescriptionError] = useState("");
+
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -57,6 +63,37 @@ const UpdatemyProduct = () => {
 
   const updatehandleSubmit = async (event) => {
     event.preventDefault();
+    if (!token) {
+      navigate('/login');
+      return;
+  }
+    setIngredientError('');
+    setDescriptionError("");
+    setPriceError("");
+    setQuantityError("");
+    setWeightError("");
+
+    if(!inputIngredient){
+      setIngredientError('Ingredient is required');
+      return;
+    }
+    if(!inputPrice){
+      setPriceError("Price is required");
+      return;
+    }
+    if(!inputQuantity){
+      setQuantityError("Quantity is required");
+      return;
+    }
+    if(!inputWeight){
+      setWeightError("Weight is required");
+      return;
+    }
+    if(!inputDescription){
+      setDescriptionError("Description is required");
+      return;
+    }
+
     try {
       const response = await axios.put(
         `http://localhost:3001/products/updateproducts/${localStorage.getItem('userId')}/${productID}`,
@@ -78,8 +115,13 @@ const UpdatemyProduct = () => {
         console.log('product updated');
       }
     } catch (error) {
-      console.error(error);
-    }
+      if (error.response && error.response.status === 403) {
+          console.log("Token is not valid!");
+          navigate('/login');
+      } else {
+          console.error("Product Add failed:", error);
+      }
+  }
   };
 
   return (
@@ -110,7 +152,9 @@ const UpdatemyProduct = () => {
               className="form-control"
               onChange={(e) => setInputDescription(e.target.value)}
             />
-            {/* Description error handling */}
+            {descriptionError && (
+              <span className='error-message'>{descriptionError}</span>
+            )}
           </div>
           <div className="add-product-container-form-section product-price">
             <label htmlFor="price">Price/$</label>
@@ -121,7 +165,9 @@ const UpdatemyProduct = () => {
               className="form-control"
               onChange={(e) => setInputPrice(e.target.value)}
             />
-            {/* Price error handling */}
+            {priceError && (
+              <span className='error-message'>{priceError}</span>
+            )}
           </div>
           <div className="add-product-container-form-section product-quantity">
             <label htmlFor="quantity">Quantity</label>
@@ -132,7 +178,9 @@ const UpdatemyProduct = () => {
               className="form-control"
               onChange={(e) => setInputQuantity(e.target.value)}
             />
-            {/* Quantity error handling */}
+            {quantityError && (
+              <span className='error-message'>{quantityError}</span>
+            )}
           </div>
           {category === "Food" ? (
             <>
@@ -146,7 +194,9 @@ const UpdatemyProduct = () => {
               className="form-control"
               onChange={(e) => setInputWeight(e.target.value)}
             />
-            {/* Weight error handling */}
+            {weightError && (
+              <span className='error-message'>{weightError}</span>
+            )}
           </div>
           <div className="add-product-container-form-section">
             <label htmlFor="recipes.ingredient">Ingredient</label>
@@ -157,7 +207,9 @@ const UpdatemyProduct = () => {
               className="form-control"
               onChange={(e) => setInputIngredient(e.target.value)}
             />
-            {/* Ingredient error handling */}
+            {ingredientError && (
+              <span className='error-message'>{ingredientError}</span>
+            )}
           </div>
           </>
           ) : null}

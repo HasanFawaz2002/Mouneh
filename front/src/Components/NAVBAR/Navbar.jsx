@@ -64,6 +64,13 @@ const Navbar = (props) => {
             </li>
             {isAdmin === "false" && (
               <li>
+              <NavLink to="/MyProducts" onClick={closeMenu}>
+              My Product
+            </NavLink>
+            </li>
+            )}
+            {isAdmin === "false" && (
+              <li>
               <NavLink to="/addproduct" onClick={closeMenu}>
               Add Product
             </NavLink>

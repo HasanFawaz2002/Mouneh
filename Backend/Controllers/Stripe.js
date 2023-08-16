@@ -31,7 +31,7 @@ const HandleStripe= asyncHandler(async(req, res) => {
             currency: "usd",
             product_data: {
               name: item.productID.name,
-              images: [item.productID.image],
+              images: [`http://localhost:3001/products/${item.productID._id}/photo`], 
               description: item.productID.description,
               metadata: {
                 id: item.productID.id,

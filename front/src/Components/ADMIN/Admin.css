@@ -42,6 +42,11 @@ background-color: white !important;
  .infoadmin{
   color :white;
  }
+
+ .error-message{
+  color: red;
+ }
+
  .carda{
   font-weight: 30px;
   background-color: var(--primary-color);
