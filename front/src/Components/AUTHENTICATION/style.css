@@ -2,10 +2,10 @@
     width: 80%;
     margin: 0 auto;
 }
-  
-.forgot-pass{
+  .forgot{
     color:#EDB71A;
-}
+  }
+
 .register{
     background-image: url('../../images/pexels-polina-tankilevitch-3735147.jpg');
     background-repeat: no-repeat;
@@ -22,9 +22,10 @@
     font-weight: 600;
     margin-bottom: 15px;
 }
-.error{
-    color:rgb(254, 36, 36);
+.error-email-message,.error-password-message{
+    color:red;
 }
+
 .register-content{
 width: 40%;
 position: absolute;

@@ -8,13 +8,28 @@ function Resetpassword() {
 
   const navigate = useNavigate();
   const api = "http://localhost:3001";
-  const [password, setPassword] = useState();
+  const [password, setPassword] = useState("");
+  const[passwordError,setPasswordError]=useState("");
+  function validatePassword(password) {
+    // Password must contain at least one uppercase letter, one special character, and one number
+    const passwordPattern = /^(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return passwordPattern.test(password);
+  }
   const {id, token} = useParams();
 
   
 
   function handlereset(e) {
     e.preventDefault();
+    setPasswordError("");
+    if (!password) {
+      setPasswordError("Password is required.");
+      return;
+    }
+    if (!validatePassword(password)) {
+      setPasswordError("Please enter a valid password.");
+      return;
+    }
     axios.post(`${api}/reset-password/${id}/${token}`, {password})
     .then(res => {
         if(res.data.Status === "Success") {
@@ -33,6 +48,9 @@ function Resetpassword() {
           <p className="center reset-password-container-par">ENTER A NEW PASSWORD.</p>
           <form onSubmit={handlereset}>
             <input type="password" name="password" placeholder="Enter password" id="password" value={password}  onChange={(e) => setPassword(e.target.value)} />
+            {passwordError && (
+                        <span className="error-message">{passwordError}</span>
+                      )}
             <div className="centering">
               <button type="submit" className="reset-password-btn">Update</button>
             </div>
