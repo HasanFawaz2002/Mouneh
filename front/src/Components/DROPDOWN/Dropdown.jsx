@@ -32,12 +32,22 @@ const DropDown = () => {
         toggleDropdown();
     }
     const addProduct = () => {
-      navigate('/addproduct')
-      toggleDropdown();
+      if(isAdmin === "true") {
+        navigate('/dashboard/admin/createproduct')
+        toggleDropdown();
+      }else{
+        navigate('/addproduct')
+        toggleDropdown();
+      }
     }
     const myProduct = () => {
-      navigate('/MyProducts')
-      toggleDropdown();
+      if(isAdmin === "true") {
+        navigate('/dashboard/admin/products')
+        toggleDropdown();
+      }else{
+        navigate('/MyProducts')
+        toggleDropdown();
+      }
     };
   return (
     <>
@@ -89,7 +99,6 @@ const DropDown = () => {
                 <span>Workshops</span>
               </button>
             </li>
-            {isAdmin === 'false' && (
               <li>
               <button onClick={myProduct}>
               <svg
@@ -110,8 +119,7 @@ const DropDown = () => {
                 <span>My Products</span>
               </button>
             </li>
-            )}
-            {isAdmin === 'false' && (
+            
               <li>
               <button onClick={addProduct}>
               <svg
@@ -132,7 +140,7 @@ const DropDown = () => {
                 <span>Add Products</span>
               </button>
             </li>
-            )}
+            
             
             {!isProductPage  && !isProductsPage && !isCartPage &&
             <li>

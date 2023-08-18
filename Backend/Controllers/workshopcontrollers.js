@@ -55,7 +55,7 @@ module.exports.deleteWorkshop = async (req, res) => {
   }
 };
 
-// Get all workshops (accessible only to admin)
+// Get all workshops 
 module.exports.getAllWorkshops = async (req, res) => {
     try {
       const workshops = await WorkshopModel.find();

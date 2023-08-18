@@ -7,6 +7,21 @@
     --sectionBack: #f7f6f9;
 }
 
+.no-product-yet{
+    margin: 100px;
+    text-align: center;
+}
+.no-product-yet h1{
+    font-size: 70px;
+}
+.no-product-yet button{
+    margin-top: 30px;
+    background-color: #6B4423;
+    padding: 10px;
+    color: white;
+    border-radius: 8px;
+}
+
 
 .products-container{
     background-color: #EDB71A;
@@ -165,5 +180,11 @@
     }
     .flex{ 
         margin-top: 0px; 
+    }
+    .no-product-yet{
+        margin: 55px;
+    }
+    .no-product-yet h1{
+        font-size: 40px;
     }
 }

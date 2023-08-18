@@ -47,7 +47,6 @@ const [name, setName] = useState("");
         theme: "colored",
         });
 
-    
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -63,96 +62,115 @@ const [name, setName] = useState("");
     setCategoryError("");
     setQuantityError("");
     setWeightError("");
+    setTimeError("");
+    setIngredientError("");
+    setimageError("");
+    setMethodError("");
   
-    // Validate the input fields
-    if (!name) {
-      setNameError("Product name is required.");
-      return;
-    }
-    if (!description) {
-      setDescriptionError("Product description is required.");
-      return;
-    }
-    if (!price) {
-      setPriceError("Product price is required.");
-      return;
-    }
-    if (!category) {
-      setCategoryError("Product category is required.");
-      return;
-    }
-    if (!quantity) {
-      setQuantityError("Product quantity is required.");
-      return;
-    }
-    if(!imagePath){
-      setimageError("Product image  is required.");
+     // Validate the input fields
+     let isValid = true;
+
+     if (!name) {
+       setNameError('Product name is required.');
+       isValid = false;
+     }
+     if (!description) {
+       setDescriptionError('Product description is required.');
+       isValid = false;
+     }
+     if (!price) {
+       setPriceError('Product price is required.');
+       isValid = false;
+     }
+     if (!category) {
+       setCategoryError('Product category is required.');
+       isValid = false;
+     }
+     if (!quantity) {
+       setQuantityError('Product quantity is required.');
+       isValid = false;
+     }
+     if (!imagePath) {
+       setimageError('Product image is required.');
+       isValid = false;
+     }
+ 
+     if (category === 'Food') {
+       if (!weight) {
+         setWeightError('Product weight is required.');
+         isValid = false;
+       }
+       if (!ingredient) {
+         setIngredientError('Product ingredient is required.');
+         isValid = false;
+       }
+       if (!time) {
+         setTimeError('Product time is required.');
+         isValid = false;
+       }
+       if (!method) {
+         setMethodError('Product method is required.');
+         isValid = false;
+       }
+     }
+ 
+     if (isValid) {
+       try {
+         const productData = new FormData();
+         productData.append('name', name);
+         productData.append('description', description);
+         productData.append('price', price);
+         productData.append('quantity', quantity);
+         productData.append('imagePath', imagePath);
+         productData.append('category', category);
+ 
+         if (category === 'Food') {
+           productData.append('weight', weight);
+           productData.append('ingredient', ingredient);
+           productData.append('time', time);
+           productData.append('method', method);
+         }
+ 
+         const headers = {
+           token: `Bearer ${token}`,
+         };
+ 
+         const response = await axios.post(
+           'http://localhost:3001/products',
+           productData,
+           { headers }
+         );
+ 
+         if (response.data?.success) {
+           notify();
+         } else{
+          notify();
+         }
+          
+       }catch (error) {
+        if (error.response && error.response.status === 400) {
+            const errorMessage = error.response.data?.error || 'Product data is not valid.';
+            const notify2 = () => toast.error(errorMessage, {
+                position: 'top-right',
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: 'colored',
+            });
+            notify2();
+        } else if (error.response && error.response.status === 403) {
+            console.log('Token is not valid!');
+            navigate('/login');
+        } else {
+            console.error('Product Add failed:', error);
+        }
     }
     
-  
-    try {
-      console.log("Form submitted. Starting product creation...");
-      const productData = new FormData();
-      productData.append("name", name);
-      productData.append("description", description);
-      productData.append("price", price);
-      productData.append("quantity", quantity);
-      productData.append("imagePath", imagePath);
-      productData.append("category", category);
-  
-      // Additional check for 'Food' category before adding recipe data
-      if (category === "Food") {
-        if (!weight) {
-          setWeightError("Product weight is required.");
-          return;
-        }
-        if(!ingredient){
-          setIngredientError("Product ingredient is required.");
-          return;
-        }
-        if(!time){
-          setTimeError("Product time is required.");
-          return;
-        }
-        if(!method){
-          setMethodError("Product method is required.");
-          return;
-        }
-        productData.append("weight", weight);
-        productData.append("ingredient", ingredient); // Corrected key here
-        productData.append("time", time); // Corrected key here
-        productData.append("method", method); // Corrected key here
-      }
-
-      console.log(category);
-
-      console.log("Product data before sending request:", Object.fromEntries(productData)); // Log productData
-
-      // Set the token in the request headers
-      const headers = {
-        token: `Bearer ${token}`,
-      };
-
-      const response = await axios.post(
-        "http://localhost:3001/products",
-        productData,
-        { headers }
-      );
-      console.log("Product creation response:", response.data);
-      if (response.data?.success) {
-        notify();
-      } else {
-        notify();
-      }
-    } catch (error) {
-            if (error.response && error.response.status === 403) {
-                console.log("Token is not valid!");
-                navigate('/login');
-            } else {
-                console.error("Product Add failed:", error);
-            }
-        }
-    };
+     }
+   };
     
     
     
@@ -287,10 +305,10 @@ theme="colored"
                                 />
                                 Craft
                             </label>
-                            {categoryError && 
+                        </div>
+                        {categoryError && 
                             <span className="error-message">{categoryError}</span>
                             }
-                        </div>
                     </div>
                     {category === 'Food' && (
                         <>
@@ -303,10 +321,11 @@ theme="colored"
                             className="form-control"
                             onChange={(e) => setIngredient(e.target.value)}
                           />
-            </div>
-            {ingredientError && (
+                          {ingredientError && (
                         <span className="error-message">{ingredientError}</span>
                       )}
+            </div>
+            
             <div className="add-product-container-form-section product-time">
                                 <label htmlFor="recipes.time">Time/minutes</label>
                                 <input
@@ -316,10 +335,11 @@ theme="colored"
                             className="form-control"
                             onChange={(e) => setTime(e.target.value)}
                           />
-                            </div>
-                            {timeError && (
+                          {timeError && (
                         <span className="error-message">{timeError}</span>
                       )}
+                            </div>
+                            
                             <div className="add-product-container-form-section product-weight">
                                 <label htmlFor="recipes.weight">Weight/gram</label>
                                 <input

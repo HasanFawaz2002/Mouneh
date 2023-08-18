@@ -63,6 +63,9 @@
     grid-template-columns:1fr 1fr;
     width:600px;
 }
+.add-product-container-form-left input{
+    width: 100%;
+}
 
 .add-product-container-form-section{
     display:flex;
@@ -98,10 +101,9 @@
     display:flex;
     justify-content:space-evenly;
     width:100%;
-    border:1px solid var(--primary-color);
     padding:5px;
+    border: transparent !important;
 }
-
 
 
 

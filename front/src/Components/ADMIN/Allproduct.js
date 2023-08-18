@@ -19,7 +19,7 @@ const Products = () => {
         token: `Bearer ${token}`,
       };
 
-      const { data } = await axios.get("http://localhost:3001/products/my-products", { headers });
+      const { data } = await axios.get(`http://localhost:3001/products/my-products/${localStorage.getItem('userId')}`, { headers });
       setProducts(data);
     } catch (error) {
       console.log(error);

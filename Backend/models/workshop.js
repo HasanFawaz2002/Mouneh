@@ -17,7 +17,7 @@ const workshopSchema = new mongoose.Schema({
         type: Number,
         required: [true, 'capacity  is required.'],
         min: [10, 'Minimum capacity allowed is 18.'],
-        max: [30, 'Maximum capacity allowed is 100.']
+        max: [30, 'Maximum capacity allowed is 30.']
     },
     duration: {
         type: Number,
