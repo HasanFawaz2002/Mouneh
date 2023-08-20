@@ -1,23 +1,66 @@
 const CartModel = require('../models/Cart');
+const ProductModel = require('../models/product');
+const cron = require('node-cron');
+
+
+(async () => {
+  // Schedule runs every day at 1:15 AM
+  await cron.schedule('57 0 * * *', async () => {
+      try {
+          const now = new Date();
+          const deletedItems = await CartModel.find({ expirationTime: { $lte: now } });
+          
+          // Calculate the total quantities of deleted items
+          const totalDeletedQuantities = deletedItems.reduce((total, item) => total + item.quantity, 0);
+          
+          // Iterate through deleted items and update product quantities
+          for (const item of deletedItems) {
+              const product = await ProductModel.findById(item.productID);
+              if (product) {
+                  product.quantity += item.quantity;
+                  await product.save();
+              }
+          }
+          
+          // Delete the expired items
+          await CartModel.deleteMany({ expirationTime: { $lte: now } });
+          
+          console.log('Expired cart items have been removed and product quantities updated.');
+      } catch (err) {
+          console.error('Error removing expired cart items and updating product quantities:', err);
+      }
+  });
+})();
 
 // ADD TO CART
-module.exports.addCart = async (req,res) => {
-    if (req.user.user.id === req.params.userID){
-            const userID = req.user.user.id;
-            const productID = req.params.productID;
-            const quantity = req.body.quantity;
-        try {
-            const cart = await CartModel.create({userID,productID, quantity});
-            console.log(`Cart created ${cart}`);
-            res.status(201).json(cart);
-        }catch(err){
-            console.error('Error creating Cart:', err);
-            res.status(400).json({ err: 'Cart data is not valid.' });
-        }
-    }else {
-        res.status(403).json('You are not allowed to add a Cart');
+module.exports.addCart = async (req, res) => {
+  if (req.user.user.id === req.params.userID) {
+      const userID = req.user.user.id;
+      const productID = req.params.productID;
+      const quantity = req.body.quantity;
+      const now = new Date();
+      const expirationTime = new Date(now.getTime() + (24 * 60 * 60 * 1000)); // 24 hours later
+      
+      try {
+          const cart = await CartModel.create({ userID, productID, quantity, expirationTime });
+          console.log(`Cart created ${cart}`);
+          
+          
+          
+          const response = {
+              cart,
+          };
+          
+          res.status(201).json(response);
+      } catch (err) {
+          console.error('Error creating Cart:', err);
+          res.status(400).json({ err: 'Cart data is not valid.' });
       }
-}
+  } else {
+      res.status(403).json('You are not allowed to add a Cart');
+  }
+};
+
 
 // GET CART ITEMS FOR A SPECIFIC USER
 module.exports.getCartItems = async (req, res) => {

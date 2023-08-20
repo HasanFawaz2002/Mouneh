@@ -29,6 +29,10 @@ const addToCarSchema = new mongoose.Schema({
         type: Number,
         required: [true, 'Product quantity is required.'],
         min: [0, 'Product quantity cannot be negative.']
+    },
+    expirationTime: {
+        type: Date,
+        required: true
     }
 })
 

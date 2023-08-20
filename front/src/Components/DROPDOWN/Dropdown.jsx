@@ -11,6 +11,7 @@ const DropDown = () => {
     const isProductsPage = location.pathname.startsWith("/showProducts");
     const isCartPage = location.pathname.startsWith("/cart");
     const isAdmin = localStorage.getItem("isAdmin");
+    const token = localStorage.getItem('access_token');
 
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
@@ -163,27 +164,26 @@ const DropDown = () => {
               </button>
             </li>}
             
-            
-            
-            <li>
-              <button onClick={edit}>
-                <svg
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                  strokeWidth="2"
-                  stroke="currentColor"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  height="14"
-                  width="14"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <polygon points="16 3 21 8 8 21 3 21 3 16 16 3"></polygon>
-                </svg>
-                <span>Edit Profile</span>
-              </button>
-            </li>
-            
+            {token && (
+              <li>
+            <button onClick={edit}>
+              <svg
+                strokeLinejoin="round"
+                strokeLinecap="round"
+                strokeWidth="2"
+                stroke="currentColor"
+                fill="none"
+                viewBox="0 0 24 24"
+                height="14"
+                width="14"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <polygon points="16 3 21 8 8 21 3 21 3 16 16 3"></polygon>
+              </svg>
+              <span>Edit Profile</span>
+            </button>
+          </li>
+            )}
           </ul>
         </nav>
       </label>
