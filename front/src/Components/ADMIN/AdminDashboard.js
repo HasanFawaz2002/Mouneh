@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import AdminMenu from "./AdminMenu";
 import axios from "axios"; // Import axios for making API requests
 import jwt_decode from "jwt-decode"; 
@@ -6,31 +7,38 @@ import './Admin.css';
 
 const AdminDashboard = () => {
   const [userData, setUserData] = useState({});
+  const navigate = useNavigate();
+  const token = localStorage.getItem('access_token');
+  const isAdmin = localStorage.getItem('isAdmin');
 
   useEffect(() => {
+    // Check if the user is not an admin or there is no token
+    if (isAdmin === "false" || !token) {
+      // Navigate to the login page
+      navigate('/login'); // Change '/login' to your actual login route
+      return;
+    }
+
     // Function to fetch user data and update the state
     const fetchUserData = async () => {
       try {
-        const token = localStorage.getItem('access_token');
         const config = {
           headers: {
             token: `Bearer ${token}`,
           },
         };
-        const decodedToken = jwt_decode (token); // You'll need to install the 'jwt-decode' package for this
+        const decodedToken = jwt_decode (token);
 
-      // Get the user ID from the decoded token
-      const userID = decodedToken.user.id;
+        const userID = decodedToken.user.id;
         const response = await axios.get(`http://localhost:3001/users/find/${userID}`, config);
         setUserData(response.data);
       } catch (error) {
-        // Handle error if user data cannot be fetched
         console.error("Error fetching user data:", error);
       }
     };
 
     fetchUserData();
-  }, []);
+  }, [token, isAdmin]);
 
   return (
       <div className="container-fluid  dashboard">

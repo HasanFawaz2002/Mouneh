@@ -3,6 +3,8 @@ import AdminMenu from "./AdminMenu";
 import { Toaster, toast } from "react-hot-toast";
 import axios from "axios";
 import './Admin.css';
+import { useNavigate } from "react-router-dom";
+
 
 /*import { useNavigate } from "react-router-dom";*/
 
@@ -24,7 +26,8 @@ const CreateProduct = () => {
   const [time, setTime] = useState("");
   const [method, setMethod] = useState("");
 
-  
+  const navigate = useNavigate();
+
 
   const handleCreate = async (e) => {
     e.preventDefault();
@@ -104,6 +107,14 @@ const CreateProduct = () => {
       toast.error("Something went wrong to add product");
     }
   };
+
+  // Check if the user is an admin, if not redirect to restricted page
+  const isAdmin = localStorage.getItem('isAdmin');
+  const token = localStorage.getItem('access_token');
+  if (isAdmin === 'false' || !token) {
+    navigate('/login'); // Replace '/restricted' with your actual restricted access route
+    return null;
+  }
 
  
   return (

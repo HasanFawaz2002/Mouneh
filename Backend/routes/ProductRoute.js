@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const verify = require('../Controllers/verifytoken');
-const { addProduct, updateProduct, deleteProduct, getProduct, getAllProduct, getMyProducts,getinfoProducts,getNewProduct,ReturnProductQuantity,updateProductQuantity,getAllCategory,upload,getProductPhoto,updatemyproduct } = require('../Controllers/ProductsController');
+const { addProduct, updateProduct, deleteProduct, getProduct, getAllProduct, getMyProducts,getinfoProducts,getNewProduct,ReturnProductQuantity,updateProductQuantity,getAllCategory,upload,getProductPhoto,updatemyproduct,getWaitingProducts,updateProductStatus } = require('../Controllers/ProductsController');
 
 const router = Router();
 
@@ -18,7 +18,8 @@ router.patch('/return-quantity/:productID', ReturnProductQuantity);
 router.get("/categories", getAllCategory);
 router.get("/products/:productID/photo", getProductPhoto);
 router.put("/products/updateproducts/:id/:productID",verify, updatemyproduct);
-
+router.get('/waitingproduct',getWaitingProducts);
+router.put('/updateProductStatus/:productID',verify,updateProductStatus);
 
 
 module.exports = router;
