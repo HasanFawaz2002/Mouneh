@@ -5,7 +5,7 @@ const cron = require('node-cron');
 
 (async () => {
   // Schedule runs every day at 1:15 AM
-  await cron.schedule('57 0 * * *', async () => {
+  await cron.schedule('0 0 * * *', async () => {
       try {
           const now = new Date();
           const deletedItems = await CartModel.find({ expirationTime: { $lte: now } });
