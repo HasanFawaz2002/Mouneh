@@ -16,6 +16,10 @@ import Cart from "./Components/CART/Cart";
 import CheckoutSuccess from "./Components/CART/CheckoutSuccess";
 import AllWorkshops from './Components/WORKSHOPS/AllWorkshops';
 import SingleWorkshop from './Components/WORKSHOPS/SingleWorkshop';
+import { RegisterForm } from "./Components/WORKSHOPREGISTER/RegisterForm";
+import RegisterSuccess from "./Components/WORKSHOPREGISTER/RegisterSuccess";
+import { ChatComponent } from "./Components/CHAT/ChatComponent";
+import UserChat from "./Components/UserChat/UserChat";
 import AddProduct from "./Components/ADDPRODUCT/AddProduct";
 import AdminDashboard from './Components/ADMIN/AdminDashboard';
 import UpdateProduct from './Components/ADMIN/updateproduct';
@@ -48,7 +52,10 @@ function App(){
         <Route path="/checkout-success" element={<CheckoutSuccess />}></Route>
         <Route path="/workshops" element={<AllWorkshops />} />
         <Route path="/workshop/:id" element={<SingleWorkshop />} />
-        <Route path="/workshop/register" element={<Register />} />
+        <Route path="/workshop/register" element={<RegisterForm />} />
+        <Route path="/workshop/register-success/:capacity/:workshopID" element={<RegisterSuccess />} />
+        <Route path="/chat/:workshopid" element={<ChatComponent />} />
+        <Route path="/mychat" element={<UserChat />} />
         <Route path="/addproduct" element={<AddProduct />}></Route>
         <Route path="/dashboard/admin/*" element={<AdminDashboard />} />
         <Route path="/dashboard/admin/createproduct" element={<CreateProduct />} />

@@ -63,7 +63,7 @@
     color:white;
 }
 @media (max-width: 768px) {
-    .container {
+    .AboutUs-container {
         flex-direction: column-reverse; 
     }
 

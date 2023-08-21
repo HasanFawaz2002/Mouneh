@@ -4,16 +4,13 @@ const cron = require('node-cron');
 
 
 (async () => {
-  // Schedule runs every day at 1:15 AM
   await cron.schedule('0 0 * * *', async () => {
       try {
           const now = new Date();
           const deletedItems = await CartModel.find({ expirationTime: { $lte: now } });
           
-          // Calculate the total quantities of deleted items
           const totalDeletedQuantities = deletedItems.reduce((total, item) => total + item.quantity, 0);
           
-          // Iterate through deleted items and update product quantities
           for (const item of deletedItems) {
               const product = await ProductModel.findById(item.productID);
               if (product) {

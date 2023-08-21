@@ -8,6 +8,8 @@ const mailRoute =require("../routes/mailRoute");
 const cartRoute =require("../routes/cartRoute");
 const StripeRoute=require("../routes/Stripe");
 const messageRoute =require("../routes/messageRoute");
+const chatRoute =require("../routes/chatRoutes");
+const WorkshopStripe = require('../routes/workshopStripe');
 
 const connect = require('./connect');
 const cors=require('cors');
@@ -30,8 +32,8 @@ app.get("/about",function(req,res){
 
 app.use(express.json(),cors());
 
-app.use(authRoute,usersRoute,ProductRoute,workshopRoute,userworkshopRoute,mailRoute,cartRoute,StripeRoute,messageRoute);
-
+app.use(authRoute,usersRoute,ProductRoute,workshopRoute,userworkshopRoute,mailRoute,cartRoute,StripeRoute,messageRoute,chatRoute);
+app.use("/stripe", WorkshopStripe)
 
 app.listen(process.env.PORT,function(){
     connect();

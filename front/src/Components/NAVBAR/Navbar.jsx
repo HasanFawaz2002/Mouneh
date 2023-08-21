@@ -10,6 +10,7 @@ const Navbar = (props) => {
   const isProductPage = location.pathname.startsWith("/product/");
   const isProductsPage = location.pathname.startsWith("/showProducts");
   const isAdmin = localStorage.getItem("isAdmin");
+  const token = localStorage.getItem("access_token");
 
 
 
@@ -80,6 +81,9 @@ const Navbar = (props) => {
             {isProductPage && <NavLink to="/cart">My Cart</NavLink>}
             {!isProductPage && <NavLink to="/editprofile">Edit Profile</NavLink>}
             </li>
+            {token && (
+              <li><NavLink to="/mychat">My Chats</NavLink></li>
+            )}
             <li>
               <NavLink to="/login" onClick={closeMenu}>
                 Login
