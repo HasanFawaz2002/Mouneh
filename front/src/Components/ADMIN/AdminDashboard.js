@@ -33,8 +33,12 @@ const AdminDashboard = () => {
         const response = await axios.get(`http://localhost:3001/users/find/${userID}`, config);
         setUserData(response.data);
       } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
+        if (error.response && error.response.status === 403) {
+          console.log("Token is not valid!");
+          navigate('/login');
+        } else {
+          console.error("Cart Add failed:", error);
+        }      }
     };
 
     fetchUserData();

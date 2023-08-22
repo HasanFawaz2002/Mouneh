@@ -78,11 +78,11 @@ const Navbar = (props) => {
             </li>
             )}
             <li>
-            {isProductPage && <NavLink to="/cart">My Cart</NavLink>}
-            {!isProductPage && <NavLink to="/editprofile">Edit Profile</NavLink>}
+            {isProductPage && <NavLink onClick={closeMenu} to="/cart">My Cart</NavLink>}
+            {!isProductPage && <NavLink onClick={closeMenu} to="/editprofile">Edit Profile</NavLink>}
             </li>
             {token && (
-              <li><NavLink to="/mychat">My Chats</NavLink></li>
+              <li><NavLink onClick={closeMenu} to="/mychat">My Chats</NavLink></li>
             )}
             <li>
               <NavLink to="/login" onClick={closeMenu}>

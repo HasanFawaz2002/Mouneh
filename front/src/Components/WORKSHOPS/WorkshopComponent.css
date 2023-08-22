@@ -10,10 +10,10 @@
 
 .workshop-list{
   width: 100%;
-  height: 1000px;
   background-color: white;
   display: flex;
   flex-direction: column;
+ 
 }
 
 .ws-card{

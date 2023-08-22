@@ -1,3 +1,7 @@
+.fixed-footer {
+    margin-top: 300px;
+  }
+
 .footer-content{
     display: grid;
     grid-template-columns:repeat(3,1fr);

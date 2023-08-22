@@ -30,7 +30,10 @@ import AllWorkshop from './Components/ADMIN/allworkshop';
 import CreateWorkshop from './Components/ADMIN/createworkshop';
 import MyProducts from "./Components/PRODUCTS/showmyproducts";
 import UpdatemyProduct from"./Components/PRODUCTS/updateproduct";
+import { useLocation } from "react-router-dom";
 function App(){
+    const location = useLocation();
+    const isMyChatRoute = location.pathname.includes('/mychat') || location.pathname.includes('/chat/') || location.pathname.includes('/workshop/');
     return (
     <>
 
@@ -65,7 +68,7 @@ function App(){
         <Route path="/dashboard/admin/users" element={<Users />} />
         <Route path="/dashboard/admin/allworkshop" element={<AllWorkshop />} />
     </Routes>
-    <Footer/>
+    <Footer isFixed={isMyChatRoute}/>
     </>
     )
 }
