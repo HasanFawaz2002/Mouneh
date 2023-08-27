@@ -24,6 +24,8 @@ const UpdateProduct = () => {
   const [ingredient, setIngredient] = useState("");
   const [time, setTime] = useState("");
   const [method, setMethod] = useState("");
+
+
  
   console.log("Product id:", productId);
   console.log("user id:", userId);
@@ -141,6 +143,14 @@ const UpdateProduct = () => {
       toast.error("Something went wrong while updating the product");
     }
   };
+
+  // Check if the user is an admin, if not redirect to restricted page
+  const isAdmin = localStorage.getItem('isAdmin');
+  const token = localStorage.getItem('access_token');
+  if (isAdmin === 'false' || !token) {
+    navigate('/login'); // Replace '/restricted' with your actual restricted access route
+    return null;
+  }
 
 
   return (

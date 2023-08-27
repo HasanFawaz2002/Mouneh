@@ -4,10 +4,14 @@ import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
 import './Admin.css';
+import { useNavigate } from "react-router-dom";
+
 
 
 const Workshops = () => {
   const [workshops, setWorkshops] = useState([]);
+  const navigate = useNavigate();
+
 
   const getAllWorkshops = async () => {
     try {
@@ -48,6 +52,14 @@ const Workshops = () => {
       toast.error("Something Went Wrong delete workshop");
     }
   };
+
+  // Check if the user is an admin, if not redirect to restricted page
+  const isAdmin = localStorage.getItem('isAdmin');
+  const token = localStorage.getItem('access_token');
+  if (isAdmin === 'false' || !token) {
+    navigate('/login'); // Replace '/restricted' with your actual restricted access route
+    return null;
+  }
 
  
 return (

@@ -4,9 +4,14 @@ import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
 import './Admin.css';
+import { useNavigate } from "react-router-dom";
+
 
 const Users = () => {
     const [users, setUsers] = useState([]);
+
+    const navigate = useNavigate();
+
   
     // get all users
     const getAllUsers = async () => {
@@ -53,6 +58,14 @@ const Users = () => {
       useEffect(() => {
         getAllUsers();
       }, []);
+
+      // Check if the user is an admin, if not redirect to restricted page
+  const isAdmin = localStorage.getItem('isAdmin');
+  const token = localStorage.getItem('access_token');
+  if (isAdmin === 'false' || !token) {
+    navigate('/login'); // Replace '/restricted' with your actual restricted access route
+    return null;
+  }
     return (
       <>
           <Toaster position="top-right" />

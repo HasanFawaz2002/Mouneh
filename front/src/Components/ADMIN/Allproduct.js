@@ -4,17 +4,16 @@ import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
 import './Admin.css';
+import { useNavigate } from "react-router-dom";
 
 
 const Products = () => {
   const [products, setProducts] = useState([]);
-
+const navigate = useNavigate();
   // get all products
   const getAllProducts = async () => {
     try {
       const token = localStorage.getItem('access_token');
-
-      // Set the token in the request headers
       const headers = {
         token: `Bearer ${token}`,
       };
@@ -32,31 +31,33 @@ const Products = () => {
     getAllProducts();
   }, []);
 
-
   const handleDeleteProduct = async (userId, productId) => {
     console.log("userId:", userId);
     console.log("productId:", productId);
     try {
       const token = localStorage.getItem('access_token');
-  
-      // Set the token in the request headers
       const headers = {
         token: `Bearer ${token}`,
       };
-  
-      // Send a DELETE request to your backend API to delete the product
-      await axios.delete(`http://localhost:3001/products/${userId}/${productId}`, { headers });
-  
-      // If the deletion is successful, remove the deleted product from the state
-      setProducts((prevProducts) => prevProducts.filter((p) => p._id !== productId));
-  
-      toast.success("Product deleted successfully!");
 
+      await axios.delete(`http://localhost:3001/products/${userId}/${productId}`, { headers });
+
+      setProducts((prevProducts) => prevProducts.filter((p) => p._id !== productId));
+
+      toast.success("Product deleted successfully!");
     } catch (error) {
       console.log(error);
       toast.error("Something Went Wrong delete product");
     }
   };
+
+  // Check if the user is an admin, if not redirect to restricted page
+  const isAdmin = localStorage.getItem('isAdmin');
+  const token = localStorage.getItem('access_token');
+  if (isAdmin === 'false' || !token) {
+    navigate('/login'); // Replace '/restricted' with your actual restricted access route
+    return null;
+  }
   
   return (
     <>

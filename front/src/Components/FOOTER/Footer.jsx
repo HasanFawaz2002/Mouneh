@@ -8,9 +8,9 @@ import {
     faTwitter,
   } from "@fortawesome/free-brands-svg-icons";
 
-const Footer = () => {
+const Footer = ({ isFixed }) => {
   return (
-    <footer className="footer">
+    <footer className={`footer ${isFixed ? 'fixed-footer' : ''}`}>
       <div className="footer-content">
 
         <div className="footer-section">

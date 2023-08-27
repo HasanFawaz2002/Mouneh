@@ -405,3 +405,42 @@ res.status(403).json('You are not allowed to see stats users');
 }
 */
 
+// Get Products with Status "waiting" and Populate User
+module.exports.getWaitingProducts = async (req, res) => {
+  try {
+    const waitingProducts = await ProductModel.find({ status: 'waiting' })
+      .populate('userID', '-password') 
+      .exec();
+
+    res.status(200).json(waitingProducts);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+
+
+// Update Product Status to "accepted"
+module.exports.updateProductStatus = async (req, res) => {
+  try {
+    const { productID } = req.params;
+
+    if (!req.user.user.isAdmin) {
+      return res.status(403).json({ message: 'You do not have permission to perform this action.' });
+    }
+
+    const updatedProduct = await ProductModel.findByIdAndUpdate(
+      productID,
+      { $set: { status: 'accepted' } },
+      { new: true }
+    );
+
+    if (!updatedProduct) {
+      return res.status(404).json({ message: 'Product not found.' });
+    }
+
+    res.status(200).json(updatedProduct);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};

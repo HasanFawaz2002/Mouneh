@@ -3,6 +3,7 @@ import AdminMenu from "./AdminMenu";
 import { Toaster, toast } from "react-hot-toast";
 import axios from "axios";
 import './Admin.css';
+import { useNavigate } from "react-router-dom";
 
 
 const CreateWorkshop = () => {
@@ -13,6 +14,9 @@ const CreateWorkshop = () => {
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [categories, setCategories] = useState([]);
+
+  const navigate = useNavigate();
+
 
   const getAllCategory = async () => {
     try {
@@ -62,6 +66,14 @@ const CreateWorkshop = () => {
       toast.error("Something went wrong while creating the workshop");
     }
   };
+
+  // Check if the user is an admin, if not redirect to restricted page
+  const isAdmin = localStorage.getItem('isAdmin');
+  const token = localStorage.getItem('access_token');
+  if (isAdmin === 'false' || !token) {
+    navigate('/login'); // Replace '/restricted' with your actual restricted access route
+    return null;
+  }
 
   return (
     <>

@@ -173,7 +173,7 @@
 
 @media (max-width: 768px) {
     .products-container{
-        width: 100vw;
+        width: 100%;
     }
     .product p{
         margin-top: 0px;

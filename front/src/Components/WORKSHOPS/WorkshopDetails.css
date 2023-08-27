@@ -24,17 +24,23 @@
 
 .workshop-information {
   width: 100%;
-  max-width: 700px; /* Adjust max-width as needed */
+  max-width: 700px;
+  /* Adjust max-width as needed */
   background-color: var(--primary-color);
   margin-top: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
   padding: 5%;
   box-sizing: border-box;
   margin-left: 22vh;
+  height: 60vh;
 }
 
 .workshop-title {
   margin-bottom: 3vh;
+}
+
+.btnREg {
+  /* margin-left: 30%; */
 }
 
 .workshop-desc,
@@ -50,7 +56,8 @@
   border-radius: 5px;
   color: white;
   width: 100%;
-  max-width: 200px; /* Adjust max-width as needed */
+  max-width: 200px;
+  /* Adjust max-width as needed */
   height: 5vh;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -75,6 +82,8 @@
   .workshop-information {
     margin: 20px 0;
   }
+
+
 }
 
 @media screen and (max-width: 480px) {
@@ -89,6 +98,7 @@
   .workshop-title {
     font-size: 20px;
   }
+
 
   .workshop-desc,
   .ws-duration,
