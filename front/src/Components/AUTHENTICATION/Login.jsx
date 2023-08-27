@@ -12,6 +12,7 @@ function Login() {
   });
   const [emailError, setEmailError] = useState("");
   const [passworderror, setpasswordError] = useState("");
+  const[loginError,setloginError]= useState("");
 
   function validateEmail(email) {
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -39,6 +40,8 @@ function Login() {
 
     setEmailError('');
     setpasswordError('');
+    setloginError('');
+
     let isValid=true;
 
     if (!contact.email) {
@@ -69,8 +72,17 @@ function Login() {
         navigate('/');
       })
       .catch((error) => {
-        console.error("Login failed:", error);
-        // Handle the error response here if needed
+        if (error.response) {
+          const { data } = error.response;
+          console.log("Backend error response:", data);
+          if (data.error && data.error === "Email or Password is not valid") {
+            setloginError('"Email or Password is not valid"');
+          } else {
+            console.error("login failed:", error);
+          }
+        } else {
+          console.error("login failed:", error);
+        }
       });
     }
   }
@@ -112,6 +124,9 @@ function Login() {
             <p className="parag ">
               Not a member? <Link to='/register'><span className="auth-span">Register</span></Link>
             </p>
+            {loginError && (
+              <span className="error-login-message">{loginError}</span>
+            )}
           </form>
         </div>
       </div>

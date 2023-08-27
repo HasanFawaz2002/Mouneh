@@ -33,7 +33,7 @@ function Register() {
   const [cityError, setCityError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-
+  const [registerError,setregisterError]=useState("");
   
   function validateEmail(email) {
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -55,7 +55,7 @@ function Register() {
     setCityError("");
     setEmailError("");
     setPasswordError("");
-
+    setregisterError("");
     let isValid = true;
 
     // Validate each field and set corresponding error messages
@@ -111,7 +111,24 @@ function Register() {
           navigate('/');
         })
         .catch((error) => {
-          console.error("Registration failed:", error);
+          if (error.response) {
+            const { data } = error.response;
+            console.log("Backend error response:", data); // Log the backend error response
+            if (data.error === "User already registered with this email") {
+              console.log("Email already registered");
+              setregisterError('"Email address is already registered."');
+            } else if (data.error === "User already registered with this phone number") {
+              console.log("Phone number already registered");
+              setregisterError('"Phone number is already registered."');
+            } else if (data.error === "Email and phone number already registered") {
+              console.log("Email and phone number already registered");
+              setregisterError('"Email and phone number are already registered."');
+            } else {
+              console.error("Registration failed:", error);
+            }
+          } else {
+            console.error("Registration failed:", error);
+          }
         });
     }
   }
@@ -186,6 +203,9 @@ function Register() {
             <p className="parag ">
               Already a member? <Link to="/login" className="auth-span">Login</Link>
             </p>
+            {registerError && (
+              <span className="error-register-message">{registerError}</span>
+            )}
           </form>
         </div>
       </div>

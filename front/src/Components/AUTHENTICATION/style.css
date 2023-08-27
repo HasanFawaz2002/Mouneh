@@ -68,6 +68,12 @@ font-weight: 300;
 
 
 }
+.error-register-message,.error-login-message{
+   display: flex;
+   justify-content: center;
+    color:red;
+    font-size: 25px;
+}
 .submit{
 width: 50%;
 height: 50px;

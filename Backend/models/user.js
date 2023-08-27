@@ -4,17 +4,17 @@ const UserSchema = new mongoose.Schema({
     username:{
         type: String,
         required: true,
-        unique: true, // Add unique index to enforce uniqueness
+        //unique: true, // Add unique index to enforce uniqueness
     },
     firstname: {
         type: String,
         required: true,
-        unique: true, // Add unique index to enforce uniqueness
+        //unique: true, // Add unique index to enforce uniqueness
     },
     lastname: {
         type: String,
         required: true,
-        unique: true, // Add unique index to enforce uniqueness
+        //unique: true, // Add unique index to enforce uniqueness
     },
     email: {
         type: String,
