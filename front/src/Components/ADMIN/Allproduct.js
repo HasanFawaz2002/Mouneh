@@ -63,23 +63,23 @@ const navigate = useNavigate();
     <>
     <Toaster position="top-right" />
       <div className="row dashboard">
-        <div className="dash col-md-3">
+      <div className="dash col-md-3">
           <AdminMenu />
         </div>
         <div className="col-md-9">
-          <h1 className="productlist text-center">All Products List</h1>
+          <h1 className="productlist text-center">My Products </h1>
           <div className=" cardlist d-flex flex-wrap w-100 h-200">
             {products.map((p) => (
-              <div key={p._id} className=" cardproduct card m-4" style={{ width: "250px" ,height:"400px"}}>
+              <div key={p._id} className=" cardproduct cardadmin m-4" style={{ width: "250px" ,height:"400px"}}>
                 <img
                   src={`http://localhost:3001/products/${p._id}/photo`}
                   className="card-img-top product-image w-250 h-50"
                   alt={p.name}
                 />
                 <div className="card-body">
-                  <h5 className="card-title">Name: {p.name}</h5>
-                  <h5 className="card-text">Category: {p.category}</h5>
-                  <h5 className="card-text">Price :  {p.price} $</h5>
+                <h5 className="card-title1">Name: {p.name}</h5>
+                  <h5 className="card-text1">Category: {p.category}</h5>
+                  <h5 className="card-text1">Price :  {p.price} $</h5>
                   
                   <div className="cardbtn d-flex justify-content-between">
                     <Link

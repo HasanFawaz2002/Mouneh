@@ -1,4 +1,5 @@
-import React, { useState,useRef } from 'react';
+import React, { useState,useRef,useEffect } from 'react';
+import {motion, useInView, useAnimation} from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import recipesImage from '../../images/Recipe book.gif';
 import chefImage from '../../images/Chef-pana.png';
@@ -8,6 +9,7 @@ import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 
 const AddProduct = () => {
   const navigate = useNavigate();
@@ -33,12 +35,22 @@ const [name, setName] = useState("");
   const [timeError, setTimeError] = useState("");
   const [method, setMethod] = useState("");
   const [methodError, setMethodError] = useState("");
+    
+    //SCROLL ANIMATION
+    const ref = useRef(null);
+    const isInView = useInView(ref);
+    const mainControls = useAnimation();
+    useEffect(()=>{
+      if(isInView){
+         mainControls.start("visible");
+      }
+    },[isInView])
 
-  
+
     const formRef = useRef(null); 
-    const notify = () => toast.success('Product Added', {
+    const notify = () => toast.success('Product will be Added after been Accepted', {
         position: "top-right",
-        autoClose: 2000,
+        autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -230,7 +242,15 @@ theme="colored"
                 </div>
             </div>
             <div ref={formRef} className="add-product-container-form">
-                <form className='add-product-container-form-left'>
+                <motion.form ref={ref} className='add-product-container-form-left'
+                variants={{
+                  hidden:{opacity: 0,x: -75},
+                  visible:{opacity: 1,x: 0},
+                }}
+                initial="hidden"
+                animate={mainControls}
+                transition={{duration:1}}
+                >
                     <div className="add-product-container-form-section product-name">
                         <label htmlFor="name">Product Name</label>
                         <input
@@ -381,8 +401,16 @@ theme="colored"
                           )}
                     </div>
                     <button type='submit' onClick={handleSubmit}>Add Product</button>
-                </form>
-                <img src={chefImage} alt="Chef" />
+                </motion.form>
+                <motion.img ref={ref} src={chefImage} alt="Chef" 
+                variants={{
+                  hidden:{opacity: 0,x: 75},
+                  visible:{opacity: 1,x: 0},
+                }}
+                initial="hidden"
+                animate={mainControls}
+                transition={{duration:1}}
+                 />
             </div>
         </>
     );

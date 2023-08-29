@@ -53,7 +53,7 @@ const Navbar = (props) => {
             </li>
             {isAdmin === "true" && (
               <li>
-              <NavLink to="/dashboard" onClick={closeMenu}>
+              <NavLink to="/dashboard/admin/*" onClick={closeMenu}>
               Dashboard
             </NavLink>
             </li>

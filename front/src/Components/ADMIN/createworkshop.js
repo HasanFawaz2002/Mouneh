@@ -4,6 +4,7 @@ import { Toaster, toast } from "react-hot-toast";
 import axios from "axios";
 import './Admin.css';
 import { useNavigate } from "react-router-dom";
+import workImage from '../../images/Resume.gif';
 
 
 const CreateWorkshop = () => {
@@ -86,6 +87,7 @@ const CreateWorkshop = () => {
           <div className="col-md-9">
             <div className="create-workshop-container">
               <h1 className="workshopheader">Create Workshop</h1>
+              <div className="d-flex">
               <div className="cont m-1 w-75">
                 <form className="workshopcontainer"> 
                   <div className="row ">
@@ -167,6 +169,14 @@ const CreateWorkshop = () => {
                     </button>
                   </div>
                 </form>
+              </div>
+              <div className="workshop-image-container">
+            <img
+              src={workImage} 
+              alt="workshop Image"
+              className="product-image"
+            />
+          </div>
               </div>
             </div>
           </div>

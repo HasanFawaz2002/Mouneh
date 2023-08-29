@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
+import {motion, useInView, useAnimation} from 'framer-motion';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
@@ -9,6 +10,16 @@ import './Swiper.css';
 
 const Swiper = () => {
   const [newProduct, setNewProduct] = useState([]);
+  //SCROLL ANIMATION
+  const swiperRef = useRef(null);
+  const swiperIsInView = useInView(swiperRef);
+  const swiperMainControls = useAnimation();
+  useEffect(()=>{
+    if(swiperIsInView){
+      swiperMainControls.start("visible");
+      console.log("swiper is in view");
+    }
+  },[swiperIsInView])
   useEffect(() => {
     axios.get('http://localhost:3001/newProduct')
       .then(result => setNewProduct(result.data))
@@ -51,15 +62,26 @@ const Swiper = () => {
   };
 
   return (
-    <div className="swiper">
+    <div className="swiper" ref={swiperRef}>
       {newProduct.length === 0 ? (
           <h1 className="swiper-header">No Products</h1>
           ) : (
         <>
           <h1 className="swiper-header">New Products</h1>
           <Slider {...settings}>
-            {newProduct.map(item => (
-              <div className="card" key={item._id}>
+            {newProduct.map((item, index) => (
+              <motion.div  className="card" key={item._id}
+              variants={{
+                hidden:{opacity: 0,x: 75},
+                visible:{opacity: 1,x: 0},
+              }}
+              initial="hidden"
+              animate={swiperMainControls}
+              transition={{
+                duration: 0.5,
+                delay: index * 0.2, 
+              }}
+              >
                 <div className="card-info">
                   <div className="card-avatar">
                     <img src={`http://localhost:3001/products/${item._id}/photo`} alt={item.image} />
@@ -90,7 +112,7 @@ const Swiper = () => {
                     <Link to={`/product/${item._id}`}>View Product</Link>
                   </button>
                 )}
-              </div>
+              </motion.div>
             ))}
           </Slider>
         </>

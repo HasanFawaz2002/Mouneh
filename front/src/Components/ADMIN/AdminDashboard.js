@@ -4,6 +4,8 @@ import AdminMenu from "./AdminMenu";
 import axios from "axios"; // Import axios for making API requests
 import jwt_decode from "jwt-decode"; 
 import './Admin.css';
+import userimage from '../../images/Profile data.gif';
+
 
 const AdminDashboard = () => {
   const [userData, setUserData] = useState({});
@@ -45,38 +47,45 @@ const AdminDashboard = () => {
   }, [token, isAdmin]);
 
   return (
-      <div className="container-fluid  dashboard">
-        <div className="row">
-          <div className="dashadmin col-md-3">
-            <AdminMenu />
-          </div>
-          <div className="col-md-9">
-            <h2 className="carda w-75">Admin Profile</h2>
-            <div className="card w-75 p-3">
-              <div className="info-row">
-                <span className="cardinfo">Name: </span>
-                <span className="infoadmin"> {`${userData.firstname} ${userData.lastname}`}</span>
-              </div>
-              <div className="info-row">
-                <span className="cardinfo">Email:</span>
-                <span className="infoadmin">{userData.email}</span>
-              </div>
-              <div className="info-row">
-                <span className="cardinfo">Phone number: </span>
-                <span className="infoadmin"> {userData.phonenumber}</span>
-              </div>
-              <div className="info-row">
-                <span className="cardinfo">Age:  </span>
-                <span className="infoadmin">   {userData.age}</span>
-              </div>
-              <div className="info-row">
-                <span className="cardinfo">City: </span>
-                <span className="infoadmin"> {userData.city}</span>
-              </div>
+    <div className="container-fluid dashboard">
+    <div className="row admindashboard">
+      <div className="dashadmin col-md-3">
+        <AdminMenu />
+      </div>
+      <div className="col-md-9">
+        <h2 className="carda w-100">User Profile</h2>
+        <div className="d-flex align-items-center">
+          <img
+            src={userimage} 
+            alt="User Profile"
+            className="profile-image"
+          />
+          <div className="cardadmindash w-50 p-3">
+            <div className="info-row">
+              <span className="cardinfo">Full Name: </span>
+              <span className="infoadmin">{`${userData.firstname} ${userData.lastname}`}</span>
+            </div>
+            <div className="info-row">
+              <span className="cardinfo">Email:</span>
+              <span className="infoadmin">{userData.email}</span>
+            </div>
+            <div className="info-row">
+              <span className="cardinfo">Mobile: </span>
+              <span className="infoadmin">{userData.phonenumber}</span>
+            </div>
+            <div className="info-row">
+              <span className="cardinfo">Age: </span>
+              <span className="infoadmin">{userData.age}</span>
+            </div>
+            <div className="info-row">
+              <span className="cardinfo">City: </span>
+              <span className="infoadmin">{userData.city}</span>
             </div>
           </div>
         </div>
       </div>
+    </div>
+  </div>
   );
 };
 

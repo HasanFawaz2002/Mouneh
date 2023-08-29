@@ -30,10 +30,14 @@ import AllWorkshop from './Components/ADMIN/allworkshop';
 import CreateWorkshop from './Components/ADMIN/createworkshop';
 import MyProducts from "./Components/PRODUCTS/showmyproducts";
 import UpdatemyProduct from"./Components/PRODUCTS/updateproduct";
+import Waiting from './Components/ADMIN/waitingproduct';
+import UserWorkshop from './Components/ADMIN/userworkshop';
 import { useLocation } from "react-router-dom";
 function App(){
     const location = useLocation();
     const isMyChatRoute = location.pathname.includes('/mychat') || location.pathname.includes('/chat/') || location.pathname.includes('/workshop/');
+    const isRegisterSuccessRoute = location.pathname.includes('/workshop/register-success/');
+
     return (
     <>
 
@@ -67,8 +71,10 @@ function App(){
         <Route path="/dashboard/admin/create-workshop" element={<CreateWorkshop />} />
         <Route path="/dashboard/admin/users" element={<Users />} />
         <Route path="/dashboard/admin/allworkshop" element={<AllWorkshop />} />
+        <Route path="/dashboard/admin/userworkshop" element={<UserWorkshop />} />
+        <Route path="/dashboard/admin/waitingproduct" element={<Waiting/>} />
     </Routes>
-    <Footer isFixed={isMyChatRoute}/>
+    <Footer isFixed={isMyChatRoute  && !isRegisterSuccessRoute}/>
     </>
     )
 }

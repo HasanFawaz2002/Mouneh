@@ -12,7 +12,13 @@ const Cart = () => {
     const navigate = useNavigate();
     const token = localStorage.getItem('access_token');
 
+    
+
     useEffect(() => {
+      if (!token) {
+        navigate('/login');
+        return;
+      }
         axios.get('http://localhost:3001/cart', {
             headers: {
                 token: `Bearer ${token}`,
@@ -23,7 +29,14 @@ const Cart = () => {
             const sum = result.data.reduce((total, item) => total + (item.quantity * item.productID.price), 0);
             setSubtotal(sum);
         })
-        .catch(error => console.error(error));
+        .catch((error) => {
+          if (error.response && error.response.status === 403) {
+            console.log("Token is not valid!");
+            navigate('/login');
+          } else {
+            console.error("Cart Add failed:", error);
+          }
+        });
     }, [token]);
     
         const continueShopping = () => {
@@ -50,9 +63,23 @@ const Cart = () => {
                 console.log(updateResult);
                 window.location.reload(); 
               })
-              .catch(error => console.log(error));
+              .catch((error) => {
+                if (error.response && error.response.status === 403) {
+                  console.log("Token is not valid!");
+                  navigate('/login');
+                } else {
+                  console.error("Cart Add failed:", error);
+                }
+              });
             })
-            .catch(error => console.log(error));
+            .catch((error) => {
+              if (error.response && error.response.status === 403) {
+                console.log("Token is not valid!");
+                navigate('/login');
+              } else {
+                console.error("Cart Add failed:", error);
+              }
+            });
           };
 
           const handleDeleteAllCartItems = (e) => {
@@ -69,7 +96,14 @@ const Cart = () => {
               .then(updateResult => {
                 console.log(updateResult);
               })
-              .catch(error => console.log(error));
+              .catch((error) => {
+                if (error.response && error.response.status === 403) {
+                  console.log("Token is not valid!");
+                  navigate('/login');
+                } else {
+                  console.error("Cart Add failed:", error);
+                }
+              });
             });
           
             axios.delete(`http://localhost:3001/cart/${localStorage.getItem('userId')}`, {
@@ -81,7 +115,14 @@ const Cart = () => {
               console.log(result);
               window.location.reload();
             })
-            .catch(error => console.log(error));
+            .catch((error) => {
+              if (error.response && error.response.status === 403) {
+                console.log("Token is not valid!");
+                navigate('/login');
+              } else {
+                console.error("Cart Add failed:", error);
+              }
+            });
           };
           
       

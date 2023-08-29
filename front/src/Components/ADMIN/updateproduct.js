@@ -158,14 +158,14 @@ const UpdateProduct = () => {
         <Toaster position="top-right" />
       <div className="container-fluid m-3 p-3">
         <div className="row">
-          <div className="dash col-md-3">
+          <div className="dashupdate col-md-3">
             <AdminMenu />
           </div>
           <div className="containerupdate col-md-9">
             <h1 className="headerupdate">Update Product</h1>
-            <div className="m-1 w-75">
+            <div className="m-1 w-100 d-flex">
               <div className="mb-3">
-                <label className="btnu btn-outline-secondary col-md-12">
+                <label className="btnupdate btn-outline-secondary col-md-3">
                   {imagePath ? imagePath.name : "Upload Photo"}
                   <input
                     type="file"
@@ -178,7 +178,7 @@ const UpdateProduct = () => {
               </div>
               <div className="mb-3">
                 {imagePath ? (
-                  <div className="text-center">
+                  <div className="text-center-img">
                     <img
                       src={imagePath}
                       alt="product_photo"
@@ -187,18 +187,20 @@ const UpdateProduct = () => {
                     />
                   </div>
                 ) : (
-                  <div className="text-center">
+                  <div className="text-center-img">
                     <img
-                      src={`http://localhost:3000/products/${productId}/photo`}
+                      src={`http://localhost:3001/products/${productId}/photo`}
                       alt="product_photo"
                       height={"200px"}
-                      className="img img-responsive"
+                      className="imgupdate img-responsive"
                     />
                   </div>
                 )}
               </div>
               <div className="row mb-3">
-                <div className="col-md-6">
+              <div className="details-container">
+              <div className="details-section">
+                <div className="inputupdate col-md-6">
                   <label>Category:</label>
                   <input
                     type="text"
@@ -208,7 +210,7 @@ const UpdateProduct = () => {
                     onChange={(e) => setCategory(e.target.value)}
                   />
                 </div>
-                <div className="col-md-6">
+                <div className="inputupdate col-md-6">
                   <label>Name:</label>
                   <input
                     type="text"
@@ -218,8 +220,8 @@ const UpdateProduct = () => {
                     onChange={(e) => setName(e.target.value)}
                   />
                 </div>
-              </div>
-              <div className="mb-3">
+               
+               <div className="inputupdate col-md-6">
                 <label>Description:</label>
                 <textarea
                   type="text"
@@ -228,12 +230,37 @@ const UpdateProduct = () => {
                   className="form-control"
                   onChange={(e) => setDescription(e.target.value)}
                 />
-              </div>
+               </div>
+               </div>
+               <div className="details-section">
+               <div className="inputupdate col-md-6">
+                  <label>Price/$:</label>
+                  <input
+                    type="number"
+                    value={price}
+                    placeholder="Write a Price"
+                    className="form-control"
+                    onChange={(e) => setPrice(e.target.value)}
+                  />
+                </div>
+                <div className="inputupdate col-md-6">
+                  <label>Quantity:</label>
+                  <input
+                    type="number"
+                    value={quantity}
+                    placeholder="Write a quantity"
+                    className="form-control"
+                    onChange={(e) => setQuantity(e.target.value)}
+                  />
+                </div>
+                </div>
+             
               {category === "Food" && (
-                <div>
+                <div className="details-section">
+                
                   <div className="row mb-3">
-                    <div className="col-md-6">
-                      <label>Weight:</label>
+                    <div className="inputupdate col-md-6">
+                      <label>Weight/KG:</label>
                       <input
                         type="number"
                         value={weight}
@@ -242,8 +269,8 @@ const UpdateProduct = () => {
                         onChange={(e) => setWeight(e.target.value)}
                       />
                     </div>
-                    <div className="col-md-6">
-                      <label>Time:</label>
+                    <div className="inputupdate col-md-6">
+                      <label>Time/minutes:</label>
                       <input
                         type="number"
                         value={time}
@@ -254,7 +281,7 @@ const UpdateProduct = () => {
                     </div>
                   </div>
                   <div className="row mb-3">
-                    <div className="col-md-6">
+                    <div className="inputupdate col-md-6">
                       <label>Ingredient:</label>
                       <input
                         type="text"
@@ -264,7 +291,7 @@ const UpdateProduct = () => {
                         onChange={(e) => setIngredient(e.target.value)}
                       />
                     </div>
-                    <div className="col-md-6">
+                    <div className="inputupdate col-md-6">
                       <label>Method:</label>
                       <input
                         type="text"
@@ -277,37 +304,20 @@ const UpdateProduct = () => {
                   </div>
                 </div>
               )}
-              <div className="row mb-3">
-                <div className="col-md-6">
-                  <label>Price:</label>
-                  <input
-                    type="number"
-                    value={price}
-                    placeholder="Write a Price"
-                    className="form-control"
-                    onChange={(e) => setPrice(e.target.value)}
-                  />
-                </div>
-                <div className="col-md-6">
-                  <label>Quantity:</label>
-                  <input
-                    type="number"
-                    value={quantity}
-                    placeholder="Write a quantity"
-                    className="form-control"
-                    onChange={(e) => setQuantity(e.target.value)}
-                  />
-                </div>
               </div>
+             
               <div className="mb-3">
                 <button className="btn btn-primary" onClick={handleUpdate}>
                   UPDATE PRODUCT
                 </button>
               </div>
+              </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+       
+           
       </>
   );
 };

@@ -69,33 +69,43 @@ const Users = () => {
     return (
       <>
           <Toaster position="top-right" />
-        <div className="row dashboard">
-          <div className="dash col-md-3">
-            <AdminMenu />
-          </div>
-          <div className="col-md-9">
-            <h1 className="userlist text-center">All Users</h1>
-            <div className="cardlist d-flex flex-wrap w-100 h-200">
-              {users.map((user) => (
-                <div key={user._id} className="user-card card m-4" style={{ width: "400px", height: "300px" }}>
-                  
-                  <div className="card-body">
-                    <h5 className="card-title-user">{user.firstname} {user.lastname}</h5>
-                    <h5 className="card-text">Email: {user.email}</h5>
-                    <h5 className="card-text">Phone Number: {user.phonenumber}</h5>
-                    <h5 className="card-text">city: {user.city}</h5>
-                    <button
-                  className="btn "
-                  onClick={() => handleDeleteUser(user._id)}
-                >
-                  Delete User
-                </button>
-                  </div>
-                </div>
-              ))}
+          <div className="row dashboard">
+            <div className="dash col-md-3">
+              <AdminMenu />
+            </div>
+            <div className="col-md-9">
+              <h1 className="userlist text-center">All Users</h1>
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>City</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {users.map((user) => (
+                    <tr key={user._id}>
+                      <td>{user.firstname} {user.lastname}</td>
+                      <td>{user.email}</td>
+                      <td>{user.phonenumber}</td>
+                      <td>{user.city}</td>
+                      <td>
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => handleDeleteUser(user._id)}
+                        >
+                          Delete User
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
-        </div>
         </>
     );
   };

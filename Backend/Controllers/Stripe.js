@@ -2,7 +2,14 @@ const asyncHandler = require("express-async-handler");
 const Order=require('../models/Order');
 // This is your test secret API key.
 const Stripe = require('stripe')
-const stripe=Stripe('sk_test_51NbiGiKQ6FXvveZ8hiuXTsdr7J5NR6ZnUUQujC2k0Nl9qStFnVauX9X2O9Q5B3zXhQnOZjCv61HDPYTvpeKDJlx200K8nypiCK');
+
+
+//MY STRIPE KEY
+//const stripe=Stripe('sk_test_51Nc7uCEnoGOyJRYzRpf6Z26ESHovPTJb6I1GYOthmAQ1NBFs4LGE1FeQBA14KQFGWmp6FgUHAucfBZoSvAp0Qabq00A32ktnMR');
+
+
+
+const stripe=Stripe('sk_test_51Nc7uCEnoGOyJRYzRpf6Z26ESHovPTJb6I1GYOthmAQ1NBFs4LGE1FeQBA14KQFGWmp6FgUHAucfBZoSvAp0Qabq00A32ktnMR');
 
 
 const HandleStripe= asyncHandler(async(req, res) => {
@@ -138,11 +145,14 @@ const createOrder = async (customer, data) => {
   };
 
 
+  // MY ENDPOINT SECRET
+  //endpointSecret = "whsec_469ac81413fff5438ebc465ea4ca8652116eb863c58a4cecd4e30df571e1b421";
+
 
 
 // This is your Stripe CLI webhook secret for testing your endpoint locally.
-let endpointSecret;
-//endpointSecret= "whsec_f4369b24912b30e93f8062ea3209c549afe6bc6ec01027c3c9ac4729d85727a4";
+let endpointSecret ; 
+//endpointSecret = "whsec_469ac81413fff5438ebc465ea4ca8652116eb863c58a4cecd4e30df571e1b421";
 
 
 const handleStripeWebhook = (req, res) => {

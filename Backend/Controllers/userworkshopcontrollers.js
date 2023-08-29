@@ -1,5 +1,6 @@
 // controllers/workshopRegistration.js
 const UserWorkshopModel = require('../models/userworkshop');
+const UserModel = require('../models/user');
 const WorkshopModel = require('../models/workshop');
 const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcrypt");
@@ -84,5 +85,42 @@ module.exports.isRegisteredInWorkshop = async (req, res) => {
     }
   } catch (error) {
     res.status(500).json({ success: false });
+  }
+};
+
+module.exports.fetchWorkshopRegisteredUsers = asyncHandler(async (req, res) => {
+  const workshopId = req.params.workshopID;
+
+  try {
+    // Find users registered for the given workshop
+    const registeredUsers = await UserWorkshopModel.find({ workshop: workshopId }).populate('user');
+
+    // Extract user details and send response
+    const users = registeredUsers.map(registration => registration.user);
+    res.status(200).json(users);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'An error occurred while fetching registered users.' });
+  }
+});
+
+exports.unregisterUserFromWorkshop = async (req, res) => {
+  const { workshopId, userId } = req.params;
+
+  try {
+    // Find the workshop registration entry by user and workshop ID
+    const registration = await UserWorkshopModel.findOne({ user: userId, workshop: workshopId });
+
+    if (!registration) {
+      return res.status(404).json({ message: 'User registration for workshop not found' });
+    }
+
+    // Remove the registration entry
+    await registration.deleteOne();
+
+    res.json({ message: 'User unregistered from workshop successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 };

@@ -4,6 +4,8 @@ import { Toaster, toast } from "react-hot-toast";
 import axios from "axios";
 import './Admin.css';
 import { useNavigate } from "react-router-dom";
+import productImage from '../../images/Bath bomb.gif';
+
 
 
 /*import { useNavigate } from "react-router-dom";*/
@@ -127,7 +129,8 @@ const CreateProduct = () => {
         </div>
           <div className="col-md-9">
             <div className="create-product-container">
-              <h1>Create Product</h1>
+            <h1 className="titleadmin">Create Product</h1>
+            <div className="d-flex">
               <div className="cont m-1 w-75">
                 <div className="row">
                   <div className="col-md-6">
@@ -169,8 +172,8 @@ const CreateProduct = () => {
                     </div>
                     <div className="mb-3">
                       <label>Category:</label>
-                      <div style={{ display: "flex", marginBottom: "10px" }}>
-                          <label>
+                      <div className="product-category" style={{ display: "flex", marginBottom: "10px" }}>
+                      <label className="radiocategory">
                                 <input
                                     type="radio"
                                     name="category"
@@ -180,7 +183,7 @@ const CreateProduct = () => {
                                 />
                                 Food
                             </label>
-                            <label>
+                            <label className="radiocategory">
                                 <input
                                     type="radio"
                                     name="category"
@@ -211,7 +214,7 @@ const CreateProduct = () => {
                     {category === "Food" && (
                       <div>
                         <div className="mb-3">
-                          <label>Weight:</label>
+                          <label>Weight/KG:</label>
                           <input
                             type="number"
                             value={weight}
@@ -224,7 +227,7 @@ const CreateProduct = () => {
                           )}
                         </div>
                         <div className="mb-3">
-                          <label>Time:</label>
+                          <label>Time/Minutes:</label>
                           <input
                             type="number"
                             value={time}
@@ -235,7 +238,7 @@ const CreateProduct = () => {
                         </div>
                         <div className="mb-3">
                           <label>Ingredient:</label>
-                          <input
+                          <textarea
                             type="text"
                             value={ingredient}
                             placeholder="Ingredient"
@@ -245,7 +248,7 @@ const CreateProduct = () => {
                         </div>
                         <div className="mb-3">
                           <label>Method:</label>
-                          <input
+                          <textarea 
                             type="text"
                             value={method}
                             placeholder="Method"
@@ -256,7 +259,7 @@ const CreateProduct = () => {
                       </div>
                     )}
                     <div className="mb-3">
-                      <label>Product Price:</label>
+                      <label>Product Price/$:</label>
                       <input
                         type="number"
                         value={price}
@@ -292,6 +295,14 @@ const CreateProduct = () => {
                   </div>
                 </div>
               </div>
+              <div className="product-image-container">
+            <img
+              src={productImage} 
+              alt="Product Image"
+              className="product-image"
+            />
+          </div>
+          </div>
             </div>
           </div>
         </div>
