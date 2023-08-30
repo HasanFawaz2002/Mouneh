@@ -14,7 +14,7 @@ const SingleWorkshop = () => {
   }, [id]);
 
   return (
-    <div>
+    <div style={{marginBottom:30}}>
       {workshop ? (
         <>
           <WorkshopDetails

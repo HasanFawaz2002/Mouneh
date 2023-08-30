@@ -36,9 +36,9 @@ import { useLocation } from "react-router-dom";
 import NotFound from "./Components/PageNotFound/404";
 function App(){
     const location = useLocation();
-    const isMyChatRoute = location.pathname.includes('/mychat') || location.pathname.includes('/chat/') || location.pathname.includes('/workshop/');
+    const isMyChatRoute = location.pathname.includes('/mychat') || location.pathname.includes('/chat/') ;
     const isRegisterSuccessRoute = location.pathname.includes('/workshop/register-success/');
-    const isNotFoundRoute = location.pathname.includes('*'); // Assuming '*' represents the Not Found route
+    const isNotFoundRoute = location.pathname.includes('*'); 
     const isAdminRoute = location.pathname.includes('/dashboard/admin/*');
 
     const shouldDisplayNavbar = !isNotFoundRoute || isAdminRoute;
