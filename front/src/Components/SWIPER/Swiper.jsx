@@ -78,7 +78,7 @@ const Swiper = () => {
               initial="hidden"
               animate={swiperMainControls}
               transition={{
-                duration: 0.5,
+                duration: 0.7,
                 delay: index * 0.2, 
               }}
               >

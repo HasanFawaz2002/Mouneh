@@ -8,11 +8,25 @@ function Forgotpassword() {
   const navigate = useNavigate();
   const api = "http://localhost:3001";
   const [email, setEmail] = useState("");
-
+  const [emailError, setEmailError] = useState("");
   
+  function validateEmail(email) {
+    // A basic email validation regex pattern
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    return emailPattern.test(email);
+  }
 
   function handleforgot(e) {
     e.preventDefault();
+    setEmailError("");
+    if (!email) {
+      setEmailError("Email adress is required.");
+      return;
+    }
+    if (!validateEmail(email)) {
+      setEmailError("Please enter a valid email address.");
+      return;
+    }
     
     axios.post(`${api}/forgot-password`, { email })
       .then((res) => {
@@ -41,6 +55,9 @@ function Forgotpassword() {
           <p className="center forgot-password-container-par">PLEASE ENTER YOUR EMAIL TO RESET YOUR PASSWORD.</p>
           <form onSubmit={handleforgot}>
             <input type="text" name="email" placeholder="Email Address" id="email" value={email}    onChange={(e) => setEmail(e.target.value)} />
+            {emailError && (
+                        <span className="error-message">{emailError}</span>
+                      )}
             <div className="centering">
               <button type="submit" className="forgot-password-btn">Send</button>
             </div>

@@ -2,10 +2,20 @@
     width: 80%;
     margin: 0 auto;
 }
-  
-.forgot-pass{
+  .forgot{
     color:#EDB71A;
+  }
+  .password{
+    position: relative;
 }
+    .fa-eye{
+        position: absolute;
+        right: 30px;
+        cursor: pointer;
+        top: 15px ;
+        font-size: 20px;
+        color:#EDB71A;
+    }
 .register{
     background-image: url('../../images/pexels-polina-tankilevitch-3735147.jpg');
     background-repeat: no-repeat;
@@ -22,11 +32,12 @@
     font-weight: 600;
     margin-bottom: 15px;
 }
-.error{
-    color:rgb(254, 36, 36);
+.error-email-message,.error-password-message,.error-confirmpassword-message{
+    color:red;
 }
+
 .register-content{
-width: 40%;
+width: 45%;
 position: absolute;
 top: 50%;
 left: 50%;
@@ -66,6 +77,12 @@ font-size: 15px !important;
 font-weight: 300;
 
 
+}
+.error-register-message,.error-login-message{
+   display: flex;
+   justify-content: center;
+    color:red;
+    font-size: 25px;
 }
 .submit{
 width: 50%;
@@ -114,7 +131,9 @@ margin-left: 3px;
 
 .register-content{
     width: 90%;
-
+}
+.register .auth-par{
+    font-size: 14px;
 }
 }            
         
