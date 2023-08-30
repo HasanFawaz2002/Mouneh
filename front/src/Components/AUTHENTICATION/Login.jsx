@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./style.css"; 
 import { useNavigate, Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye,faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 function Login() {
   const navigate = useNavigate();
@@ -13,6 +15,13 @@ function Login() {
   const [emailError, setEmailError] = useState("");
   const [passworderror, setpasswordError] = useState("");
   const[loginError,setloginError]= useState("");
+
+  const [showPassword, setShowPassword] = useState(false);
+  
+
+  function togglePasswordVisibility() {
+    setShowPassword((prevState) => !prevState);
+  }
 
   function validateEmail(email) {
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -105,19 +114,27 @@ function Login() {
             {emailError && (
               <span className="error-email-message">{emailError}</span>
             )}
+            <div className="flexSb password">
             <input
-              type="password"
+              type={showPassword ? "text" : "password"} 
               name="password"
-              placeholder="Password"
               id="password"
+              placeholder="Password"
               value={contact.password}
               onChange={handleChange}
             />
+            <FontAwesomeIcon
+               icon={showPassword ? faEyeSlash : faEye} 
+               className="fa-eye"
+               onClick={togglePasswordVisibility}
+            />
+            
+            </div>
             {passworderror && (
               <span className="error-password-message">{passworderror}</span>
             )}
-            <br />
-            <Link to="/forgot-password" className="forgot">Forgot password?</Link>
+          
+            <p><Link to="/forgot-password" className="forgot">Forgot password?</Link></p>
             <div className="centering">
               <button className="submit">Login</button>
             </div>

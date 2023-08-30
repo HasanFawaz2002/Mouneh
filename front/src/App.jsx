@@ -1,5 +1,5 @@
 import React from "react";
-import {Routes,Route} from 'react-router-dom'
+import {Routes,Route,Outlet} from 'react-router-dom'
 import Navbar from "./Components/NAVBAR/Navbar";
 import Home from './Components/HOME/Home'
 import Contact from "./Components/CONTACT/Contact";
@@ -31,14 +31,18 @@ import CreateWorkshop from './Components/ADMIN/createworkshop';
 import MyProducts from "./Components/PRODUCTS/showmyproducts";
 import UpdatemyProduct from"./Components/PRODUCTS/updateproduct";
 import { useLocation } from "react-router-dom";
+import NotFound from "./Components/PageNotFound/404";
 function App(){
     const location = useLocation();
     const isMyChatRoute = location.pathname.includes('/mychat') || location.pathname.includes('/chat/') || location.pathname.includes('/workshop/');
+  
+    const isNotFoundRoute = location.pathname === "*";
     return (
     <>
-
-    <Navbar />
+   
+   {isNotFoundRoute ? null : <Navbar />}
     <Routes>
+       
         <Route path="/" element={<Home />}></Route>
         <Route path="/contact" element={<Contact/>}></Route>
         <Route path="/about" element={<AboutUs/>}></Route>
@@ -67,10 +71,20 @@ function App(){
         <Route path="/dashboard/admin/create-workshop" element={<CreateWorkshop />} />
         <Route path="/dashboard/admin/users" element={<Users />} />
         <Route path="/dashboard/admin/allworkshop" element={<AllWorkshop />} />
+        <Route path="*" element={<NotFound />} />
+      
     </Routes>
-    <Footer isFixed={isMyChatRoute}/>
+    {isNotFoundRoute ? null : <Footer isFixed={isMyChatRoute} />}
     </>
     )
 }
+
+
+
+
+
+
+
+
 
 export default App;

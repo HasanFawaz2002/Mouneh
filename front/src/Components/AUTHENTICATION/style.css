@@ -5,7 +5,17 @@
   .forgot{
     color:#EDB71A;
   }
-
+  .password{
+    position: relative;
+}
+    .fa-eye{
+        position: absolute;
+        right: 30px;
+        cursor: pointer;
+        top: 15px ;
+        font-size: 20px;
+        color:#EDB71A;
+    }
 .register{
     background-image: url('../../images/pexels-polina-tankilevitch-3735147.jpg');
     background-repeat: no-repeat;
@@ -22,12 +32,12 @@
     font-weight: 600;
     margin-bottom: 15px;
 }
-.error-email-message,.error-password-message{
+.error-email-message,.error-password-message,.error-confirmpassword-message{
     color:red;
 }
 
 .register-content{
-width: 40%;
+width: 45%;
 position: absolute;
 top: 50%;
 left: 50%;

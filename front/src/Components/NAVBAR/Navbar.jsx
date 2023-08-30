@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import "./Navbar.css";
-import { NavLink,useLocation  } from "react-router-dom";
+import { NavLink,useLocation,useNavigate  } from "react-router-dom";
 import MounehLogo from "../../images/Mouneh-logo.png";
 import DropDown from "../DROPDOWN/Dropdown";
 
 const Navbar = (props) => {
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation(); 
   const isProductPage = location.pathname.startsWith("/product/");
@@ -20,6 +21,14 @@ const Navbar = (props) => {
 
   const closeMenu = () => {
     setIsMenuOpen(false);
+  };
+
+  
+  const handleLogout = () => {
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("isAdmin");
+   // navigate('/login'); // Redirect to the homepage after logout
   };
 
   return (
@@ -121,11 +130,20 @@ const Navbar = (props) => {
           </li>
         </ul>
         <div className="authentication-btn">
-            
-          {isProductsPage && <NavLink to="/cart">My Cart</NavLink>}
-          {isProductPage && <NavLink to="/cart">My Cart</NavLink>}
-          <NavLink to="/login">Login</NavLink>
-          <NavLink to="/register">Register</NavLink>
+          {token ? (
+            <>
+              {isProductsPage && <NavLink to="/cart">My Cart</NavLink>}
+              {isProductPage && <NavLink to="/cart">My Cart</NavLink>}
+              <NavLink to="/login" onClick={handleLogout}>
+                Logout
+              </NavLink>
+            </>
+          ) : (
+            <>
+              <NavLink to="/login">Login</NavLink>
+              <NavLink to="/register">Register</NavLink>
+            </>
+          )}
         </div>
       </nav>
     </>
