@@ -214,7 +214,7 @@ const CreateProduct = () => {
                     {category === "Food" && (
                       <div>
                         <div className="mb-3">
-                          <label>Weight/KG:</label>
+                          <label>Weight/g:</label>
                           <input
                             type="number"
                             value={weight}
