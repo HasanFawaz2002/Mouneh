@@ -1,5 +1,5 @@
 const express = require("express");
-const stripe = require('stripe')("sk_test_51Nbjq8EFdxDemLHzPX22ZGQtNf1VEZtD1kRmcTGEeevHe9fWoSJ1xr4WpocmxMux8BOHsvXz5u3DdWfoH8N1Sonh00CsoWXawh");
+const stripe = require('stripe')("sk_test_51Nc7uCEnoGOyJRYzRpf6Z26ESHovPTJb6I1GYOthmAQ1NBFs4LGE1FeQBA14KQFGWmp6FgUHAucfBZoSvAp0Qabq00A32ktnMR");
 const flash = require('express-flash');
 require("dotenv").config();
 const session = require('express-session');

@@ -6,7 +6,7 @@ function Search({ setSearchQuery }){
         setSearchQuery(event.target.value);
       };
     return(
-        <div class="center">
+        <div class="center" style={{zIndex:2}}>
             <form class="flex items-center max-w-sm">   
                  <label for="simple-search" class="sr-only">Search</label>
                  <div class="relative w-full">

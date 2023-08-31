@@ -51,7 +51,6 @@ function MyProducts() {
       <div className="products-container">
         {shouldDisplaySearch && ( // Conditionally render if there are products or valid search query
           <div className="products-header">
-            <h1>My Products</h1>
             <Search setSearchQuery={setSearchQuery} />
           </div>
         )}

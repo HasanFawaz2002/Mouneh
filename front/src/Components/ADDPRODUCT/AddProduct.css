@@ -79,6 +79,7 @@
     outline: transparent;
     padding:5px;
     font-size:large;
+    border-radius: 5px;
 }
 
 .add-product-container-form-left button{

@@ -95,7 +95,7 @@ const Home = () => {
             initial="hidden"
             animate="visible"
             transition={{duration:0.5,delay:0.5}}
-            ><Link to="/showProducts">Products</Link></motion.button>
+            ><Link to="/showProducts/All">Products</Link></motion.button>
           </div>
         </div>
       </div>

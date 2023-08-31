@@ -3,6 +3,7 @@ import "./Navbar.css";
 import { NavLink,useLocation,useNavigate  } from "react-router-dom";
 import MounehLogo from "../../images/Mouneh-logo.png";
 import DropDown from "../DROPDOWN/Dropdown";
+import CategoryDropDown from "../CATEGORY DROPDOWN/CategoryDropdown";
 
 const Navbar = (props) => {
   const navigate = useNavigate();
@@ -125,6 +126,9 @@ const Navbar = (props) => {
           <li>
             <NavLink to="/contact">Contact</NavLink>
           </li>
+          {isProductsPage && (
+            <li><CategoryDropDown /></li>
+          )}
           <li>
             <DropDown />
           </li>

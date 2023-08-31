@@ -57,10 +57,14 @@
     display: inline-block;
     text-rendering: optimizeLegibility;
     position: relative;
+    margin-right: 15px;
+    z-index: 1;
+
   }
   
   .popup input {
     display: none;
+
   }
   
   .burger {
@@ -69,6 +73,8 @@
     font-weight:bold;
     padding-left:10px;
     cursor: pointer;
+    z-index: 1;
+
   }
 /*
   .burger span {
@@ -115,6 +121,8 @@
     margin: 0;
     padding: 0;
     list-style-type: none;
+    z-index: 1;
+
   }
   
   .popup-window ul button {
@@ -131,11 +139,15 @@
     border-radius: var(--nav-button-border-radius);
     cursor: pointer;
     column-gap: var(--nav-button-distance);
+    z-index: 1;
+
   }
   
   
   .popup-window ul li svg {
     color: var(--primary-color);
+    z-index: 1;
+
   }
   
   
@@ -143,6 +155,8 @@
     margin: var(--underline-margin-y) 0;
     border: none;
     border-bottom: var(--underline-border-width) solid var(--underline-border-color);
+    z-index: 1;
+
   }
   
   /* actions */
@@ -153,38 +167,50 @@
   .popup-window ul button:focus-visible svg {
     color: var(--nav-button-hover-text-color);
     background: var(--primary-color);
+    z-index: 1;
+
   }
   
   .burger:hover {
     transform: scale(var(--burger-hover-scale));
+    z-index: 1;
+
   }
   
-  .burger:active {
-    transform: scale(var(--burger-active-scale));
-  }
+  
   
   .burger:focus:not(:hover) {
     outline-color: var(--burger-enable-outline-color);
     outline-offset: var(--burger-enable-outline-offset);
+    z-index: 1;
+
   }
   
   .popup input:checked+.burger span:nth-child(1) {
     top: 50%;
     transform: translateY(-50%) rotate(45deg);
+    z-index: 1;
+
   }
   
   .popup input:checked+.burger span:nth-child(2) {
     bottom: 50%;
     transform: translateY(50%) rotate(-45deg);
+    z-index: 1;
+
   }
   
   .popup input:checked+.burger span:nth-child(3) {
     transform: translateX(calc(var(--burger-diameter) * -1 - var(--burger-line-width)));
+    z-index: 1;
+
   }
   
   .popup input:checked~nav {
     transform: scale(var(--nav-active-scale));
     visibility: visible;
     opacity: 1;
+    z-index: 1;
+
   }
   

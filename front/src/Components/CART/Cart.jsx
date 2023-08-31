@@ -40,7 +40,7 @@ const Cart = () => {
     }, [token]);
     
         const continueShopping = () => {
-            navigate('/showProducts');
+            navigate('/showProducts/All');
         }
 
         const handleDelete = (e, cartID, productID, quantity) => {
