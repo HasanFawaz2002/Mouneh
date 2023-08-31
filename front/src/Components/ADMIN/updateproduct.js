@@ -306,7 +306,7 @@ const UpdateProduct = () => {
               )}
               </div>
              
-              <div className="mb-3">
+              <div className="mb-3 mt-2 ml-4">
                 <button className="btn btn-primary" onClick={handleUpdate}>
                   UPDATE PRODUCT
                 </button>

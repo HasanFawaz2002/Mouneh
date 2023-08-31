@@ -53,7 +53,7 @@ const AdminDashboard = () => {
         <AdminMenu />
       </div>
       <div className="col-md-9">
-        <h2 className="carda w-100">User Profile</h2>
+        <h2 className="userprofile w-100">User Profile</h2>
         <div className="d-flex align-items-center">
           <img
             src={userimage} 

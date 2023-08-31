@@ -2,6 +2,7 @@ import React,{useState,useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import "./Cart.css";
 import PayButton from "./Paybutton";
@@ -11,6 +12,18 @@ const Cart = () => {
     const [subtotal, setSubtotal] = useState(0);
     const navigate = useNavigate();
     const token = localStorage.getItem('access_token');
+    const notify = () => toast.info('Items will be removed after 24 hour', {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      });
+
+      
 
     
 
@@ -25,6 +38,7 @@ const Cart = () => {
             }
         })
         .then(result => {
+            notify();
             setCartItems(result.data);
             const sum = result.data.reduce((total, item) => total + (item.quantity * item.productID.price), 0);
             setSubtotal(sum);
@@ -130,6 +144,18 @@ const Cart = () => {
     
     return (
         <>
+        <ToastContainer
+position="top-right"
+autoClose={3000}
+hideProgressBar={true}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="colored"
+/>
         <h1 className="add-to-cart-container-header">Shopping Cart</h1>
         <div className="add-to-cart-container">
             <table>
