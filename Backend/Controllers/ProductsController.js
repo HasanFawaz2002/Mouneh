@@ -265,6 +265,24 @@ module.exports.getAllProduct = async (req, res) => {
     }
 };
 
+
+module.exports.getAllProductByCategory=async (req, res) =>{
+  const { Category } = req.params;
+
+  try {
+    let products;
+
+    if (Category === "All") {
+      products = await ProductModel.find({ status: "accepted" });
+    } else if (Category === "Craft" || Category === "Food") {
+      products = await ProductModel.find({ category: Category, status: "accepted" });
+    }
+
+    res.json(products);
+  } catch (error) {
+    res.status(500).json({ error: "An error occurred while fetching products." });
+  }
+}
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 //Get 8 Products From the newest One

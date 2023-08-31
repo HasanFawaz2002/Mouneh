@@ -15,18 +15,17 @@ const [searchQuery, setSearchQuery] = useState('');
 const [currentPage, setCurrentPage] = useState(1);
 const [postsPerPage] = useState(8);
 const params = useParams();
-  const Category = params.Category;
+const Category = params.Category;
 
   useEffect(() => {
-    if (Category === "All") {
-      axios.get('http://localhost:3001/products')
-        .then(result => {
-          setProducts(result.data);
-          console.log(result.data);
-        })
-        .catch(error => console.error(error));
-    }
+    axios.get(`http://localhost:3001/products/${Category}`)
+      .then(result => {
+        setProducts(result.data);
+        console.log(result.data);
+      })
+      .catch(error => console.error(error));
   }, [Category]);
+  
 
 const filteredProducts = products.filter((product) =>
 product.name.toLowerCase().includes(searchQuery.toLowerCase())

@@ -18,11 +18,11 @@ const CategoryDropDown = () => {
         toggleDropdown();
       }
       const Food = () => {
-        navigate('/showProducts/food')
+        navigate('/showProducts/Food')
         toggleDropdown();
       }
       const Craft = () => {
-        navigate('/showProducts/craft')
+        navigate('/showProducts/Craft')
         toggleDropdown();
       }
     
