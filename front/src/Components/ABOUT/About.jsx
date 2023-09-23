@@ -2,6 +2,8 @@ import React from "react";
 import "./About.css";
 import Myimage from "../../images/boho-macrame-assortment-indoors.jpg";
 import {Link} from "react-router-dom";
+import {motion} from 'framer-motion';
+
 
 function AboutUs(){
     return(
@@ -9,7 +11,15 @@ function AboutUs(){
          <h1 className="aboutus-header">A<span className="white-span">B</span>O<span className="white-span">U</span>T US <i className="fa-solid fa-jar fa-bounce"></i></h1>
        <div className="AboutUs-container">
             
-        <div className="content">
+        <motion.div className="content" 
+         variants={{
+            hidden:{opacity: 0,x: -75},
+            visible:{opacity: 1,x: 0},
+          }}
+          initial="hidden"
+          animate="visible"
+          transition={{duration:1}}
+        >
             <h2 className="aboutus-header2">Welcome to Home Grown</h2>
             <p className="mg">Your one-stop destination for all things homemade and handcrafted! At Home Grown,
                we take pride in fostering a vibrant community of passionate individuals who share their love for homemade
@@ -25,9 +35,17 @@ function AboutUs(){
                venture as we celebrate the beauty of homemade and the art of handcrafted creativity. Together, let's cultivate a 
                thriving community of passionate artisans and connoisseurs, right here at Home Grown!</p>
                <button className="mg aboutus-btn"><Link to="/contact">Contact Us</Link></button>
-        </div>
+        </motion.div>
         <div className="img">
-            <img src={Myimage} alt="Description" className="custom-img" />
+            <motion.img src={Myimage} alt="Description" className="custom-img" 
+             variants={{
+                hidden:{opacity: 0,x: 75},
+                visible:{opacity: 1,x: 0},
+              }}
+              initial="hidden"
+              animate="visible"
+              transition={{duration:1}}
+            />
         </div>
     </div>
         
