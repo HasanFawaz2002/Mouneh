@@ -140,7 +140,7 @@ function Register() {
     if (isValid) {
       const { confirmPassword, ...dataToSend } = contact; // Exclude confirmPassword from dataToSend
       axios
-        .post(`${api}/register`, dataToSend)
+        .post(`https://mouneh-deploy.onrender.com/register`, dataToSend)
         .then((response) => {
           console.log("Registration successful!");
           localStorage.clear(); // Clear localStorage here
