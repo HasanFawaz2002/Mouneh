@@ -1,0 +1,37 @@
+{
+  "files": {
+    "main.css": "/static/css/main.33ce82bb.css",
+    "main.js": "/static/js/main.df6a39c6.js",
+    "static/media/boho-macrame-assortment-indoors.jpg": "/static/media/boho-macrame-assortment-indoors.bff82f9b91c5722c19b2.jpg",
+    "static/media/pexels-polina-tankilevitch-3735147.jpg": "/static/media/pexels-polina-tankilevitch-3735147.0d5be9d1a033af4065ac.jpg",
+    "static/media/cherry tree.gif": "/static/media/cherry tree.f0fe8b194ac9ec2239fb.gif",
+    "static/media/Left hander.gif": "/static/media/Left hander.0f2be2a1136f961f4339.gif",
+    "static/media/Recipe book.gif": "/static/media/Recipe book.ae5567fca859a3a5ef04.gif",
+    "static/media/Bath bomb.gif": "/static/media/Bath bomb.74e800de08df2942133e.gif",
+    "static/media/Maple_Mustard_Chicken_Baked_in_the_Oven-_Nerds_with_Knives-removebg-preview.png": "/static/media/Maple_Mustard_Chicken_Baked_in_the_Oven-_Nerds_with_Knives-removebg-preview.1ce61df8c3062832aaea.png",
+    "static/media/Chef-pana.png": "/static/media/Chef-pana.9969bbf2625399a2b20a.png",
+    "static/media/Chef-bro.png": "/static/media/Chef-bro.08f9c98a05cf9174b4b9.png",
+    "static/media/Simple_Stuffed_Makdous_Recipe__cured_eggplant_-removebg-preview.png": "/static/media/Simple_Stuffed_Makdous_Recipe__cured_eggplant_-removebg-preview.68de045909d7735980ec.png",
+    "static/media/Plain credit card.gif": "/static/media/Plain credit card.670b0dbc3b4fd91fb97b.gif",
+    "static/media/Profile data.gif": "/static/media/Profile data.1cd7abd2eb3d299f0854.gif",
+    "static/media/Chili_Oil-removebg-preview.png": "/static/media/Chili_Oil-removebg-preview.033bb97c676f96a2b3c5.png",
+    "static/media/Bringing_Spring_Inside_with_Plants-removebg-preview.png": "/static/media/Bringing_Spring_Inside_with_Plants-removebg-preview.ab50521d6d8fef5cee00.png",
+    "static/media/Garlic_Olive_Oil-removebg-preview.png": "/static/media/Garlic_Olive_Oil-removebg-preview.42169b8a6cb9efb3eb0d.png",
+    "static/media/bootstrap-icons.woff?": "/static/media/bootstrap-icons.4753c5ba57962b4d7bf8.woff",
+    "static/media/Simple_Handmade_Gifts_-_Part_Six-removebg-preview.png": "/static/media/Simple_Handmade_Gifts_-_Part_Six-removebg-preview.31692b95cd02eaa431bf.png",
+    "static/media/bootstrap-icons.woff2?": "/static/media/bootstrap-icons.6d63d0501e5ed7b79dab.woff2",
+    "static/media/Resume.gif": "/static/media/Resume.a99da8795eff5d89d396.gif",
+    "static/media/Mouneh-logo.png": "/static/media/Mouneh-logo.c8d3108ed823f592d8af.png",
+    "static/media/slick.svg": "/static/media/slick.2630a3e3eab21c607e21.svg",
+    "static/media/slick.eot": "/static/media/slick.a4e97f5a2a64f0ab1323.eot",
+    "static/media/slick.ttf": "/static/media/slick.c94f7671dcc99dce43e2.ttf",
+    "static/media/slick.woff": "/static/media/slick.295183786cd8a1389865.woff",
+    "index.html": "/index.html",
+    "main.33ce82bb.css.map": "/static/css/main.33ce82bb.css.map",
+    "main.df6a39c6.js.map": "/static/js/main.df6a39c6.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.33ce82bb.css",
+    "static/js/main.df6a39c6.js"
+  ]
+}
