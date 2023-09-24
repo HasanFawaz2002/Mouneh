@@ -21,7 +21,7 @@ const Swiper = () => {
     }
   },[swiperIsInView])
   useEffect(() => {
-    axios.get('http://localhost:3001/newProduct')
+    axios.get('https://mouneh-deploy.onrender.com/newProduct')
       .then(result => setNewProduct(result.data))
       .catch(error => console.error(error));
   }, []);
